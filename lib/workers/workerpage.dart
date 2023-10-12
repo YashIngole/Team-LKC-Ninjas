@@ -62,163 +62,156 @@ class _workerpageState extends State<workerpage> {
             Padding(
               padding: const EdgeInsets.only(top: 10),
               child: ElevatedButton(
-                  onPressed: () {
-                    Get.defaultDialog(
-                      contentPadding: EdgeInsets.zero,
-                      barrierDismissible: false,
-                      title: "Create a listing",
-                      content: SingleChildScrollView(
-                        child: SizedBox(
-                          width: Get.width * 0.5,
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: TextFormField(
-                                  onChanged: (val) {
-                                    setState(() {
-                                      title = val;
-                                    });
-                                  },
-                                  style: const TextStyle(),
-                                  decoration: InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
-                                        borderSide:
-                                            const BorderSide(color: Colors.black),
-                                        borderRadius:
-                                            BorderRadius.circular(12)),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderSide:
-                                            const BorderSide(color: Colors.black),
-                                        borderRadius:
-                                            BorderRadius.circular(12)),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color.fromARGB(255, 243, 65, 65),
-                                      ),
-                                      borderRadius: BorderRadius.circular(12),
+                onPressed: () {
+                  Get.defaultDialog(
+                    contentPadding: EdgeInsets.zero,
+                    barrierDismissible: false,
+                    title: "Create a listing",
+                    content: SingleChildScrollView(
+                      child: SizedBox(
+                        width: Get.width * 0.5,
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: TextFormField(
+                                onChanged: (val) {
+                                  setState(() {
+                                    title = val;
+                                  });
+                                },
+                                style: const TextStyle(),
+                                decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide:
+                                          const BorderSide(color: Colors.black),
+                                      borderRadius: BorderRadius.circular(12)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          const BorderSide(color: Colors.black),
+                                      borderRadius: BorderRadius.circular(12)),
+                                  errorBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      color: Color.fromARGB(255, 243, 65, 65),
                                     ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color.fromARGB(255, 0, 0, 5),
-                                      ),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    labelText: 'Title',
+                                    borderRadius: BorderRadius.circular(12),
                                   ),
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Please Enter title';
-                                    }
-                                    return null;
-                                  },
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      color: Color.fromARGB(255, 0, 0, 5),
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  labelText: 'Title',
+                                ),
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return 'Please Enter title';
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 10),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: DropdownButtonFormField(
+                                isExpanded: true,
+
+                                icon: const Icon(Icons.keyboard_arrow_down),
+
+                                // Array list of items
+                                items: items.map((String items) {
+                                  return DropdownMenuItem(
+                                    value: items,
+                                    child: Text(items),
+                                  );
+                                }).toList(),
+                                // After selecting the desired option,it will
+                                // change button value to selected value
+                                onChanged: (String? newValue) {
+                                  // print('Selected category: $newValue');
+                                  setState(() {
+                                    category = newValue;
+                                  });
+                                },
+                              ),
+                            ),
+                            // Padding(
+                            //   padding: const EdgeInsets.symmetric(
+                            //       horizontal: 20, vertical: 10),
+                            // ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 10, right: 10, top: 30),
+                              child: TextFormField(
+                                onChanged: (val) {
+                                  setState(() {
+                                    Description = val;
+                                  });
+                                },
+                                minLines: 2,
+                                maxLines: null,
+                                maxLength: 500,
+                                decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide:
+                                          const BorderSide(color: Colors.black),
+                                      borderRadius: BorderRadius.circular(12)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          const BorderSide(color: Colors.black),
+                                      borderRadius: BorderRadius.circular(12)),
+                                  errorBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      color: Color.fromARGB(255, 243, 65, 65),
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      color: Color.fromARGB(255, 0, 0, 5),
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  labelText: 'Description',
                                 ),
                               ),
-                              const Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 10),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: DropdownButtonFormField(
-                                  isExpanded: true,
+                            ),
+                            ElevatedButton(
+                                onPressed: () {
+                                  User? user =
+                                      authService.firebaseAuth.currentUser;
 
-                                  icon: const Icon(Icons.keyboard_arrow_down),
-
-                                  // Array list of items
-                                  items: items.map((String items) {
-                                    return DropdownMenuItem(
-                                      value: items,
-                                      child: Text(items),
-                                    );
-                                  }).toList(),
-                                  // After selecting the desired option,it will
-                                  // change button value to selected value
-                                  onChanged: (String? newValue) {
-                                    // print('Selected category: $newValue');
-                                    setState(() {
-                                      category = newValue;
-                                    });
-                                  },
-                                ),
-                              ),
-                              // Padding(
-                              //   padding: const EdgeInsets.symmetric(
-                              //       horizontal: 20, vertical: 10),
-                              // ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 10, right: 10, top: 30),
-                                child: TextFormField(
-                                  onChanged: (val) {
-                                    setState(() {
-                                      Description = val;
-                                    });
-                                  },
-                                  minLines: 2,
-                                  maxLines: null,
-                                  maxLength: 500,
-                                  decoration: InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
-                                        borderSide:
-                                            const BorderSide(color: Colors.black),
-                                        borderRadius:
-                                            BorderRadius.circular(12)),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderSide:
-                                            const BorderSide(color: Colors.black),
-                                        borderRadius:
-                                            BorderRadius.circular(12)),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color.fromARGB(255, 243, 65, 65),
-                                      ),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color.fromARGB(255, 0, 0, 5),
-                                      ),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    labelText: 'Description',
-                                  ),
-                                ),
-                              ),
-                              ElevatedButton(
-                                  onPressed: () {
-                                    User? user =
-                                        authService.firebaseAuth.currentUser;
-
-                                    _databaseservice.saveworkerlisting(
-                                        userName,
-                                        title,
-                                        user!.uid,
-                                        category,
-                                        Description);
-                                  },
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(Colors
-                                            .black), // Set the background color to black
-                                    shape: MaterialStateProperty.all<
-                                        OutlinedBorder>(
-                                      RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            0.0), // Set the border radius to make it rectangular
-                                      ),
+                                  _databaseservice.saveworkerlisting(userName,
+                                      title, user!.uid, category, Description);
+                                },
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(Colors
+                                          .black), // Set the background color to black
+                                  shape:
+                                      MaterialStateProperty.all<OutlinedBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          0.0), // Set the border radius to make it rectangular
                                     ),
                                   ),
-                                  child: const Text("Create")),
-                            ],
-                          ),
+                                ),
+                                child: const Text("Create")),
+                          ],
                         ),
                       ),
-                    );
-                  },
-                  child: const Text("Create Listing")),
+                    ),
+                  );
+                },
+                child: const Text("Create Listing"),
+              ),
             ),
             const SizedBox(height: 30),
             Expanded(
@@ -257,14 +250,16 @@ class _workerpageState extends State<workerpage> {
                                         right: BorderSide(
                                             width: 1.0,
                                             color: Colors.white24))),
-                                child: const Icon(Icons.work, color: Colors.white),
+                                child:
+                                    const Icon(Icons.work, color: Colors.white),
                               ),
                               title: Row(
                                 children: [
                                   Expanded(
                                     child: Text(
                                       data['title'],
-                                      style: const TextStyle(color: Colors.white),
+                                      style:
+                                          const TextStyle(color: Colors.white),
                                     ),
                                   ),
                                 ],
@@ -277,11 +272,12 @@ class _workerpageState extends State<workerpage> {
                                     children: [
                                       Text(
                                         data['category'].toString(),
-                                        style: const TextStyle(color: Colors.white),
+                                        style: const TextStyle(
+                                            color: Colors.white),
                                       ),
                                       Text(data['Description'],
-                                          style:
-                                              const TextStyle(color: Colors.white)),
+                                          style: const TextStyle(
+                                              color: Colors.white)),
                                     ],
                                   ),
                                   const Spacer(),

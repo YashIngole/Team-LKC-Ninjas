@@ -5,8 +5,11 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sahayak/Themeconst.dart';
+import 'package:sahayak/auth%20svc/databaseService.dart';
 import 'package:sahayak/auth%20svc/helper.dart';
+import 'package:sahayak/auth%20ui/welcome_ui.dart';
 import 'package:sahayak/user/SearchWorkers.dart';
+import 'package:sahayak/user/UserProfile.dart';
 import 'package:sahayak/user/customslider.dart';
 
 class LandingPage extends StatefulWidget {
@@ -45,6 +48,8 @@ class _LandingPageState extends State<LandingPage> {
     });
   }
 
+  final databaseService _databaseservice = databaseService();
+  final FirebaseAuth auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,6 +89,14 @@ class _LandingPageState extends State<LandingPage> {
                               ),
                             )
                           ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 240),
+                          child: IconButton(
+                              onPressed: () {
+                                signOut();
+                              },
+                              icon: Icon(Icons.logout_outlined)),
                         ),
                       ],
                     ),
@@ -145,5 +158,11 @@ class _LandingPageState extends State<LandingPage> {
         ],
       ),
     );
+  }
+
+  signOut() async {
+    await auth.signOut();
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => WelcomePage()));
   }
 }
