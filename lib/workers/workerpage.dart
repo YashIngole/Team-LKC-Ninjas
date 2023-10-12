@@ -8,9 +8,10 @@ import 'package:sahayak/Themeconst.dart';
 import 'package:sahayak/auth%20svc/authentication.dart';
 import 'package:sahayak/auth%20svc/databaseService.dart';
 import 'package:sahayak/auth%20svc/helper.dart';
+import 'package:sahayak/auth%20ui/welcome_ui.dart';
 
 class workerpage extends StatefulWidget {
-  const workerpage({ Key? key});
+  const workerpage({Key? key});
 
   @override
   State<workerpage> createState() => _workerpageState();
@@ -47,7 +48,7 @@ class _workerpageState extends State<workerpage> {
   String Description = "";
   List<String> categories = [];
   List<DocumentSnapshot<Map<String, dynamic>>> docs = [];
-
+  final FirebaseAuth auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -78,9 +79,15 @@ class _workerpageState extends State<workerpage> {
                           fontSize: 30,
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
+                const Spacer(),
+                IconButton(
+                    onPressed: () {
+                      signOut();
+                    },
+                    icon: const Icon(Icons.logout_outlined)),
               ],
             ),
             Column(
@@ -375,5 +382,11 @@ class _workerpageState extends State<workerpage> {
     } else {
       print('Document not found');
     }
+  }
+
+  signOut() async {
+    await auth.signOut();
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => const WelcomePage()));
   }
 }
