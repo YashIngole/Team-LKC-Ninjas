@@ -1,9 +1,11 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sahayak/Themeconst.dart';
 import 'package:sahayak/auth%20svc/helper.dart';
+import 'package:sahayak/user/SearchWorkers.dart';
 import 'package:sahayak/user/customslider.dart';
 
 class LandingPage extends StatefulWidget {
@@ -114,7 +116,10 @@ class _LandingPageState extends State<LandingPage> {
                       ],
                     )),
                 child: Center(
-                  child: Image.asset("assets/sahayak.png"),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.asset("assets/sahayak.png"),
+                  ),
                 ),
               ),
               const Spacer(),
@@ -128,9 +133,14 @@ class _LandingPageState extends State<LandingPage> {
                           color: Colors.grey, fontSize: 20),
                     ),
                     const Spacer(),
-                    Text("View all",
-                        style: GoogleFonts.andadaPro(
-                            color: Colors.grey, fontSize: 12))
+                    InkWell(
+                      onTap: () {
+                        Get.to(SearchWorkers(InitialVal: ""));
+                      },
+                      child: Text("View all",
+                          style: GoogleFonts.andadaPro(
+                              color: Colors.grey, fontSize: 12)),
+                    )
                   ],
                 ),
               ),
