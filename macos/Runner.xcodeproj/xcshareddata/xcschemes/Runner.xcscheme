@@ -15,7 +15,11 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "33CC10EC2044A3C60003C045"
+<<<<<<< HEAD
                BuildableName = "sahayak_b.app"
+=======
+               BuildableName = "sahayak.app"
+>>>>>>> ad2cdd845c991ad37ccb426416495424257223cf
                BlueprintName = "Runner"
                ReferencedContainer = "container:Runner.xcodeproj">
             </BuildableReference>
@@ -31,7 +35,11 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "33CC10EC2044A3C60003C045"
+<<<<<<< HEAD
             BuildableName = "sahayak_b.app"
+=======
+            BuildableName = "sahayak.app"
+>>>>>>> ad2cdd845c991ad37ccb426416495424257223cf
             BlueprintName = "Runner"
             ReferencedContainer = "container:Runner.xcodeproj">
          </BuildableReference>
@@ -65,7 +73,11 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "33CC10EC2044A3C60003C045"
+<<<<<<< HEAD
             BuildableName = "sahayak_b.app"
+=======
+            BuildableName = "sahayak.app"
+>>>>>>> ad2cdd845c991ad37ccb426416495424257223cf
             BlueprintName = "Runner"
             ReferencedContainer = "container:Runner.xcodeproj">
          </BuildableReference>
@@ -82,7 +94,11 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "33CC10EC2044A3C60003C045"
+<<<<<<< HEAD
             BuildableName = "sahayak_b.app"
+=======
+            BuildableName = "sahayak.app"
+>>>>>>> ad2cdd845c991ad37ccb426416495424257223cf
             BlueprintName = "Runner"
             ReferencedContainer = "container:Runner.xcodeproj">
          </BuildableReference>

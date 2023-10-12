@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "601901033214",
+    "project_id": "saahayak-77fed",
+    "storage_bucket": "saahayak-77fed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:601901033214:android:6640039881848a8d3b67af",
+        "android_client_info": {
+          "package_name": "com.example.sahayak"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMX7xCn8jqYTicQvQXKFeHXmWwYaXbw9E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

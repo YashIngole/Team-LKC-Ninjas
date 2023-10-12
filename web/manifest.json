@@ -1,6 +1,6 @@
 {
-    "name": "sahayak_b",
-    "short_name": "sahayak_b",
+    "name": "sahayak",
+    "short_name": "sahayak",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
