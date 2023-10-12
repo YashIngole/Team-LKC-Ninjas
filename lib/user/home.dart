@@ -21,7 +21,7 @@ class _HomeState extends State<Home> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
   final List<Widget> _widgetOptions = <Widget>[
     LandingPage(),
-     const SearchWorkers(
+    const SearchWorkers(
       InitialVal: "",
     ),
     const userprofile()

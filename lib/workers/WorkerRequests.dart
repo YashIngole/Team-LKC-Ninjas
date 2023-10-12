@@ -17,11 +17,11 @@ class workerrequests extends StatefulWidget {
 class _workerrequestsState extends State<workerrequests> {
   final TextEditingController availabilityController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
- 
+
   List<String> descriptions = [];
 
   final databaseService _databaseservice = databaseService();
- String userName = "";
+  String userName = "";
   String email = "";
   gettingUserData() async {
     await helperFunctions.getUserEmailFromSF().then((value) {

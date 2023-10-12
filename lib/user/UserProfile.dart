@@ -28,27 +28,30 @@ String ImageUrl = "";
 class _HomeState extends State<userprofile> {
   String userName = "";
   String email = "";
-  gettingUserData() async {
-    await helperFunctions.getUserEmailFromSF().then((value) {
-      setState(() {
-        email = value!;
-      });
-    });
-    await helperFunctions.getUserNameFromSF().then((val) {
-      setState(() {
-        userName = val!;
-      });
+
+  Future<void> getUserData() async {
+    email = await helperFunctions.getUserEmailFromSF() ?? '';
+    userName = await helperFunctions.getUserNameFromSF() ?? '';
+    final imageUrl = await getImageUrl(userId);
+    setState(() {
+      ImageUrl = imageUrl ?? "";
     });
   }
 
   AuthService authService = AuthService();
   final databaseService _databaseservice = databaseService();
   final FirebaseAuth auth = FirebaseAuth.instance;
+  @override
+  void initState() {
+    getUserData();
+    getImageUrl(userId);
+  }
 
   @override
   Widget build(BuildContext context) {
     final FirebaseAuth auth = FirebaseAuth.instance;
     User? user = authService.firebaseAuth.currentUser;
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: kbackgroundcolor,
@@ -149,11 +152,11 @@ class _HomeState extends State<userprofile> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Name : ${user!.displayName}",
+                        "Name : $userName",
                         style:
                             GoogleFonts.acme(color: Colors.white, fontSize: 20),
                       ),
-                      Text("Email : ${user.email}",
+                      Text("Email : $email",
                           style: GoogleFonts.acme(
                               color: Colors.white, fontSize: 20)),
                       Text(
@@ -174,6 +177,27 @@ class _HomeState extends State<userprofile> {
         ]),
       ),
     );
+  }
+
+  Future<String?> getImageUrl(String userId) async {
+    try {
+      final QuerySnapshot snapshot = await FirebaseFirestore.instance
+          .collection('users') // Replace with your collection name
+          .where('uid', isEqualTo: userId)
+          .limit(1) // Limit to one document (in case multiple matches)
+          .get();
+
+      if (snapshot.docs.isNotEmpty) {
+        final imageUrl = snapshot.docs.first['ImageUrl'];
+        return imageUrl;
+      } else {
+        // No document matching the condition was found.
+        return null;
+      }
+    } catch (e) {
+      print('Error fetching image URL: $e');
+      return null;
+    }
   }
 
   void AddImageUrl() async {
