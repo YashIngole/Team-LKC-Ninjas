@@ -72,21 +72,21 @@ class _workerrequestsState extends State<workerrequests> {
               SizedBox(
                 height: 10,
               ),
-              StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                stream: FirebaseFirestore.instance
-                    .collection('service_requests')
-                    .where('userId', isEqualTo: workerId)
-                    .snapshots(),
-                builder: (_, snapshot) {
-                  if (snapshot.hasError) {
-                    return Text('Error = ${snapshot.error}');
-                  }
+              Expanded(
+                child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                  stream: FirebaseFirestore.instance
+                      .collection('service_requests')
+                      .where('userId', isEqualTo: workerId)
+                      .snapshots(),
+                  builder: (_, snapshot) {
+                    if (snapshot.hasError) {
+                      return Text('Error = ${snapshot.error}');
+                    }
 
-                  if (snapshot.hasData) {
-                    final docs = snapshot.data!.docs;
-                    descriptions.clear();
-                    return Expanded(
-                      child: ListView.builder(
+                    if (snapshot.hasData) {
+                      final docs = snapshot.data!.docs;
+                      descriptions.clear();
+                      return ListView.builder(
                         itemCount: docs.length,
                         itemBuilder: (_, i) {
                           final data = docs[i].data();
@@ -142,12 +142,12 @@ class _workerrequestsState extends State<workerrequests> {
                             ),
                           );
                         },
-                      ),
-                    );
-                  }
+                      );
+                    }
 
-                  return const Center(child: LoadingIndicator());
-                },
+                    return const Center(child: LoadingIndicator());
+                  },
+                ),
               )
             ],
           ),
