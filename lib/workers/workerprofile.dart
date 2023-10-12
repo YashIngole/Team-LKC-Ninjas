@@ -19,6 +19,7 @@ class workerprofile extends StatefulWidget {
 }
 
 String issue = "";
+bool AcceptRequest = false;
 
 class _HomeState extends State<workerprofile> {
   final databaseService _databaseservice = databaseService();
@@ -122,7 +123,10 @@ class _HomeState extends State<workerprofile> {
                               ElevatedButton(
                                   onPressed: () {
                                     _databaseservice.createServiceRequest(
-                                        issue, widget.userId);
+                                      issue,
+                                      widget.userId,false
+                                    );
+                                    Get.back();
                                   },
                                   child: const Text("send request"))
                             ]);
