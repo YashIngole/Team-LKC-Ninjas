@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sahayak/Themeconst.dart';
 
 import 'package:sahayak/auth%20ui/register_ui.dart';
@@ -18,21 +19,25 @@ class WelcomePage extends StatelessWidget {
           backgroundColor: kbackgroundcolor,
           body: Column(
             children: [
-              const Padding(
+              Padding(
                 padding: EdgeInsets.only(top: 20, left: 20, bottom: 20),
                 child: Text(
-                  "Your one-stop solution for local services...",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 35,
-                      fontWeight: FontWeight.bold),
+                  "Your One-stop solution for local services",
+                  style: GoogleFonts.acme(color: Colors.white, fontSize: 40),
                 ),
               ),
-              Image.asset(
-                'assets/sahayak.png',
-                //fit: BoxFit.cover,
-                alignment: Alignment.topCenter,
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 50, vertical: 30),
+                child: Image.asset(
+                  'assets/sahayak.png',
+                  //fit: BoxFit.cover,
+                  alignment: Alignment.topCenter,
+                ),
               ),
+              Spacer(),
+              Text("Choose your login type: ",
+                  style: GoogleFonts.acme(color: Colors.grey, fontSize: 20)),
               Spacer(),
               Row(
                 children: [
