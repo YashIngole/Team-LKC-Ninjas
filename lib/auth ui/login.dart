@@ -309,8 +309,11 @@ class _SigninState extends State<LoginPage> {
         // Call the function to check user type
         checkUserType();
       } catch (error) {
-        // Handle the error, for example, by showing an error message and stopping loading
-        print("Error during login: $error");
+        Get.snackbar("Login Credentials mismatched.", "Please try again",
+            duration: const Duration(seconds: 3),
+            backgroundColor: Colors.black,
+            snackPosition: SnackPosition.BOTTOM,
+            colorText: Colors.white);
         setState(() {
           _isLoading = false;
         });
