@@ -240,14 +240,15 @@ class _workerpageState extends State<workerpage> {
                                     Get.back(); // Close the dialog
                                     // Show a Snackbar
                                     Get.snackbar(
-                                      "Success", // Title of the Snackbar
-                                      "Listing created successfully", // Message of the Snackbar
-                                      snackPosition: SnackPosition.BOTTOM,
-                                      backgroundColor: Color(
-                                          0xff293241), // Background color (black)
-                                      colorText:
-                                          Colors.white, // Text color (white)
-                                    );
+                                        "Success", // Title of the Snackbar
+                                        "Listing created successfully", // Message of the Snackbar
+                                        snackPosition: SnackPosition.BOTTOM,
+                                        backgroundColor: Color(
+                                            0xff293241), // Background color (black)
+                                        colorText: Colors.white,
+                                        duration: Duration(
+                                            seconds: 1) // Text color (white)
+                                        );
                                   },
                                   style: ButtonStyle(
                                     backgroundColor:
@@ -362,6 +363,14 @@ class _workerpageState extends State<workerpage> {
                                     color: Colors.white, size: 30.0),
                                 onPressed: () {
                                   deleteworklistData(i);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('Worker deleted'),
+                                      duration: Duration(seconds: 1),
+                                      backgroundColor: Colors
+                                          .black, // Adjust the duration as needed
+                                    ),
+                                  );
                                 },
                               ),
                             ),
