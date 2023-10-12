@@ -14,8 +14,9 @@ import 'package:sahayak/auth%20svc/helper.dart';
 
 //import 'package:image_picker/image_picker.dart';
 class workerprofile2 extends StatefulWidget {
-  const workerprofile2({super.key});
-
+  const workerprofile2({super.key, required this.DisplayName, required this.userId});
+  final String DisplayName;
+   final String userId;
   @override
   State<workerprofile2> createState() => _HomeState();
 }
@@ -110,31 +111,56 @@ class _HomeState extends State<workerprofile2> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Name : $userName",
+                          "Name : " + widget.DisplayName,
                           style: GoogleFonts.acme(
                               color: Colors.white, fontSize: 20),
-                        ),
-                        Text("Email : $email",
-                            style: GoogleFonts.acme(
-                                color: Colors.white, fontSize: 20)),
-                        Row(
-                          children: [
-                            Expanded(
-                                child: Text(
-                              "Phone: $Phone",
-                              style: GoogleFonts.acme(
-                                  color: Colors.white, fontSize: 20),
-                            )),
-                          ],
                         ),
                       ],
                     ),
                   ),
                 ),
               ),
-              // SizedBox(
-              //   height: 10,
-              // ),
+             ElevatedButton(
+                      onPressed: () {
+                        Get.defaultDialog(
+                            title: "Send work request",
+                            content: Column(
+                              children: [
+                                TextFormField(
+                                  onChanged: (val) {
+                                    setState(() {
+                                      issue = val;
+                                    });
+                                  },
+                                  minLines: 5,
+                                  maxLines: null,
+                                  maxLength: 500,
+                                  decoration: const InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      labelText: "Describe your issue"),
+                                ),
+                              ],
+                            ),
+                            actions: [
+                              ElevatedButton(
+                                  onPressed: () {
+                                    _databaseservice.createServiceRequest(
+                                        issue, widget.userId, false);
+                                    Get.back();
+                                  },
+                                  child: const Text("send request"))
+                            ]);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(0), // <-- Radius
+                        ),
+                      ),
+                      child: const Text(
+                        "Send requests",
+                        style: TextStyle(fontSize: 20),
+                      )),
             ],
           ),
           const Spacer()

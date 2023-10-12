@@ -148,12 +148,17 @@ class _SearchWorkersState extends State<SearchWorkers> {
                       itemBuilder: (_, i) {
                         final data = filteredDocs[i].data();
                         String userId = data['worker id'].toString();
+                        String DiplayName = data['DisplayName'] ?? "";
+
                         return Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 10, vertical: 8),
                           child: InkWell(
                             onTap: () {
-                              Get.to(workerprofile2());
+                              Get.to(workerprofile2(
+                                DisplayName: DiplayName,
+                                userId: userId,
+                              ));
                             },
                             child: Container(
                               decoration: BoxDecoration(
