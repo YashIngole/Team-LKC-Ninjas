@@ -11,6 +11,7 @@ import 'package:sahayak/Themeconst.dart';
 import 'package:sahayak/auth%20svc/authentication.dart';
 import 'package:sahayak/auth%20svc/databaseService.dart';
 import 'package:sahayak/auth%20svc/helper.dart';
+import 'package:sahayak/auth%20ui/welcome_ui.dart';
 
 //import 'package:image_picker/image_picker.dart';
 class workerprofile extends StatefulWidget {
@@ -340,5 +341,11 @@ class _HomeState extends State<workerprofile> {
           .then((_) => print('Success'))
           .catchError((error) => print('Failed: $error'));
     }
+  }
+
+  signOut() async {
+    await auth.signOut();
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => WelcomePage()));
   }
 }
