@@ -68,10 +68,18 @@ class _HomeState extends State<userprofile> {
             children: [
               Spacer(),
               IconButton(
-                  onPressed: () {
-                    Get.to(notification());
-                  },
-                  icon: Icon(Icons.send))
+                onPressed: () {
+                  Get.to(notification());
+                },
+                icon: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(
+                    Icons.send,
+                    color: Colors.white,
+                    size: 33,
+                  ),
+                ),
+              )
             ],
           ),
           const Spacer(),
@@ -260,6 +268,16 @@ class _HomeState extends State<userprofile> {
                                           onPressed: () {
                                             AddPhoneNumber();
                                             Get.back();
+                                            Get.snackbar("phone number",
+                                                "Updated successfully",
+                                                snackPosition:
+                                                    SnackPosition.BOTTOM,
+                                                backgroundColor: Colors
+                                                    .black, // Background color
+                                                colorText: Colors.white,
+                                                duration: Duration(
+                                                    seconds: 1) // Text color
+                                                );
                                           },
                                           icon: Icon(Icons.save))
                                     ]);

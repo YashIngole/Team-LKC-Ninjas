@@ -287,20 +287,20 @@ class _SigninState extends State<LoginPage> {
             }
           }
 
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Welcome, ${snapshot.docs[0]['fullName']}!'),
-              duration: Duration(seconds: 3),
-            ),
-          );
-          // Get.snackbar(
-          //   'Welcome',
-          //   '${snapshot.docs[0]['fullName']}!', // Message of the Snackbar
-          //   snackPosition: SnackPosition.BOTTOM,
-          //   backgroundColor: Colors.black, // Background color (black)
-          //   colorText: Colors.white, // Text color (white)
-          //   duration: Duration(seconds: 3), // Custom duration (3 seconds)
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   SnackBar(
+          //     content: Text('Welcome, ${snapshot.docs[0]['fullName']}!'),
+          //     duration: Duration(seconds: 3),
+          //   ),
           // );
+          Get.snackbar(
+            'Welcome',
+            '${snapshot.docs[0]['fullName']}!', // Message of the Snackbar
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.black, // Background color (black)
+            colorText: Colors.white, // Text color (white)
+            duration: Duration(seconds: 1), // Custom duration (3 seconds)
+          );
 
           // Call the function to check user type
           checkUserType();
