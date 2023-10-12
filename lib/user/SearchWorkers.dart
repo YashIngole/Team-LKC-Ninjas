@@ -1,6 +1,5 @@
 import 'dart:core';
 
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
@@ -55,6 +54,13 @@ class _SearchWorkersState extends State<SearchWorkers> {
       body: SafeArea(
         child: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 20, top: 20),
+              child: Text(
+                "Search For Workers Nearby You!",
+                style: TextStyle(color: Colors.white, fontSize: 30),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.only(
                   top: 30, bottom: 20, left: 20, right: 20),

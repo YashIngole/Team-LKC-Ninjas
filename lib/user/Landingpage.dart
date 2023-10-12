@@ -65,8 +65,10 @@ class _LandingPageState extends State<LandingPage> {
                 child: Stack(
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        Spacer(),
+                        Padding(padding: EdgeInsets.symmetric(horizontal: 20)),
                         Column(
                           children: [
                             Padding(
@@ -80,9 +82,9 @@ class _LandingPageState extends State<LandingPage> {
                             Padding(
                               padding: const EdgeInsets.only(left: 20),
                               child: Text(
-                                userName,
+                                userName.toUpperCase(),
                                 style: GoogleFonts.roboto(
-                                  fontSize: 35,
+                                  fontSize: 30,
                                   color:
                                       const Color.fromARGB(255, 200, 201, 202),
                                   fontWeight: FontWeight.w900,
@@ -122,7 +124,7 @@ class _LandingPageState extends State<LandingPage> {
                     )),
                 child: Center(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(20),
                     child: Image.asset("assets/sahayak.png"),
                   ),
                 ),
