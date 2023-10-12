@@ -70,7 +70,7 @@ class _LandingPageState extends State<LandingPage> {
                         Column(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(top: 5, left: 6),
+                              padding: const EdgeInsets.only(top: 5),
                               child: Text(
                                 'Hi...!',
                                 style: GoogleFonts.adamina(
@@ -81,12 +81,14 @@ class _LandingPageState extends State<LandingPage> {
                               padding: const EdgeInsets.only(left: 20),
                               child: Text(
                                 userName,
-                                style: const TextStyle(
-                                  color: Kusercolor,
-                                  fontSize: 30,
+                                style: GoogleFonts.roboto(
+                                  fontSize: 35,
+                                  color:
+                                      const Color.fromARGB(255, 200, 201, 202),
+                                  fontWeight: FontWeight.w900,
                                 ),
                               ),
-                            )
+                            ),
                           ],
                         ),
                         const Spacer(),

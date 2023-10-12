@@ -75,9 +75,13 @@ class _HomeState extends State<userprofile> {
             ],
           ),
           const Spacer(),
-          const Text(
+          Text(
             "User Card",
-            style: TextStyle(fontSize: 28, color: Colors.white),
+            style: GoogleFonts.roboto(
+              fontSize: 35,
+              color: const Color.fromARGB(255, 200, 201, 202),
+              fontWeight: FontWeight.w900,
+            ),
           ),
           const SizedBox(
             height: 40,

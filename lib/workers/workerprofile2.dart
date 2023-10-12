@@ -67,9 +67,13 @@ class _HomeState extends State<workerprofile2> {
         backgroundColor: kbackgroundcolor,
         body: Column(children: [
           const Spacer(),
-          const Text(
+          Text(
             "Sahayak Card",
-            style: TextStyle(fontSize: 28, color: Colors.white),
+            style: GoogleFonts.roboto(
+              fontSize: 35,
+              color: const Color.fromARGB(255, 200, 201, 202),
+              fontWeight: FontWeight.w900,
+            ),
           ),
           const SizedBox(
             height: 40,

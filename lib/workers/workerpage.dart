@@ -53,17 +53,180 @@ class _workerpageState extends State<workerpage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Get.defaultDialog(
+              contentPadding: EdgeInsets.zero,
+              barrierDismissible: false,
+              title: "Create a Work",
+              content: SingleChildScrollView(
+                child: SizedBox(
+                  width: Get.width * 0.5,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: TextFormField(
+                          onChanged: (val) {
+                            setState(() {
+                              title = val;
+                            });
+                          },
+                          style: const TextStyle(),
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    const BorderSide(color: Colors.black),
+                                borderRadius: BorderRadius.circular(12)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    const BorderSide(color: Colors.black),
+                                borderRadius: BorderRadius.circular(12)),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Color.fromARGB(255, 243, 65, 65),
+                              ),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Color.fromARGB(255, 0, 0, 5),
+                              ),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            labelText: 'Name',
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please Enter Name';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      const Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: DropdownButtonFormField(
+                          isExpanded: true,
+
+                          icon: const Icon(Icons.keyboard_arrow_down),
+
+                          // Array list of items
+                          items: items.map((String items) {
+                            return DropdownMenuItem(
+                              value: items,
+                              child: Text(items),
+                            );
+                          }).toList(),
+                          // After selecting the desired option,it will
+                          // change button value to selected value
+                          onChanged: (String? newValue) {
+                            // print('Selected category: $newValue');
+                            setState(() {
+                              category = newValue;
+                            });
+                          },
+                        ),
+                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.symmetric(
+                      //       horizontal: 20, vertical: 10),
+                      // ),
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(left: 10, right: 10, top: 30),
+                        child: TextFormField(
+                          onChanged: (val) {
+                            setState(() {
+                              Description = val;
+                            });
+                          },
+                          minLines: 2,
+                          maxLines: null,
+                          maxLength: 500,
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    const BorderSide(color: Colors.black),
+                                borderRadius: BorderRadius.circular(12)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    const BorderSide(color: Colors.black),
+                                borderRadius: BorderRadius.circular(12)),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Color.fromARGB(255, 243, 65, 65),
+                              ),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Color.fromARGB(255, 0, 0, 5),
+                              ),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            labelText: 'Description',
+                          ),
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          User? user = authService.firebaseAuth.currentUser;
+
+                          _databaseservice.saveworkerlisting(userName, title,
+                              user!.uid, category, Description);
+
+                          Get.back(); // Close the dialog
+                          // Show a Snackbar
+                          Get.snackbar(
+                              "Success", // Title of the Snackbar
+                              "Listing created successfully", // Message of the Snackbar
+                              snackPosition: SnackPosition.BOTTOM,
+                              backgroundColor:
+                                  Color(0xff293241), // Background color (black)
+                              colorText: Colors.white,
+                              duration:
+                                  Duration(seconds: 1) // Text color (white)
+                              );
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors
+                                  .black), // Set the background color to black
+                          shape: MaterialStateProperty.all<OutlinedBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  0.0), // Set the border radius to make it rectangular
+                            ),
+                          ),
+                        ),
+                        child: const Text("Create"),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+          child: Icon(Icons.add),
+        ),
         resizeToAvoidBottomInset: true,
         backgroundColor: kbackgroundcolor,
         body: Column(
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Spacer(),
+                Padding(padding: EdgeInsets.symmetric(horizontal: 20)),
                 Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 5, left: 6),
+                      padding: const EdgeInsets.only(top: 5),
                       child: Text(
                         'Hi...!',
                         style: GoogleFonts.adamina(
@@ -74,9 +237,10 @@ class _workerpageState extends State<workerpage> {
                       padding: const EdgeInsets.only(left: 20),
                       child: Text(
                         userName,
-                        style: const TextStyle(
-                          color: Kusercolor,
-                          fontSize: 30,
+                        style: GoogleFonts.roboto(
+                          fontSize: 35,
+                          color: const Color.fromARGB(255, 200, 201, 202),
+                          fontWeight: FontWeight.w900,
                         ),
                       ),
                     ),
@@ -93,193 +257,11 @@ class _workerpageState extends State<workerpage> {
                     )),
               ],
             ),
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Get.defaultDialog(
-                        contentPadding: EdgeInsets.zero,
-                        barrierDismissible: false,
-                        title: "Create a Work",
-                        content: SingleChildScrollView(
-                          child: SizedBox(
-                            width: Get.width * 0.5,
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10),
-                                  child: TextFormField(
-                                    onChanged: (val) {
-                                      setState(() {
-                                        title = val;
-                                      });
-                                    },
-                                    style: const TextStyle(),
-                                    decoration: InputDecoration(
-                                      enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              color: Colors.black),
-                                          borderRadius:
-                                              BorderRadius.circular(12)),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              color: Colors.black),
-                                          borderRadius:
-                                              BorderRadius.circular(12)),
-                                      errorBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color:
-                                              Color.fromARGB(255, 243, 65, 65),
-                                        ),
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color.fromARGB(255, 0, 0, 5),
-                                        ),
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      labelText: 'Name',
-                                    ),
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return 'Please Enter Name';
-                                      }
-                                      return null;
-                                    },
-                                  ),
-                                ),
-                                const Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 10),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10),
-                                  child: DropdownButtonFormField(
-                                    isExpanded: true,
-
-                                    icon: const Icon(Icons.keyboard_arrow_down),
-
-                                    // Array list of items
-                                    items: items.map((String items) {
-                                      return DropdownMenuItem(
-                                        value: items,
-                                        child: Text(items),
-                                      );
-                                    }).toList(),
-                                    // After selecting the desired option,it will
-                                    // change button value to selected value
-                                    onChanged: (String? newValue) {
-                                      // print('Selected category: $newValue');
-                                      setState(() {
-                                        category = newValue;
-                                      });
-                                    },
-                                  ),
-                                ),
-                                // Padding(
-                                //   padding: const EdgeInsets.symmetric(
-                                //       horizontal: 20, vertical: 10),
-                                // ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 10, right: 10, top: 30),
-                                  child: TextFormField(
-                                    onChanged: (val) {
-                                      setState(() {
-                                        Description = val;
-                                      });
-                                    },
-                                    minLines: 2,
-                                    maxLines: null,
-                                    maxLength: 500,
-                                    decoration: InputDecoration(
-                                      enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              color: Colors.black),
-                                          borderRadius:
-                                              BorderRadius.circular(12)),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              color: Colors.black),
-                                          borderRadius:
-                                              BorderRadius.circular(12)),
-                                      errorBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color:
-                                              Color.fromARGB(255, 243, 65, 65),
-                                        ),
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color.fromARGB(255, 0, 0, 5),
-                                        ),
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      labelText: 'Description',
-                                    ),
-                                  ),
-                                ),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    User? user =
-                                        authService.firebaseAuth.currentUser;
-
-                                    _databaseservice.saveworkerlisting(
-                                        userName,
-                                        title,
-                                        user!.uid,
-                                        category,
-                                        Description);
-
-                                    Get.back(); // Close the dialog
-                                    // Show a Snackbar
-                                    Get.snackbar(
-                                        "Success", // Title of the Snackbar
-                                        "Listing created successfully", // Message of the Snackbar
-                                        snackPosition: SnackPosition.BOTTOM,
-                                        backgroundColor: Color(
-                                            0xff293241), // Background color (black)
-                                        colorText: Colors.white,
-                                        duration: Duration(
-                                            seconds: 1) // Text color (white)
-                                        );
-                                  },
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(Colors
-                                            .black), // Set the background color to black
-                                    shape: MaterialStateProperty.all<
-                                        OutlinedBorder>(
-                                      RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            0.0), // Set the border radius to make it rectangular
-                                      ),
-                                    ),
-                                  ),
-                                  child: const Text("Create"),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                    child: const Icon(Icons.add),
-                  ),
-                ),
-                const Text(
-                  "Create a Listing",
-                  style: TextStyle(color: Colors.white),
-                )
-              ],
+             SizedBox(height: 10),
+            Text(
+              "Create a Work Listing here: ",
+              style: TextStyle(color: Colors.grey),
             ),
-            const SizedBox(height: 30),
             Expanded(
               child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                 stream: FirebaseFirestore.instance

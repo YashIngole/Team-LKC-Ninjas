@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sahayak/Loading.dart';
 import 'package:sahayak/Themeconst.dart';
 import 'package:sahayak/auth%20svc/authentication.dart';
@@ -56,9 +57,20 @@ class _workerrequestsState extends State<workerrequests> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: <Widget>[
-              const Text(
-                'Work Requests',
-                style: TextStyle(color: Colors.white, fontSize: 24),
+              Text(
+                "Work Requests",
+                style: GoogleFonts.roboto(
+                  fontSize: 26,
+                  color: const Color.fromARGB(255, 200, 201, 202),
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+              Text(
+                "Check The work Requests sent by the users here!",
+                style: TextStyle(color: Colors.grey),
+              ),
+              SizedBox(
+                height: 10,
               ),
               StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                 stream: FirebaseFirestore.instance

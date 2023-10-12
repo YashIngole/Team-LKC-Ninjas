@@ -64,9 +64,13 @@ class _HomeState extends State<workerprofile> {
         backgroundColor: kbackgroundcolor,
         body: Column(children: [
           const Spacer(),
-          const Text(
+          Text(
             "Sahayak Card",
-            style: TextStyle(fontSize: 28, color: Colors.white),
+            style: GoogleFonts.roboto(
+              fontSize: 35,
+              color: const Color.fromARGB(255, 200, 201, 202),
+              fontWeight: FontWeight.w900,
+            ),
           ),
           const SizedBox(
             height: 40,
@@ -137,7 +141,7 @@ class _HomeState extends State<workerprofile> {
                               image: imageProvider,
                               fit: BoxFit.fill,
                             ),
-                            borderRadius: BorderRadius.circular(10)),
+                            borderRadius: BorderRadius.circular(20)),
                       ),
                       Positioned(
                           right: 0,
@@ -248,7 +252,7 @@ class _HomeState extends State<workerprofile> {
                                       IconButton(
                                           onPressed: () {
                                             AddPhoneNumber();
-                                             Get.back();
+                                            Get.back();
                                           },
                                           icon: Icon(Icons.save))
                                     ]);

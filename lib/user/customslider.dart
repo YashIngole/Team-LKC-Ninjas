@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:sahayak/user/home.dart';
-import 'package:sahayak/user/planetlistview.dart';
+import 'package:sahayak/user/Categorieslistview.dart';
 
 class CustomCarouselSlider extends StatelessWidget {
   const CustomCarouselSlider({
