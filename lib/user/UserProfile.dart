@@ -13,7 +13,6 @@ class userprofile extends StatefulWidget {
 }
 
 String issue = "";
-String userId = "kKRjGRysGdPmP01bCD78UdC7NTy1";
 
 class _HomeState extends State<userprofile> {
   final databaseService _databaseservice = databaseService();

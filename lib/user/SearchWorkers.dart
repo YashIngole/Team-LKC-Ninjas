@@ -146,7 +146,7 @@ class _SearchWorkersState extends State<SearchWorkers> {
                       itemCount: filteredDocs.length,
                       itemBuilder: (_, i) {
                         final data = filteredDocs[i].data();
-
+                        String userId = data['worker id'].toString();
                         return Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 10, vertical: 8),
@@ -155,6 +155,7 @@ class _SearchWorkersState extends State<SearchWorkers> {
                               Get.to(workerprofile(
                                 workername: userName,
                                 ImageUrl: '',
+                                userId: userId,
                               ));
                             },
                             child: Container(

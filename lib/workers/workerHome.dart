@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:sahayak/Themeconst.dart';
-import 'package:sahayak/workers/response.dart';
+import 'package:sahayak/workers/WorkerRequests.dart';
 import 'package:sahayak/workers/workerpage.dart';
 import 'package:sahayak/workers/workerprofile.dart';
 
@@ -20,9 +20,9 @@ class _WorkerHomeState extends State<WorkerHome> {
   final List<Widget> _widgetOptions = <Widget>[
     const workerpage(),
     workerrequests(),
-    const workerprofile(
+     workerprofile(
       workername: "",
-      ImageUrl: '',
+      ImageUrl: '', userId: '',
     )
   ];
   @override
