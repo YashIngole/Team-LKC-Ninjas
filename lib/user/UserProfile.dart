@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahayak/Themeconst.dart';
 import 'package:sahayak/auth%20svc/databaseService.dart';
+import 'package:sahayak/auth%20ui/welcome_ui.dart';
 import 'package:sahayak/user/Landingpage.dart';
 
 //import 'package:image_picker/image_picker.dart';
@@ -13,6 +14,8 @@ class userprofile extends StatefulWidget {
   State<userprofile> createState() => _HomeState();
 }
 
+User? currentUser = FirebaseAuth.instance.currentUser;
+String userId = currentUser!.uid;
 String issue = "";
 
 class _HomeState extends State<userprofile> {
@@ -41,6 +44,7 @@ class _HomeState extends State<userprofile> {
                 borderRadius: BorderRadius.circular(20),
                 color: Colors.grey[800]),
           ),
+
           //Spacer(),
           // Center(
           //   child: SingleChildScrollView(
@@ -96,6 +100,14 @@ class _HomeState extends State<userprofile> {
                       height: Get.height * 0.05,
                       width: Get.width * 0.6,
                       color: ktilecolor,
+                      // child: Text(
+                      //   "Name : ",
+                      //   style: TextStyle(
+                      //     fontSize: 30,
+                      //     backgroundColor: Colors.transparent,
+
+                      //   ),
+                      // ),
                       // child: ElevatedButton(
                       //   onPressed: () {
                       //     Get.defaultDialog(
@@ -152,7 +164,7 @@ class _HomeState extends State<userprofile> {
                     borderRadius: BorderRadius.circular(0), // <-- Radius
                   ),
                 ),
-                child: Text(
+                child: const Text(
                   "LogOut",
                   style: TextStyle(fontSize: 18),
                 ),
@@ -168,6 +180,6 @@ class _HomeState extends State<userprofile> {
   signOut() async {
     await auth.signOut();
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => LandingPage()));
+        context, MaterialPageRoute(builder: (context) => WelcomePage()));
   }
 }
