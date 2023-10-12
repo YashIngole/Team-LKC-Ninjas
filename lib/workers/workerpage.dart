@@ -144,11 +144,11 @@ class _workerpageState extends State<workerpage> {
                                           borderRadius:
                                               BorderRadius.circular(12),
                                         ),
-                                        labelText: 'Title',
+                                        labelText: 'Name',
                                       ),
                                       validator: (value) {
                                         if (value!.isEmpty) {
-                                          return 'Please Enter title';
+                                          return 'Please Enter Name';
                                         }
                                         return null;
                                       },
