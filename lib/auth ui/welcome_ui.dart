@@ -19,12 +19,12 @@ class WelcomePage extends StatelessWidget {
           body: Column(
             children: [
               const Padding(
-                padding: EdgeInsets.only(top: 20, left: 20),
+                padding: EdgeInsets.only(top: 20, left: 20, bottom: 20),
                 child: Text(
                   "Your one-stop solution for local services...",
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: 40,
+                      fontSize: 35,
                       fontWeight: FontWeight.bold),
                 ),
               ),
@@ -33,6 +33,7 @@ class WelcomePage extends StatelessWidget {
                 //fit: BoxFit.cover,
                 alignment: Alignment.topCenter,
               ),
+              Spacer(),
               Row(
                 children: [
                   SizedBox(
