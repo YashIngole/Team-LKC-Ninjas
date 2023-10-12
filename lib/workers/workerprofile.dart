@@ -187,7 +187,7 @@ class _HomeState extends State<workerprofile> {
                                 AddImageUrl();
                               },
                               icon: Icon(Icons.edit),
-                              label: Text("edit")))
+                              label: Text("Change")))
                     ],
                   ),
                   placeholder: (context, url) =>
@@ -248,10 +248,10 @@ class _HomeState extends State<workerprofile> {
                                       IconButton(
                                           onPressed: () {
                                             AddPhoneNumber();
+                                             Get.back();
                                           },
                                           icon: Icon(Icons.save))
                                     ]);
-                                Get.back();
                               },
                               icon: Icon(Icons.edit),
                             ),

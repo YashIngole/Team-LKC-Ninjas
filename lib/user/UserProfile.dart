@@ -258,10 +258,10 @@ class _HomeState extends State<userprofile> {
                                       IconButton(
                                           onPressed: () {
                                             AddPhoneNumber();
+                                            Get.back();
                                           },
                                           icon: Icon(Icons.save))
                                     ]);
-                                Get.back();
                               },
                               icon: Icon(Icons.edit),
                             ),
