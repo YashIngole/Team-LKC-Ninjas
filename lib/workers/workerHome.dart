@@ -20,10 +20,7 @@ class _WorkerHomeState extends State<WorkerHome> {
   final List<Widget> _widgetOptions = <Widget>[
     const workerpage(),
     const workerrequests(),
-     const workerprofile(
-      workername: "",
-      ImageUrl: '', userId: '',
-    )
+    const workerprofile()
   ];
   @override
   Widget build(BuildContext context) {

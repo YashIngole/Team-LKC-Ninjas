@@ -8,7 +8,7 @@ import 'package:sahayak/auth%20svc/helper.dart';
 import 'package:sahayak/workers/workerprofile.dart';
 
 class SearchWorkers extends StatefulWidget {
-  const SearchWorkers({ Key? key, required this.InitialVal});
+  const SearchWorkers({Key? key, required this.InitialVal});
   final String InitialVal;
   @override
   State<SearchWorkers> createState() => _SearchWorkersState();
@@ -152,11 +152,7 @@ class _SearchWorkersState extends State<SearchWorkers> {
                               horizontal: 10, vertical: 8),
                           child: InkWell(
                             onTap: () {
-                              Get.to(workerprofile(
-                                workername: userName,
-                                ImageUrl: '',
-                                userId: userId,
-                              ));
+                              Get.to(workerprofile());
                             },
                             child: Container(
                               decoration: BoxDecoration(

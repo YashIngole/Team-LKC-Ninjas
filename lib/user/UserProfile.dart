@@ -250,6 +250,7 @@ class _HomeState extends State<userprofile> {
                                           },
                                           icon: Icon(Icons.save))
                                     ]);
+                                Get.back();
                               },
                               icon: Icon(Icons.edit),
                             ),
