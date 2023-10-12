@@ -58,7 +58,9 @@ class _HomeState extends State<workerprofile2> {
   @override
   Widget build(BuildContext context) {
     final FirebaseAuth auth = FirebaseAuth.instance;
-    User? user = authService.firebaseAuth.currentUser;
+    User? user = auth.currentUser;
+    final currentuid = user!.uid;
+    print(currentuid);
 
     return SafeArea(
       child: Scaffold(
@@ -146,7 +148,7 @@ class _HomeState extends State<workerprofile2> {
                           ElevatedButton(
                               onPressed: () {
                                 _databaseservice.createServiceRequest(
-                                    issue, widget.userId, false, userId);
+                                    issue, widget.userId, false, currentuid);
                                 Get.back();
                               },
                               child: const Text("send request"))

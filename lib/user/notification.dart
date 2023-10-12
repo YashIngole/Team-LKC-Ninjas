@@ -19,9 +19,12 @@ class _notificationState extends State<notification> {
   @override
   Widget build(BuildContext context) {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
-    User? user = AuthService().firebaseAuth.currentUser;
-    String uid = user!.uid.toString();
-    print(uid);
+
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    User? user = auth.currentUser;
+    final currentuid = user!.uid;
+    print(currentuid);
+
     return Scaffold(
       backgroundColor: kbackgroundcolor,
       appBar: AppBar(
@@ -41,7 +44,7 @@ class _notificationState extends State<notification> {
           child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
         stream: FirebaseFirestore.instance
             .collection('service_requests')
-            .where('SenderId', isEqualTo: uid)
+            .where('SenderId', isEqualTo: currentuid)
             .snapshots(),
         builder: (_, snapshot) {
           if (snapshot.hasError) {
