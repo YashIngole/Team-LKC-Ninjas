@@ -34,12 +34,14 @@ class databaseService {
   }
 //create service request
 
-  void createServiceRequest(String issue, String userId, bool AcceptStatus) {
+  void createServiceRequest(
+      String issue, String userId, bool AcceptStatus, String SenderId) {
     FirebaseFirestore.instance.collection('service_requests').add({
       'issue': issue,
       'userId': userId,
       'createdAt': DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
-      'AcceptStatus': AcceptStatus
+      'AcceptStatus': AcceptStatus,
+      'SenderId': SenderId
     });
   }
 

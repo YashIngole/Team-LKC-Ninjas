@@ -11,6 +11,7 @@ import 'package:sahayak/Themeconst.dart';
 import 'package:sahayak/auth%20svc/authentication.dart';
 import 'package:sahayak/auth%20svc/databaseService.dart';
 import 'package:sahayak/auth%20svc/helper.dart';
+import 'package:sahayak/user/notification.dart';
 
 //import 'package:image_picker/image_picker.dart';
 class userprofile extends StatefulWidget {
@@ -62,6 +63,16 @@ class _HomeState extends State<userprofile> {
       child: Scaffold(
         backgroundColor: kbackgroundcolor,
         body: Column(children: [
+          Row(
+            children: [
+              Spacer(),
+              IconButton(
+                  onPressed: () {
+                    Get.to(notification());
+                  },
+                  icon: Icon(Icons.send))
+            ],
+          ),
           const Spacer(),
           const Text(
             "User Card",

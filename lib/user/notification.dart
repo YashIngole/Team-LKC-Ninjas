@@ -41,7 +41,7 @@ class _notificationState extends State<notification> {
           child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
         stream: FirebaseFirestore.instance
             .collection('service_requests')
-            .where('userId', isEqualTo: "RvXtNT7McKfHYhi14Pd9hw5QWws1")
+            .where('SenderId', isEqualTo: uid)
             .snapshots(),
         builder: (_, snapshot) {
           if (snapshot.hasError) {
@@ -50,21 +50,23 @@ class _notificationState extends State<notification> {
 
           if (snapshot.hasData) {
             final docs = snapshot.data!.docs;
-            return SizedBox(
-              height: 500,
-              child: ListView.builder(
-                itemCount: docs.length,
-                itemBuilder: (_, i) {
-                  final data = docs[i].data();
-                  String desc = data['email'].toString();
-                  return Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: ktilecolor,
-                          borderRadius: BorderRadius.circular(6)),
-                      child: ListTile(
+
+            return ListView.builder(
+              itemCount: docs.length,
+              itemBuilder: (_, i) {
+                final data = docs[i].data();
+                String desc = data['issue'].toString();
+                bool AcceptedStatus = data['AcceptedStatus'] ?? false;
+
+                print(AcceptedStatus ?? "lol");
+                return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: ktilecolor,
+                        borderRadius: BorderRadius.circular(6)),
+                    child: ListTile(
                         contentPadding: const EdgeInsets.symmetric(
                             horizontal: 20.0, vertical: 10.0),
                         leading: Container(
@@ -89,17 +91,12 @@ class _notificationState extends State<notification> {
                             ),
                           ],
                         ),
-                        trailing: ElevatedButton(
-                          onPressed: () {},
-                          child: data['AcceptStatus'] == 'false'
-                              ? Text("Accept")
-                              : Text("Accepted"),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
+                        trailing: AcceptedStatus
+                            ? Text("Status : Accepted")
+                            : Text("Status : Rejected")),
+                  ),
+                );
+              },
             );
           }
 
