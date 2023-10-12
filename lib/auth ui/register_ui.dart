@@ -280,7 +280,7 @@ class _LoginPageState extends State<Registerpagee> {
                                                       color: Colors.white)),
                                               TextButton(
                                                 onPressed: () {
-                                                  Get.to(LoginPage(
+                                                  Get.off(LoginPage(
                                                     userType: widget.userType,
                                                   ));
                                                 },

@@ -240,7 +240,7 @@ class _SigninState extends State<LoginPage> {
                                             ),
                                             TextButton(
                                               onPressed: () {
-                                                Get.to(const Registerpagee(
+                                                Get.off(const Registerpagee(
                                                   userType: '',
                                                 ));
                                               },
