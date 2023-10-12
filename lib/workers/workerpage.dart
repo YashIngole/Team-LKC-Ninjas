@@ -238,6 +238,16 @@ class _workerpageState extends State<workerpage> {
                                         Description);
 
                                     Get.back(); // Close the dialog
+                                    // Show a Snackbar
+                                    Get.snackbar(
+                                      "Success", // Title of the Snackbar
+                                      "Listing created successfully", // Message of the Snackbar
+                                      snackPosition: SnackPosition.BOTTOM,
+                                      backgroundColor: Color(
+                                          0xff293241), // Background color (black)
+                                      colorText:
+                                          Colors.white, // Text color (white)
+                                    );
                                   },
                                   style: ButtonStyle(
                                     backgroundColor:
