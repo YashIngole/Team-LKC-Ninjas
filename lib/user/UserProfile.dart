@@ -34,9 +34,11 @@ class _HomeState extends State<userprofile> {
     email = await helperFunctions.getUserEmailFromSF() ?? '';
     userName = await helperFunctions.getUserNameFromSF() ?? '';
     final imageUrl = await getImageUrl(userId);
+    final phone = await getPhoneNumber(userId);
 
     setState(() {
       ImageUrl = imageUrl ?? "";
+      Phone = phone ?? "";
     });
   }
 
@@ -48,6 +50,7 @@ class _HomeState extends State<userprofile> {
   void initState() {
     getUserData();
     getImageUrl(userId);
+    getPhoneNumber(userId);
   }
 
   @override
@@ -285,6 +288,27 @@ class _HomeState extends State<userprofile> {
       }
     } catch (e) {
       print('Error fetching image URL: $e');
+      return null;
+    }
+  }
+
+  Future<String?> getPhoneNumber(String userId) async {
+    try {
+      final QuerySnapshot snapshot = await FirebaseFirestore.instance
+          .collection('users') // Replace with your collection name
+          .where('uid', isEqualTo: userId)
+          .limit(1) // Limit to one document (in case multiple matches)
+          .get();
+
+      if (snapshot.docs.isNotEmpty) {
+        final phone = snapshot.docs.first['Phone'];
+        return phone;
+      } else {
+        // No document matching the condition was found.
+        return null;
+      }
+    } catch (e) {
+      print('Error fetching Phone: $e');
       return null;
     }
   }
