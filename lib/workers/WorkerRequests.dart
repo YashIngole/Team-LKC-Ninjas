@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sahayak/Loading.dart';
 import 'package:sahayak/Themeconst.dart';
 import 'package:sahayak/auth%20svc/authentication.dart';
@@ -43,11 +44,10 @@ class _workerrequestsState extends State<workerrequests> {
   @override
   Widget build(BuildContext context) {
     // Assuming you have a worker ID obtained after authentication.
-
     User? user = authService.firebaseAuth.currentUser;
-    String workerId = user!.uid;
+    String workerId = user!.uid.toString();
     // Assuming you have received a request ID as a parameter.
-    const requestId = 'request789'; 
+    const requestId = 'request789';
 
     return SafeArea(
       child: Scaffold(
@@ -65,8 +65,7 @@ class _workerrequestsState extends State<workerrequests> {
                 child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                   stream: FirebaseFirestore.instance
                       .collection('service_requests')
-                      .where('userId',
-                          isEqualTo: "kKRjGRysGdPmP01bCD78UdC7NTy1")
+                      .where('userId', isEqualTo: workerId)
                       .snapshots(),
                   builder: (_, snapshot) {
                     if (snapshot.hasError) {

@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
@@ -34,11 +36,12 @@ class databaseService {
   }
 //create service request
 
-  void createServiceRequest(String issue, String userId) {
+  void createServiceRequest(String issue, String userId, bool AcceptStatus) {
     FirebaseFirestore.instance.collection('service_requests').add({
       'issue': issue,
       'userId': userId,
       'createdAt': DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
+      'AcceptStatus': AcceptStatus
     });
   }
 

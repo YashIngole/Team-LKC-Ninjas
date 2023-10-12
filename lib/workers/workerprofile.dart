@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahayak/Themeconst.dart';
 import 'package:sahayak/auth%20svc/databaseService.dart';
+import 'package:sahayak/auth%20ui/welcome_ui.dart';
 import 'package:sahayak/user/UserProfile.dart';
 
 //import 'package:image_picker/image_picker.dart';
@@ -19,9 +21,11 @@ class workerprofile extends StatefulWidget {
 }
 
 String issue = "";
+bool AcceptRequest = false;
 
 class _HomeState extends State<workerprofile> {
   final databaseService _databaseservice = databaseService();
+  final FirebaseAuth auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -122,7 +126,8 @@ class _HomeState extends State<workerprofile> {
                               ElevatedButton(
                                   onPressed: () {
                                     _databaseservice.createServiceRequest(
-                                        issue, widget.userId);
+                                        issue, widget.userId, false);
+                                    Get.back();
                                   },
                                   child: const Text("send request"))
                             ]);
@@ -142,8 +147,30 @@ class _HomeState extends State<workerprofile> {
             ),
           ),
           const Spacer(),
+          ElevatedButton(
+            onPressed: () {
+              signOut();
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.transparent,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(0), // <-- Radius
+              ),
+            ),
+            child: const Text(
+              "LogOut",
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+          Spacer()
         ],
       ),
     ));
+  }
+
+  signOut() async {
+    await auth.signOut();
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => WelcomePage()));
   }
 }
