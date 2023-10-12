@@ -39,6 +39,7 @@ class _SigninState extends State<LoginPage> {
   String password = "";
   bool _isLoading = false;
   AuthService authService = AuthService();
+  bool _passwordObscured = true;
 
   @override
   Widget build(BuildContext context) {
@@ -149,6 +150,23 @@ class _SigninState extends State<LoginPage> {
                                                   const OutlineInputBorder(),
                                               focusedBorder:
                                                   const OutlineInputBorder(),
+                                              suffixIcon: IconButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    _passwordObscured =
+                                                        !_passwordObscured;
+                                                  });
+                                                },
+                                                icon: Icon(
+                                                  _passwordObscured
+                                                      ? Icons
+                                                          .visibility_off_outlined
+                                                      : Icons
+                                                          .visibility_outlined,
+                                                  size: 30,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
                                               fillColor: kfieldcolor,
                                               filled: true,
                                               hintText: "Password",
@@ -163,12 +181,15 @@ class _SigninState extends State<LoginPage> {
                                               print(password);
                                             });
                                           },
-                                          validator: (val) {
-                                            if (val!.isNotEmpty) {
-                                              return null;
-                                            } else {
-                                              return "Name cannot be empty";
+                                          obscureText: _passwordObscured,
+                                          validator: (value) {
+                                            if (value == null ||
+                                                value.isEmpty) {
+                                              return 'Password is required';
+                                            } else if (value.length < 6) {
+                                              return 'Password must be at least 6 characters long';
                                             }
+                                            return null;
                                           },
                                         ),
                                         const SizedBox(height: 20),
@@ -294,8 +315,7 @@ class _SigninState extends State<LoginPage> {
             _isLoading = false;
           });
         } else {
-          // Handle login failure here
-          // Show an error message to the user
+          //return Navigator.pop(context);
         }
       });
     }

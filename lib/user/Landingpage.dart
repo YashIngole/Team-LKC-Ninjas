@@ -9,7 +9,6 @@ import 'package:sahayak/auth%20svc/databaseService.dart';
 import 'package:sahayak/auth%20svc/helper.dart';
 import 'package:sahayak/auth%20ui/welcome_ui.dart';
 import 'package:sahayak/user/SearchWorkers.dart';
-import 'package:sahayak/user/UserProfile.dart';
 import 'package:sahayak/user/customslider.dart';
 
 class LandingPage extends StatefulWidget {
@@ -90,6 +89,15 @@ class _LandingPageState extends State<LandingPage> {
                             )
                           ],
                         ),
+                        const Spacer(),
+                        IconButton(
+                            onPressed: () {
+                              signOut();
+                            },
+                            icon: const Icon(
+                              Icons.logout_outlined,
+                              color: Colors.white,
+                            )),
                       ],
                     ),
                   ],

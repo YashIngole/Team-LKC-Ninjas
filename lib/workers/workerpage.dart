@@ -235,33 +235,39 @@ class _workerpageState extends State<workerpage> {
                                         User? user = authService
                                             .firebaseAuth.currentUser;
 
-                                    _databaseservice.saveworkerlisting(
-                                        userName,
-                                        title,
-                                        user!.uid,
-                                        category,
-                                        Description);
-                                  },
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(Colors
-                                            .black), // Set the background color to black
-                                    shape: MaterialStateProperty.all<
-                                        OutlinedBorder>(
-                                      RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            0.0), // Set the border radius to make it rectangular
+                                        _databaseservice.saveworkerlisting(
+                                            userName,
+                                            title,
+                                            user!.uid,
+                                            category,
+                                            Description);
+                                      },
+                                      style: ButtonStyle(
+                                        backgroundColor: MaterialStateProperty
+                                            .all<Color>(Colors
+                                                .black), // Set the background color to black
+                                        shape: MaterialStateProperty.all<
+                                            OutlinedBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                0.0), // Set the border radius to make it rectangular
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  child: const Text("Create")),
-                            ],
+                                      child: const Text("Create")),
+                                ],
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    );
-                  },
-                  child: const Text("Create Listing")),
+                        );
+                      },
+                      child: const Icon(Icons.add)),
+                ),
+                const Text(
+                  "Create a Listing",
+                  style: TextStyle(color: Colors.white),
+                )
+              ],
             ),
             const SizedBox(height: 30),
             Expanded(
@@ -355,15 +361,15 @@ class _workerpageState extends State<workerpage> {
                       },
                     );
                   }
-                  Future.delayed(1000.milliseconds);
+
                   return const Center(child: LoadingIndicator());
                 },
               ),
             ),
           ],
         ),
-     ] ),
-     ), );
+      ),
+    );
   }
 
   void deleteworklistData(int index) async {
