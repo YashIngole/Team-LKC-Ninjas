@@ -11,7 +11,7 @@ import 'package:sahayak/user/home.dart';
 //import 'package:sahayak/user/SearchWorkers.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized(); 
 
   if (kIsWeb) {
     await Firebase.initializeApp(

@@ -43,12 +43,11 @@ class _workerrequestsState extends State<workerrequests> {
   @override
   Widget build(BuildContext context) {
     // Assuming you have a worker ID obtained after authentication.
-
     User? user = authService.firebaseAuth.currentUser;
-    String workerId = user!.uid;
+    String workerId = user!.uid.toString();
     // Assuming you have received a request ID as a parameter.
-    const requestId = 'request789'; 
-
+    const requestId = 'request789';
+    print(workerId);
     return SafeArea(
       child: Scaffold(
         backgroundColor: kbackgroundcolor,
@@ -65,8 +64,7 @@ class _workerrequestsState extends State<workerrequests> {
                 child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                   stream: FirebaseFirestore.instance
                       .collection('service_requests')
-                      .where('userId',
-                          isEqualTo: "kKRjGRysGdPmP01bCD78UdC7NTy1")
+                      .where('userId', isEqualTo: workerId)
                       .snapshots(),
                   builder: (_, snapshot) {
                     if (snapshot.hasError) {
