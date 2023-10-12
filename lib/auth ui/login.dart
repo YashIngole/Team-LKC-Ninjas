@@ -102,13 +102,17 @@ class _SigninState extends State<LoginPage> {
                                         const SizedBox(
                                           height: 40,
                                         ),
-                                        const Text(
-                                            "Welcome back! Sign in to your account to access all the great features and services",
-                                            // ignore: prefer_const_constructors
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 20),
-                                            textAlign: TextAlign.start),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 7),
+                                          child: Text(
+                                              "Welcome back! Sign in to your account to access all the great features and services",
+                                              // ignore: prefer_const_constructors
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 20),
+                                              textAlign: TextAlign.start),
+                                        ),
                                         // ignore: prefer_const_constructors
                                         SizedBox(height: 20),
 
@@ -224,12 +228,15 @@ class _SigninState extends State<LoginPage> {
                                                 ),
                                               ),
                                             ),
-                                            const SizedBox(height: 5),
-                                            const Center(
-                                              child: Text(
-                                                  "Don't have an Account?",
-                                                  style: TextStyle(
-                                                      color: Colors.white)),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 35),
+                                              child: const Center(
+                                                child: Text(
+                                                    "Don't have an Account?",
+                                                    style: TextStyle(
+                                                        color: Colors.white)),
+                                              ),
                                             ),
                                             TextButton(
                                               onPressed: () {
