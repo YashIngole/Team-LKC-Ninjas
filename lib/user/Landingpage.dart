@@ -1,11 +1,15 @@
 import 'package:carousel_slider/carousel_controller.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sahayak/Themeconst.dart';
+import 'package:sahayak/auth%20svc/databaseService.dart';
 import 'package:sahayak/auth%20svc/helper.dart';
+import 'package:sahayak/auth%20ui/welcome_ui.dart';
 import 'package:sahayak/user/SearchWorkers.dart';
+import 'package:sahayak/user/UserProfile.dart';
 import 'package:sahayak/user/customslider.dart';
 
 class LandingPage extends StatefulWidget {
@@ -44,6 +48,8 @@ class _LandingPageState extends State<LandingPage> {
     });
   }
 
+  final databaseService _databaseservice = databaseService();
+  final FirebaseAuth auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,17 +68,6 @@ class _LandingPageState extends State<LandingPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        // Padding(
-                        //   padding: const EdgeInsets.symmetric(
-                        //       horizontal: 10, vertical: 10),
-                        //   child: Container(
-                        //     height: 50,
-                        //     width: 50,
-                        //     decoration: BoxDecoration(
-                        //         borderRadius: BorderRadius.circular(1000),
-                        //         color: Colors.green),
-                        //   ),
-                        // ),
                         Column(
                           children: [
                             Padding(
@@ -95,6 +90,12 @@ class _LandingPageState extends State<LandingPage> {
                             )
                           ],
                         ),
+                        Spacer(),
+                        IconButton(
+                            onPressed: () {
+                              signOut();
+                            },
+                            icon: Icon(Icons.logout_outlined)),
                       ],
                     ),
                   ],
@@ -155,5 +156,11 @@ class _LandingPageState extends State<LandingPage> {
         ],
       ),
     );
+  }
+
+  signOut() async {
+    await auth.signOut();
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => WelcomePage()));
   }
 }

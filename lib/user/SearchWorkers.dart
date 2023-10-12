@@ -178,7 +178,7 @@ class _SearchWorkersState extends State<SearchWorkers> {
                                 title: Row(
                                   children: [
                                     Text(
-                                      "$userName - ",
+                                      data['DisplayName'] + "-",
                                       style: GoogleFonts.abhayaLibre(
                                           color: Colors.white),
                                     ),
@@ -209,6 +209,7 @@ class _SearchWorkersState extends State<SearchWorkers> {
                       },
                     );
                   }
+                  
 
                   return const Center(child: LoadingIndicator());
                 },

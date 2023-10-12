@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
@@ -9,25 +11,19 @@ class databaseService {
 
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection("users");
-  Future savingUserData(String fullName, String email, String Phone) async {
-    return await userCollection.doc(uid).set({
-      "fullName": fullName,
-      "email": email,
-      "uid": uid,
-      "userType": "user",
-      "Phone": Phone
-    });
+  Future savingUserData(String fullName, String email) async {
+    return await userCollection.doc(uid).set(
+        {"fullName": fullName, "email": email, "uid": uid, "userType": "user"});
   }
 
   final CollectionReference workerCollection =
       FirebaseFirestore.instance.collection("workers");
-  Future savingworkerData(String fullName, String email, String Phone) async {
+  Future savingworkerData(String fullName, String email) async {
     return await userCollection.doc(uid).set({
       "fullName": fullName,
       "email": email,
       "uid": uid,
-      "userType": "worker",
-      "Phone": Phone,
+      "userType": "worker"
     });
   }
 
@@ -40,11 +36,12 @@ class databaseService {
   }
 //create service request
 
-  void createServiceRequest(String issue, String userId) {
+  void createServiceRequest(String issue, String userId, bool AcceptStatus) {
     FirebaseFirestore.instance.collection('service_requests').add({
       'issue': issue,
       'userId': userId,
       'createdAt': DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now()),
+      'AcceptStatus': AcceptStatus
     });
   }
 
@@ -54,6 +51,7 @@ class databaseService {
   // function to save the listing data to Firestore
   Future<void> saveworkerlisting(String? DisplayName, String title,
       String workerid, String? category, String Description) async {
+    // new document with a unique ID in the 'drivers' collection
     DocumentReference newworkersRef = workersRef.doc();
 
     await newworkersRef.set({

@@ -8,7 +8,7 @@ import 'package:sahayak/auth svc/authentication.dart';
 import 'package:sahayak/auth svc/helper.dart';
 
 class Registerpagee extends StatefulWidget {
-  Registerpagee({Key? key, required this.userType}) : super(key: key);
+  const Registerpagee({Key? key, required this.userType}) : super(key: key);
   final String userType;
   @override
   State<Registerpagee> createState() => _LoginPageState();
@@ -19,17 +19,16 @@ class _LoginPageState extends State<Registerpagee> {
   final _formKey = GlobalKey<FormState>();
   final _workerFormKey = GlobalKey<FormState>();
 
-  double _sigmaX = 5;
+  final double _sigmaX = 5;
   // from 0-10
-  double _sigmaY = 5;
+  final double _sigmaY = 5;
   // from 0-10
-  double _opacity = 0.2;
+  final double _opacity = 0.2;
 
   String email = "";
   String password = "";
   String fullname = "";
   bool _isLoading = false;
-  String Phone = "";
   AuthService authService = AuthService();
 
   @override
@@ -47,7 +46,7 @@ class _LoginPageState extends State<Registerpagee> {
                   Container(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         gradient: LinearGradient(
                       begin: Alignment.bottomLeft,
                       end: Alignment.topRight,
@@ -96,7 +95,7 @@ class _LoginPageState extends State<Registerpagee> {
                                     child: Center(
                                       child: Column(
                                         children: [
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 30,
                                           ),
                                           const Text(
@@ -117,7 +116,7 @@ class _LoginPageState extends State<Registerpagee> {
                                                         //     color: Colors.white),
                                                         ),
                                                 focusedBorder:
-                                                    OutlineInputBorder(
+                                                    const OutlineInputBorder(
                                                         // borderSide: BorderSide(
                                                         //     color:
                                                         //         Colors.grey.shade400),
@@ -128,7 +127,7 @@ class _LoginPageState extends State<Registerpagee> {
                                                 hintStyle: TextStyle(
                                                     color: Colors.grey[500])),
                                             style:
-                                                TextStyle(color: Colors.white),
+                                                const TextStyle(color: Colors.white),
                                             //parameter for name input
                                             onChanged: (val) {
                                               setState(() {
@@ -157,7 +156,7 @@ class _LoginPageState extends State<Registerpagee> {
                                                         //     color: Colors.white),
                                                         ),
                                                 focusedBorder:
-                                                    OutlineInputBorder(
+                                                    const OutlineInputBorder(
                                                         // borderSide: BorderSide(
                                                         //     color:
                                                         //         Colors.grey.shade400),
@@ -168,7 +167,7 @@ class _LoginPageState extends State<Registerpagee> {
                                                 hintStyle: TextStyle(
                                                     color: Colors.grey[500])),
                                             style:
-                                                TextStyle(color: Colors.white),
+                                                const TextStyle(color: Colors.white),
                                             validator: (val) {
                                               if (val == null || val.isEmpty) {
                                                 return 'Please enter an email address';
@@ -186,43 +185,7 @@ class _LoginPageState extends State<Registerpagee> {
                                               });
                                             },
                                           ),
-                                          TextFormField(
-                                            //parameter for Email input
-
-                                            decoration: InputDecoration(
-                                                enabledBorder:
-                                                    const OutlineInputBorder(
-                                                        // borderSide: BorderSide(
-                                                        //     color: Colors.white),
-                                                        ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                        // borderSide: BorderSide(
-                                                        //     color:
-                                                        //         Colors.grey.shade400),
-                                                        ),
-                                                fillColor: kfieldcolor,
-                                                filled: true,
-                                                hintText: "Phone Number",
-                                                hintStyle: TextStyle(
-                                                    color: Colors.grey[500])),
-                                            style:
-                                                TextStyle(color: Colors.white),
-                                            validator: (value) {
-                                              return !RegExp(
-                                                          r'^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$')
-                                                      .hasMatch(value!)
-                                                  ? null
-                                                  : "Please enter a valid Phone Number";
-                                            },
-                                            onChanged: (val) {
-                                              setState(() {
-                                                Phone = val;
-                                                print(Phone);
-                                              });
-                                            },
-                                          ),
-                                          SizedBox(height: 20),
+                                          const SizedBox(height: 20),
                                           TextFormField(
                                             decoration: InputDecoration(
                                                 enabledBorder:
@@ -231,7 +194,7 @@ class _LoginPageState extends State<Registerpagee> {
                                                         //     color: Colors.white),
                                                         ),
                                                 focusedBorder:
-                                                    OutlineInputBorder(
+                                                    const OutlineInputBorder(
                                                         // borderSide: BorderSide(
                                                         //     color:
                                                         //         Colors.grey.shade400),
@@ -242,7 +205,7 @@ class _LoginPageState extends State<Registerpagee> {
                                                 hintStyle: TextStyle(
                                                     color: Colors.grey[500])),
                                             style:
-                                                TextStyle(color: Colors.white),
+                                                const TextStyle(color: Colors.white),
                                             //parameter for name input
                                             onChanged: (val) {
                                               setState(() {
@@ -258,45 +221,32 @@ class _LoginPageState extends State<Registerpagee> {
                                               }
                                             },
                                           ),
-                                          SizedBox(height: 30),
+                                          const SizedBox(height: 30),
                                           Column(
-                                            // mainAxisSize: MainAxisSize.min,
-                                            // mainAxisAlignment:
-                                            //     MainAxisAlignment.start,
-                                            crossAxisAlignment:
+                                            
+                                          crossAxisAlignment:
                                                 CrossAxisAlignment.center,
                                             children: [
-                                              // RichText(
-                                              //   text: const TextSpan(
-                                              //     children: <TextSpan>[
-                                              //       TextSpan(
-                                              //         text:
-                                              //             'By selecting Agree & Continue below, I agree to our ',
-                                              //         style: TextStyle(
-                                              //             color: Colors.white,
-                                              //             fontSize: 20),
-                                              //       ),
-                                              //       TextSpan(
-                                              //         text:
-                                              //             'Terms of Service and Privacy Policy',
-                                              //         style: TextStyle(
-                                              //             color: Color.fromARGB(
-                                              //                 255, 205, 79, 37),
-                                              //             fontWeight: FontWeight.bold,
-                                              //             fontSize: 20),
-                                              //       ),
-                                              //     ],
-                                              //   ),
-                                              // ),
+                                             
 
                                               ElevatedButton(
                                                 onPressed: () {
-                                                  //Function for saving and validating email and password
+                                                
                                                   widget.userType == "Worker"
                                                       ? registerworker()
                                                       : registeruser();
                                                 },
-                                                child: Text(
+                                                style: ElevatedButton.styleFrom(
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              0.0)),
+                                                  fixedSize: const Size(350, 50),
+                                                  backgroundColor: ktilecolor,
+                                                  shadowColor:
+                                                      Colors.transparent,
+                                                ),
+                                                child: const Text(
                                                   'Register',
                                                   style: TextStyle(
                                                     color: Colors.white,
@@ -304,20 +254,10 @@ class _LoginPageState extends State<Registerpagee> {
                                                     fontSize: 20,
                                                   ),
                                                 ),
-                                                style: ElevatedButton.styleFrom(
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              0.0)),
-                                                  fixedSize: Size(350, 50),
-                                                  backgroundColor: ktilecolor,
-                                                  shadowColor:
-                                                      Colors.transparent,
-                                                ),
                                               ),
-                                              SizedBox(height: 20),
+                                              const SizedBox(height: 20),
 
-                                              Text('Already have an Account?',
+                                              const Text('Already have an Account?',
                                                   style: TextStyle(
                                                       color: Colors.white)),
                                               TextButton(
@@ -326,11 +266,11 @@ class _LoginPageState extends State<Registerpagee> {
                                                     userType: widget.userType,
                                                   ));
                                                 },
-                                                child: Text(
+                                                child: const Text(
                                                   ' Sign In.',
                                                   style: TextStyle(
                                                       color:
-                                                          const Color.fromARGB(
+                                                          Color.fromARGB(
                                                               255,
                                                               59,
                                                               179,
@@ -365,7 +305,7 @@ class _LoginPageState extends State<Registerpagee> {
       });
       await authService
           .registerworkerWithEmailAndPassword(
-              fullname, email, password, widget.userType, Phone)
+              fullname, email, password, widget.userType)
           .then((value) async {
         if (value == true) {
           await helperFunctions.saveUserLoggedInStatus(true);
@@ -392,7 +332,7 @@ class _LoginPageState extends State<Registerpagee> {
       });
       await authService
           .registerUserWithEmailAndPassword(
-              fullname, email, password, widget.userType, Phone)
+              fullname, email, password, widget.userType)
           .then((value) async {
         if (value == true) {
           await helperFunctions.saveUserLoggedInStatus(true);

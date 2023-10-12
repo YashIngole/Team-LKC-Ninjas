@@ -10,7 +10,7 @@ import 'package:sahayak/auth%20svc/databaseService.dart';
 import 'package:sahayak/auth%20svc/helper.dart';
 
 class workerpage extends StatefulWidget {
-  const workerpage({super.key});
+  const workerpage({Key? key});
 
   @override
   State<workerpage> createState() => _workerpageState();
@@ -42,14 +42,11 @@ class _workerpageState extends State<workerpage> {
   AuthService authService = AuthService();
   String title = "";
   String title1 = "";
-  String listId = '';
+  String listId = "";
   String? category;
   String Description = "";
   List<String> categories = [];
-  // Initial Selected Value
-  String dropdownvalue = 'Electrician';
-
-  // List of items in our dropdown menu
+  List<DocumentSnapshot<Map<String, dynamic>>> docs = [];
 
   @override
   Widget build(BuildContext context) {
@@ -59,164 +56,208 @@ class _workerpageState extends State<workerpage> {
         backgroundColor: kbackgroundcolor,
         body: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: ElevatedButton(
-                  onPressed: () {
-                    Get.defaultDialog(
-                      contentPadding: EdgeInsets.zero,
-                      barrierDismissible: false,
-                      title: "Create a listing",
-                      content: SingleChildScrollView(
-                        child: SizedBox(
-                          width: Get.width * 0.5,
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: TextFormField(
-                                  onChanged: (val) {
-                                    setState(() {
-                                      title = val;
-                                    });
-                                  },
-                                  style: const TextStyle(),
-                                  decoration: InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                            color: Colors.black),
-                                        borderRadius:
-                                            BorderRadius.circular(12)),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                            color: Colors.black),
-                                        borderRadius:
-                                            BorderRadius.circular(12)),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color.fromARGB(255, 243, 65, 65),
-                                      ),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color.fromARGB(255, 0, 0, 5),
-                                      ),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    labelText: 'Title',
-                                  ),
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Please Enter title';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 10),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: DropdownButtonFormField(
-                                  isExpanded: true,
-
-                                  icon: const Icon(Icons.keyboard_arrow_down),
-
-                                  // Array list of items
-                                  items: items.map((String items) {
-                                    return DropdownMenuItem(
-                                      value: items,
-                                      child: Text(items),
-                                    );
-                                  }).toList(),
-                                  // After selecting the desired option,it will
-                                  // change button value to selected value
-                                  onChanged: (String? newValue) {
-                                    // print('Selected category: $newValue');
-                                    setState(() {
-                                      category = newValue;
-                                    });
-                                  },
-                                ),
-                              ),
-                              // Padding(
-                              //   padding: const EdgeInsets.symmetric(
-                              //       horizontal: 20, vertical: 10),
-                              // ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 10, right: 10, top: 30),
-                                child: TextFormField(
-                                  onChanged: (val) {
-                                    setState(() {
-                                      Description = val;
-                                    });
-                                  },
-                                  minLines: 2,
-                                  maxLines: null,
-                                  maxLength: 500,
-                                  decoration: InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                            color: Colors.black),
-                                        borderRadius:
-                                            BorderRadius.circular(12)),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                            color: Colors.black),
-                                        borderRadius:
-                                            BorderRadius.circular(12)),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color.fromARGB(255, 243, 65, 65),
-                                      ),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color.fromARGB(255, 0, 0, 5),
-                                      ),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    labelText: 'Description',
-                                  ),
-                                ),
-                              ),
-                              ElevatedButton(
-                                onPressed: () {
-                                  User? user =
-                                      authService.firebaseAuth.currentUser;
-
-                                  _databaseservice.saveworkerlisting(userName,
-                                      title, user!.uid, category, Description);
-                                  Get.back();
-                                },
-                                style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all<Color>(Colors
-                                          .black), // Set the background color to black
-                                  shape:
-                                      MaterialStateProperty.all<OutlinedBorder>(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          0.0), // Set the border radius to make it rectangular
-                                    ),
-                                  ),
-                                ),
-                                child: const Text("Create"),
-                              ),
-                            ],
-                          ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 5, left: 6),
+                      child: Text(
+                        'Hi...!',
+                        style: GoogleFonts.adamina(
+                            color: Kusercolor, fontSize: 15),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Text(
+                        userName,
+                        style: const TextStyle(
+                          color: Kusercolor,
+                          fontSize: 30,
                         ),
                       ),
-                    );
-                  },
-                  child: const Text("Create Listing")),
+                    )
+                  ],
+                ),
+              ],
+            ),
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: ElevatedButton(
+                      onPressed: () {
+                        Get.defaultDialog(
+                          contentPadding: EdgeInsets.zero,
+                          barrierDismissible: false,
+                          title: "Create a listing",
+                          content: SingleChildScrollView(
+                            child: SizedBox(
+                              width: Get.width * 0.5,
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    child: TextFormField(
+                                      onChanged: (val) {
+                                        setState(() {
+                                          title = val;
+                                        });
+                                      },
+                                      style: const TextStyle(),
+                                      decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                                color: Colors.black),
+                                            borderRadius:
+                                                BorderRadius.circular(12)),
+                                        focusedBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                                color: Colors.black),
+                                            borderRadius:
+                                                BorderRadius.circular(12)),
+                                        errorBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Color.fromARGB(
+                                                255, 243, 65, 65),
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                        ),
+                                        focusedErrorBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Color.fromARGB(255, 0, 0, 5),
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                        ),
+                                        labelText: 'Title',
+                                      ),
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Please Enter title';
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                  ),
+                                  const Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 10),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    child: DropdownButtonFormField(
+                                      isExpanded: true,
+
+                                      icon:
+                                          const Icon(Icons.keyboard_arrow_down),
+
+                                      // Array list of items
+                                      items: items.map((String items) {
+                                        return DropdownMenuItem(
+                                          value: items,
+                                          child: Text(items),
+                                        );
+                                      }).toList(),
+                                      // After selecting the desired option,it will
+                                      // change button value to selected value
+                                      onChanged: (String? newValue) {
+                                        // print('Selected category: $newValue');
+                                        setState(() {
+                                          category = newValue;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  // Padding(
+                                  //   padding: const EdgeInsets.symmetric(
+                                  //       horizontal: 20, vertical: 10),
+                                  // ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 10, right: 10, top: 30),
+                                    child: TextFormField(
+                                      onChanged: (val) {
+                                        setState(() {
+                                          Description = val;
+                                        });
+                                      },
+                                      minLines: 2,
+                                      maxLines: null,
+                                      maxLength: 500,
+                                      decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                                color: Colors.black),
+                                            borderRadius:
+                                                BorderRadius.circular(12)),
+                                        focusedBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                                color: Colors.black),
+                                            borderRadius:
+                                                BorderRadius.circular(12)),
+                                        errorBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Color.fromARGB(
+                                                255, 243, 65, 65),
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                        ),
+                                        focusedErrorBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Color.fromARGB(255, 0, 0, 5),
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                        ),
+                                        labelText: 'Description',
+                                      ),
+                                    ),
+                                  ),
+                                  ElevatedButton(
+                                      onPressed: () {
+                                        User? user = authService
+                                            .firebaseAuth.currentUser;
+
+                                        _databaseservice.saveworkerlisting(
+                                            userName,
+                                            title,
+                                            user!.uid,
+                                            category,
+                                            Description);
+                                      },
+                                      style: ButtonStyle(
+                                        backgroundColor: MaterialStateProperty
+                                            .all<Color>(Colors
+                                                .black), // Set the background color to black
+                                        shape: MaterialStateProperty.all<
+                                            OutlinedBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                0.0), // Set the border radius to make it rectangular
+                                          ),
+                                        ),
+                                      ),
+                                      child: const Text("Create")),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                      child: Icon(Icons.add)),
+                ),
+                Text(
+                  "Create a Listing",
+                  style: TextStyle(color: Colors.white),
+                )
+              ],
             ),
             const SizedBox(height: 30),
             Expanded(
@@ -230,13 +271,13 @@ class _workerpageState extends State<workerpage> {
                   }
 
                   if (snapshot.hasData) {
-                    final docs = snapshot.data!.docs;
+                    docs = snapshot.data!.docs;
 
                     return ListView.builder(
                       itemCount: docs.length,
                       itemBuilder: (_, i) {
                         final data = docs[i].data();
-                        title1 = data["title"];
+                        title1 = data!["title"];
 
                         return Padding(
                           padding: const EdgeInsets.symmetric(
@@ -301,7 +342,7 @@ class _workerpageState extends State<workerpage> {
                                 icon: const Icon(Icons.delete_outline,
                                     color: Colors.white, size: 30.0),
                                 onPressed: () {
-                                  deleteworklistData();
+                                  deleteworklistData(i);
                                 },
                               ),
                             ),
@@ -310,7 +351,7 @@ class _workerpageState extends State<workerpage> {
                       },
                     );
                   }
-
+                  Future.delayed(1000.milliseconds);
                   return const Center(child: LoadingIndicator());
                 },
               ),
@@ -321,14 +362,10 @@ class _workerpageState extends State<workerpage> {
     );
   }
 
-  void deleteworklistData() async {
-    var collection = FirebaseFirestore.instance.collection('workerlisting');
-    print(title);
-    var querySnapshot =
-        await collection.where("title", isEqualTo: title1).get();
-
-    if (querySnapshot.docs.isNotEmpty) {
-      var documentSnapshot = querySnapshot.docs.first;
+  void deleteworklistData(int index) async {
+    if (index >= 0 && index < docs.length) {
+      var documentSnapshot = docs[index];
+      var collection = FirebaseFirestore.instance.collection('workerlisting');
 
       collection
           .doc(documentSnapshot.id)

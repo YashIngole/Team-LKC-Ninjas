@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:sahayak/Themeconst.dart';
@@ -31,6 +32,9 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        // appBar: AppBar(
+        //   title: Text('drawer'),
+        // ),
         body: Center(
           child: _widgetOptions.elementAt(_selectedIndex),
         ),
@@ -52,7 +56,8 @@ class _HomeState extends State<Home> {
                 gap: 8,
                 activeColor: Colors.black,
                 iconSize: 24,
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                 duration: const Duration(milliseconds: 400),
                 tabBackgroundColor: Colors.white,
                 color: Colors.black,

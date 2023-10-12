@@ -50,6 +50,7 @@ class _WorkerHomeState extends State<WorkerHome> {
               iconSize: 24,
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               duration: const Duration(milliseconds: 400),
+              
               tabBackgroundColor: Colors.white,
               color: Colors.black,
               tabs: const [

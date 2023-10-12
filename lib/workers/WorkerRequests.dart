@@ -1,13 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sahayak/Loading.dart';
 import 'package:sahayak/Themeconst.dart';
 import 'package:sahayak/auth%20svc/authentication.dart';
+import 'package:sahayak/auth%20svc/databaseService.dart';
 import 'package:sahayak/auth%20svc/helper.dart';
+import 'package:sahayak/user/UserProfile.dart';
 
 class workerrequests extends StatefulWidget {
-  workerrequests({super.key});
+  workerrequests({Key? key});
 
   @override
   State<workerrequests> createState() => _workerrequestsState();
@@ -15,10 +18,13 @@ class workerrequests extends StatefulWidget {
 
 class _workerrequestsState extends State<workerrequests> {
   final TextEditingController availabilityController = TextEditingController();
-
   final TextEditingController priceController = TextEditingController();
   String userName = "";
   String email = "";
+  List<String> descriptions = [];
+
+  databaseService _databaseservice = databaseService();
+
   gettingUserData() async {
     await helperFunctions.getUserEmailFromSF().then((value) {
       setState(() {
@@ -36,18 +42,15 @@ class _workerrequestsState extends State<workerrequests> {
 
   @override
   void initState() {
-    // TODO: implement initState
     gettingUserData();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // Assuming you have a worker ID obtained after authentication.
     User? user = authService.firebaseAuth.currentUser;
     String workerId = user!.uid.toString();
-    // Assuming you have received a request ID as a parameter.
-    const requestId = 'request789';
-    print(workerId);
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: kbackgroundcolor,
@@ -59,24 +62,26 @@ class _workerrequestsState extends State<workerrequests> {
                 'Work Requests',
                 style: TextStyle(color: Colors.white, fontSize: 24),
               ),
-              SizedBox(
-                height: 500,
-                child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                  stream: FirebaseFirestore.instance
-                      .collection('service_requests')
-                      .where('userId', isEqualTo: workerId)
-                      .snapshots(),
-                  builder: (_, snapshot) {
-                    if (snapshot.hasError) {
-                      return Text('Error = ${snapshot.error}');
-                    }
+              StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                stream: FirebaseFirestore.instance
+                    .collection('service_requests')
+                    .where('userId', isEqualTo: workerId)
+                    .snapshots(),
+                builder: (_, snapshot) {
+                  if (snapshot.hasError) {
+                    return Text('Error = ${snapshot.error}');
+                  }
 
-                    if (snapshot.hasData) {
-                      final docs = snapshot.data!.docs;
-                      return ListView.builder(
+                  if (snapshot.hasData) {
+                    final docs = snapshot.data!.docs;
+                    descriptions.clear();
+                    return Expanded(
+                      child: ListView.builder(
                         itemCount: docs.length,
                         itemBuilder: (_, i) {
                           final data = docs[i].data();
+                          String desc = data['issue'].toString();
+                          descriptions.add(desc);
                           return Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 10, vertical: 8),
@@ -98,7 +103,7 @@ class _workerrequestsState extends State<workerrequests> {
                                       color: Colors.white),
                                 ),
                                 title: Text(
-                                  data['issue'],
+                                  desc,
                                   style: const TextStyle(color: Colors.white),
                                 ),
                                 subtitle: Column(
@@ -112,28 +117,64 @@ class _workerrequestsState extends State<workerrequests> {
                                   ],
                                 ),
                                 trailing: ElevatedButton(
-                                    onPressed: () {},
-                                    child: const Text("Accept")),
+                                  onPressed: () {
+                                    if (data['AcceptStatus'] == 'false') {
+                                      updateAcceptStatusTrue(i);
+                                    } else {
+                                      updateAcceptStatusFalse(i);
+                                    }
+                                  },
+                                  child: data['AcceptStatus'] == 'false'
+                                      ? Text("Accept")
+                                      : Text("Accepted"),
+                                ),
                               ),
                             ),
                           );
-
-                          // ListTile(
-                          //   title: Text(data['issue']),
-                          //   subtitle: Text(data['createdAt'].toString()),
-                          // );
                         },
-                      );
-                    }
-
-                    return const Center(child: LoadingIndicator());
-                  },
-                ),
+                      ),
+                    );
+                  }
+                  // Future.delayed(1000.milliseconds);
+                  return const Center(child: LoadingIndicator());
+                },
               )
             ],
           ),
         ),
       ),
     );
+  }
+
+  void updateAcceptStatusFalse(int index) async {
+    String descToUpdate = descriptions[index];
+    var collection = FirebaseFirestore.instance.collection('service_requests');
+
+    var querySnapshot =
+        await collection.where('issue', isEqualTo: descToUpdate).get();
+    if (querySnapshot.docs.isNotEmpty) {
+      var documentSnapshot = querySnapshot.docs.first;
+      collection
+          .doc(documentSnapshot.id)
+          .update({'AcceptStatus': "false"})
+          .then((_) => print('Success'))
+          .catchError((error) => print('Failed: $error'));
+    }
+  }
+
+  void updateAcceptStatusTrue(int index) async {
+    String descToUpdate = descriptions[index];
+    var collection = FirebaseFirestore.instance.collection('service_requests');
+
+    var querySnapshot =
+        await collection.where('issue', isEqualTo: descToUpdate).get();
+    if (querySnapshot.docs.isNotEmpty) {
+      var documentSnapshot = querySnapshot.docs.first;
+      collection
+          .doc(documentSnapshot.id)
+          .update({'AcceptStatus': "true"})
+          .then((_) => print('Success'))
+          .catchError((error) => print('Failed: $error'));
+    }
   }
 }
