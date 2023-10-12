@@ -1,9 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahayak/Themeconst.dart';
 import 'package:sahayak/auth%20svc/databaseService.dart';
-import 'package:sahayak/auth%20ui/welcome_ui.dart';
 import 'package:sahayak/user/UserProfile.dart';
 
 //import 'package:image_picker/image_picker.dart';
@@ -21,11 +19,9 @@ class workerprofile extends StatefulWidget {
 }
 
 String issue = "";
-bool AcceptRequest = false;
 
 class _HomeState extends State<workerprofile> {
   final databaseService _databaseservice = databaseService();
-  final FirebaseAuth auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -57,35 +53,36 @@ class _HomeState extends State<workerprofile> {
                   height: Get.height * 0.05,
                   width: Get.width * 0.6,
                   color: ktilecolor,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        Get.defaultDialog(
-                            title: "Contact",
-                            content: SingleChildScrollView(
-                              child: Column(
-                                children: [
-                                  Text("Name: ${widget.workername}"),
-                                  const Text("Phone: 9131253231"),
-                                  const Text("Locality: Civil lines")
-                                ],
-                              ),
-                            ),
-                            actions: [
-                              ElevatedButton(
-                                  onPressed: () {},
-                                  child: const Text("send request")),
-                            ]);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(0), // <-- Radius
-                        ),
-                      ),
-                      child: const Text(
-                        "Contact",
-                        style: TextStyle(fontSize: 20),
-                      )),
+                  child: Text("name"),
+                  // child: ElevatedButton(
+                  //     onPressed: () {
+                  //       Get.defaultDialog(
+                  //           title: "Contact",
+                  //           content: SingleChildScrollView(
+                  //             child: Column(
+                  //               children: [
+                  //                 Text("Name: ${widget.workername}"),
+                  //                 const Text("Phone: 9131253231"),
+                  //                 const Text("Locality: Civil lines")
+                  //               ],
+                  //             ),
+                  //           ),
+                  //           actions: [
+                  //             ElevatedButton(
+                  //                 onPressed: () {},
+                  //                 child: const Text("send request")),
+                  //           ]);
+                  //     },
+                  //     style: ElevatedButton.styleFrom(
+                  //       backgroundColor: Colors.transparent,
+                  //       shape: RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.circular(0), // <-- Radius
+                  //       ),
+                  //     ),
+                  //     child: const Text(
+                  //       "Contact",
+                  //       style: TextStyle(fontSize: 20),
+                  //     )),
                 ),
               ),
             ),
@@ -93,84 +90,61 @@ class _HomeState extends State<workerprofile> {
           // SizedBox(
           //   height: 10,
           // ),
-          Center(
+          const Center(
             child: SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: Container(
-                  height: Get.height * 0.05,
-                  width: Get.width * 0.6,
-                  color: ktilecolor,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        Get.defaultDialog(
-                            title: "Send work request",
-                            content: Column(
-                              children: [
-                                TextFormField(
-                                  onChanged: (val) {
-                                    setState(() {
-                                      issue = val;
-                                    });
-                                  },
-                                  minLines: 5,
-                                  maxLines: null,
-                                  maxLength: 500,
-                                  decoration: const InputDecoration(
-                                      border: OutlineInputBorder(),
-                                      labelText: "Describe your issue"),
-                                ),
-                              ],
-                            ),
-                            actions: [
-                              ElevatedButton(
-                                  onPressed: () {
-                                    _databaseservice.createServiceRequest(
-                                        issue, widget.userId, false);
-                                    Get.back();
-                                  },
-                                  child: const Text("send request"))
-                            ]);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(0), // <-- Radius
-                        ),
-                      ),
-                      child: const Text(
-                        "Send requests",
-                        style: TextStyle(fontSize: 20),
-                      )),
-                ),
+                padding: EdgeInsets.only(top: 10),
+                // child: Container(
+                //   height: Get.height * 0.05,
+                //   width: Get.width * 0.6,
+                //   color: ktilecolor,
+                //   child: ElevatedButton(
+                //       onPressed: () {
+                //         Get.defaultDialog(
+                //             title: "Send work request",
+                //             content: Column(
+                //               children: [
+                //                 TextFormField(
+                //                   onChanged: (val) {
+                //                     setState(() {
+                //                       issue = val;
+                //                     });
+                //                   },
+                //                   minLines: 5,
+                //                   maxLines: null,
+                //                   maxLength: 500,
+                //                   decoration: const InputDecoration(
+                //                       border: OutlineInputBorder(),
+                //                       labelText: "Describe your issue"),
+                //                 ),
+                //               ],
+                //             ),
+                //             actions: [
+                //               ElevatedButton(
+                //                   onPressed: () {
+                //                     _databaseservice.createServiceRequest(
+                //                         issue, widget.userId);
+                //                   },
+                //                   child: const Text("send request"))
+                //             ]);
+                //       },
+                //       style: ElevatedButton.styleFrom(
+                //         backgroundColor: Colors.transparent,
+                //         shape: RoundedRectangleBorder(
+                //           borderRadius: BorderRadius.circular(0), // <-- Radius
+                //         ),
+                //       ),
+                //       child: const Text(
+                //         "Send requests",
+                //         style: TextStyle(fontSize: 20),
+                //       )),
+                // ),
               ),
             ),
           ),
           const Spacer(),
-          ElevatedButton(
-            onPressed: () {
-              signOut();
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.transparent,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(0), // <-- Radius
-              ),
-            ),
-            child: const Text(
-              "LogOut",
-              style: TextStyle(fontSize: 18),
-            ),
-          ),
-          Spacer()
         ],
       ),
     ));
-  }
-
-  signOut() async {
-    await auth.signOut();
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => WelcomePage()));
   }
 }

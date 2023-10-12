@@ -32,6 +32,9 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        // appBar: AppBar(
+        //   title: Text('drawer'),
+        // ),
         body: Center(
           child: _widgetOptions.elementAt(_selectedIndex),
         ),

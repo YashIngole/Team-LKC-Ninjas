@@ -44,52 +44,6 @@ class _HomeState extends State<userprofile> {
                 borderRadius: BorderRadius.circular(20),
                 color: Colors.grey[800]),
           ),
-
-          //Spacer(),
-          // Center(
-          //   child: SingleChildScrollView(
-          //     child: Padding(
-          //       padding: const EdgeInsets.only(top: 25),
-          //       child: Container(
-          //         height: Get.height * 0.05,
-          //         width: Get.width * 0.6,
-          //         color: ktilecolor,
-          //         child: ElevatedButton(
-          //             onPressed: () {
-          //               Get.defaultDialog(
-          //                   title: "Contact",
-          //                   content: const SingleChildScrollView(
-          //                     child: Column(
-          //                       children: [
-          //                         Text("Name: Mahesh doll"),
-          //                         Text("Phone: 9131253231"),
-          //                         Text("Locality: Civil lines")
-          //                       ],
-          //                     ),
-          //                   ),
-          //                   actions: [
-          //                     ElevatedButton(
-          //                         onPressed: () {},
-          //                         child: const Text("send request")),
-          //                   ]);
-          //             },
-          //             style: ElevatedButton.styleFrom(
-          //               backgroundColor: Colors.transparent,
-          //               shape: RoundedRectangleBorder(
-          //                 borderRadius: BorderRadius.circular(0), // <-- Radius
-          //               ),
-          //             ),
-          //             child: const Text(
-          //               "Contact",
-          //               style: TextStyle(fontSize: 20),
-          //             )),
-          //       ),
-          //     ),
-          //   ),
-          // ),
-          // SizedBox(
-          //   height: 10,
-          // ),
           Column(
             children: [
               Center(
@@ -100,53 +54,6 @@ class _HomeState extends State<userprofile> {
                       height: Get.height * 0.05,
                       width: Get.width * 0.6,
                       color: ktilecolor,
-                      // child: Text(
-                      //   "Name : ",
-                      //   style: TextStyle(
-                      //     fontSize: 30,
-                      //     backgroundColor: Colors.transparent,
-
-                      //   ),
-                      // ),
-                      // child: ElevatedButton(
-                      //   onPressed: () {
-                      //     Get.defaultDialog(
-                      //         title: "Send work request",
-                      //         content: Column(
-                      //           children: [
-                      //             TextFormField(
-                      //               onChanged: (val) {
-                      //                 setState(() {
-                      //                   issue = val;
-                      //                 });
-                      //               },
-                      //               minLines: 5,
-                      //               maxLines: null,
-                      //               maxLength: 500,
-                      //               decoration: const InputDecoration(
-                      //                   border: OutlineInputBorder(),
-                      //                   labelText: "Describe your issue"),
-                      //             ),
-                      //           ],
-                      //         ),
-                      //         actions: [
-                      //           ElevatedButton(
-                      //               onPressed: () {},
-                      //               child: const Text("send request"))
-                      //         ]);
-                      //   },
-                      //   style: ElevatedButton.styleFrom(
-                      //     backgroundColor: Colors.transparent,
-                      //     shape: RoundedRectangleBorder(
-                      //       borderRadius:
-                      //           BorderRadius.circular(0), // <-- Radius
-                      //     ),
-                      //   ),
-                      //   child: const Text(
-                      //     "Send requests",
-                      //     style: TextStyle(fontSize: 20),
-                      //   ),
-                      // ),
                     ),
                   ),
                 ),
@@ -154,32 +61,11 @@ class _HomeState extends State<userprofile> {
               // SizedBox(
               //   height: 10,
               // ),
-              ElevatedButton(
-                onPressed: () {
-                  signOut();
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.transparent,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(0), // <-- Radius
-                  ),
-                ),
-                child: const Text(
-                  "LogOut",
-                  style: TextStyle(fontSize: 18),
-                ),
-              )
             ],
           ),
           const Spacer(),
         ],
       ),
     ));
-  }
-
-  signOut() async {
-    await auth.signOut();
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => WelcomePage()));
   }
 }

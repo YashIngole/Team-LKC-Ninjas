@@ -12,7 +12,7 @@ import 'package:sahayak/user/home.dart';
 //import 'package:sahayak/user/SearchWorkers.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); 
+  WidgetsFlutterBinding.ensureInitialized();
 
   if (kIsWeb) {
     await Firebase.initializeApp(
@@ -66,6 +66,6 @@ class _MyAppState extends State<MyApp> {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: _isSignedIn ? Home() : WelcomePage());
+        home: _isSignedIn ? WelcomePage() : Home());
   }
 }
