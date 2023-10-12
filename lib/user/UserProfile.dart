@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahayak/Themeconst.dart';
@@ -83,53 +82,76 @@ class _HomeState extends State<userprofile> {
           // SizedBox(
           //   height: 10,
           // ),
-          Center(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: Container(
-                  height: Get.height * 0.05,
-                  width: Get.width * 0.6,
-                  color: ktilecolor,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        Get.defaultDialog(
-                            title: "Send work request",
-                            content: Column(
-                              children: [
-                                TextFormField(
-                                  onChanged: (val) {
-                                    setState(() {
-                                      issue = val;
-                                    });
-                                  },
-                                  minLines: 5,
-                                  maxLines: null,
-                                  maxLength: 500,
-                                  decoration: const InputDecoration(
-                                      border: OutlineInputBorder(),
-                                      labelText: "Describe your issue"),
-                                ),
-                              ],
-                            ),
-                            actions: [
-                              ElevatedButton(
-                                  onPressed: () {}, child: const Text("send request"))
-                            ]);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(0), // <-- Radius
+          Column(
+            children: [
+              Center(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Container(
+                      height: Get.height * 0.05,
+                      width: Get.width * 0.6,
+                      color: ktilecolor,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Get.defaultDialog(
+                              title: "Send work request",
+                              content: Column(
+                                children: [
+                                  TextFormField(
+                                    onChanged: (val) {
+                                      setState(() {
+                                        issue = val;
+                                      });
+                                    },
+                                    minLines: 5,
+                                    maxLines: null,
+                                    maxLength: 500,
+                                    decoration: const InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        labelText: "Describe your issue"),
+                                  ),
+                                ],
+                              ),
+                              actions: [
+                                ElevatedButton(
+                                    onPressed: () {},
+                                    child: const Text("send request"))
+                              ]);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.transparent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(0), // <-- Radius
+                          ),
+                        ),
+                        child: const Text(
+                          "Send requests",
+                          style: TextStyle(fontSize: 20),
                         ),
                       ),
-                      child: const Text(
-                        "Send requests",
-                        style: TextStyle(fontSize: 20),
-                      )),
+                    ),
+                  ),
                 ),
               ),
-            ),
+              SizedBox(
+                height: 10,
+              ),
+              ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(0), // <-- Radius
+                  ),
+                ),
+                child: Text(
+                  "LogOut",
+                  style: TextStyle(fontSize: 18),
+                ),
+              )
+            ],
           ),
           const Spacer(),
         ],
