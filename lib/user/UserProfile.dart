@@ -122,13 +122,66 @@ class _HomeState extends State<userprofile> {
                   height: Get.height * 0.3,
                   width: Get.width * 0.6,
                   imageUrl: ImageUrl,
-                  imageBuilder: (context, imageProvider) => Container(
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.fill,
-                        ),
-                        borderRadius: BorderRadius.circular(10)),
+                  imageBuilder: (context, imageProvider) => Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.fill,
+                            ),
+                            borderRadius: BorderRadius.circular(10)),
+                      ),
+                      Positioned(
+                          right: 0,
+                          bottom: 0,
+                          child: ElevatedButton.icon(
+                              onPressed: () async {
+                                ImagePicker imagePicker = ImagePicker();
+                                XFile? file = await imagePicker.pickImage(
+                                  source: ImageSource.gallery,
+                                );
+                                if (file == null) {
+                                  return;
+                                }
+                                //convert file to data
+                                final Uint8List fileBytes =
+                                    await file.readAsBytes();
+
+                                // Reference to storage root of Firebase Storage
+                                Reference referenceRoot =
+                                    FirebaseStorage.instance.ref();
+                                Reference referenceDirImages =
+                                    referenceRoot.child('images');
+
+                                // Reference for the image to be stored
+                                String uniqueFileName =
+                                    '${DateTime.now().millisecondsSinceEpoch}.jpg';
+                                Reference referenceImageToUpload =
+                                    referenceDirImages.child(uniqueFileName);
+                                try {
+                                  // Store the file
+                                  await referenceImageToUpload.putData(
+                                      fileBytes,
+                                      SettableMetadata(
+                                          contentType: 'image/jpeg'));
+                                  ImageUrl = await referenceImageToUpload
+                                      .getDownloadURL();
+                                  print(ImageUrl);
+                                  setState(
+                                    () {
+                                      ImageUrl;
+                                    },
+                                  );
+                                } catch (e) {
+                                  print('Error uploading image: $e');
+                                }
+
+                                AddImageUrl();
+                              },
+                              icon: Icon(Icons.edit),
+                              label: Text("edit")))
+                    ],
                   ),
                   placeholder: (context, url) =>
                       const CircularProgressIndicator(),
@@ -159,10 +212,15 @@ class _HomeState extends State<userprofile> {
                       Text("Email : $email",
                           style: GoogleFonts.acme(
                               color: Colors.white, fontSize: 20)),
-                      Text(
-                        "Phone : ${user!.displayName}",
-                        style:
-                            GoogleFonts.acme(color: Colors.white, fontSize: 20),
+                      Row(
+                        children: [
+                          Text(
+                            "Phone : ${user!.displayName}",
+                            style: GoogleFonts.acme(
+                                color: Colors.white, fontSize: 20),
+                          ),
+                          IconButton(onPressed: () {}, icon: Icon(Icons.edit))
+                        ],
                       ),
                     ],
                   ),
