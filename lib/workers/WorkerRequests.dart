@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 import 'package:sahayak/Loading.dart';
 import 'package:sahayak/Themeconst.dart';
 import 'package:sahayak/auth%20svc/authentication.dart';
+import 'package:sahayak/auth%20svc/databaseService.dart';
 import 'package:sahayak/auth%20svc/helper.dart';
+import 'package:sahayak/user/UserProfile.dart';
 
 class workerrequests extends StatefulWidget {
   workerrequests({super.key});
@@ -20,6 +22,7 @@ class _workerrequestsState extends State<workerrequests> {
   final TextEditingController priceController = TextEditingController();
   String userName = "";
   String email = "";
+  databaseService _databaseservice = databaseService();
   gettingUserData() async {
     await helperFunctions.getUserEmailFromSF().then((value) {
       setState(() {
@@ -113,8 +116,17 @@ class _workerrequestsState extends State<workerrequests> {
                                   ],
                                 ),
                                 trailing: ElevatedButton(
-                                    onPressed: () {},
-                                    child: const Text("Accept")),
+                                    onPressed: () {
+                                      setState(() {});
+                                      if (data['AcceptStatus'] == 'false') {
+                                        updateAcceptStatusTrue();
+                                      } else {
+                                        updateAcceptStatusFalse();
+                                      }
+                                    },
+                                    child: data['AcceptStatus'] == 'false'
+                                        ? Text("Accept")
+                                        : Text("Accepted")),
                               ),
                             ),
                           );
@@ -136,5 +148,35 @@ class _workerrequestsState extends State<workerrequests> {
         ),
       ),
     );
+  }
+
+  void updateAcceptStatusFalse() async {
+    var collection = FirebaseFirestore.instance.collection('service_requests');
+
+    var querySnapshot =
+        await collection.where('userId', isEqualTo: userId).get();
+    if (querySnapshot.docs.isNotEmpty) {
+      var documentSnapshot = querySnapshot.docs.first;
+      collection
+          .doc(documentSnapshot.id)
+          .update({'AcceptStatus': "false"})
+          .then((_) => print('Success'))
+          .catchError((error) => print('Failed: $error'));
+    }
+  }
+
+  void updateAcceptStatusTrue() async {
+    var collection = FirebaseFirestore.instance.collection('service_requests');
+
+    var querySnapshot =
+        await collection.where('userId', isEqualTo: userId).get();
+    if (querySnapshot.docs.isNotEmpty) {
+      var documentSnapshot = querySnapshot.docs.first;
+      collection
+          .doc(documentSnapshot.id)
+          .update({'AcceptStatus': "true"})
+          .then((_) => print('Success'))
+          .catchError((error) => print('Failed: $error'));
+    }
   }
 }
