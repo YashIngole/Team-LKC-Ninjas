@@ -10,7 +10,7 @@ import 'package:sahayak/auth%20svc/databaseService.dart';
 import 'package:sahayak/auth%20svc/helper.dart';
 
 class workerpage extends StatefulWidget {
-  const workerpage({super.key});
+  const workerpage({Key? key});
 
   @override
   State<workerpage> createState() => _workerpageState();
@@ -42,14 +42,11 @@ class _workerpageState extends State<workerpage> {
   AuthService authService = AuthService();
   String title = "";
   String title1 = "";
-  String listId = '';
+  String listId = "";
   String? category;
   String Description = "";
   List<String> categories = [];
-  // Initial Selected Value
-  String dropdownvalue = 'Electrician';
-
-  // List of items in our dropdown menu
+  List<DocumentSnapshot<Map<String, dynamic>>> docs = [];
 
   @override
   Widget build(BuildContext context) {
@@ -274,13 +271,13 @@ class _workerpageState extends State<workerpage> {
                   }
 
                   if (snapshot.hasData) {
-                    final docs = snapshot.data!.docs;
+                    docs = snapshot.data!.docs;
 
                     return ListView.builder(
                       itemCount: docs.length,
                       itemBuilder: (_, i) {
                         final data = docs[i].data();
-                        title1 = data["title"];
+                        title1 = data!["title"];
 
                         return Padding(
                           padding: const EdgeInsets.symmetric(
@@ -345,7 +342,7 @@ class _workerpageState extends State<workerpage> {
                                 icon: const Icon(Icons.delete_outline,
                                     color: Colors.white, size: 30.0),
                                 onPressed: () {
-                                  deleteworklistData();
+                                  deleteworklistData(i);
                                 },
                               ),
                             ),
@@ -365,14 +362,10 @@ class _workerpageState extends State<workerpage> {
     );
   }
 
-  void deleteworklistData() async {
-    var collection = FirebaseFirestore.instance.collection('workerlisting');
-    print(title);
-    var querySnapshot =
-        await collection.where("title", isEqualTo: title1).get();
-
-    if (querySnapshot.docs.isNotEmpty) {
-      var documentSnapshot = querySnapshot.docs.first;
+  void deleteworklistData(int index) async {
+    if (index >= 0 && index < docs.length) {
+      var documentSnapshot = docs[index];
+      var collection = FirebaseFirestore.instance.collection('workerlisting');
 
       collection
           .doc(documentSnapshot.id)
