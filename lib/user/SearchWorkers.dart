@@ -58,12 +58,12 @@ class _SearchWorkersState extends State<SearchWorkers> {
               padding: const EdgeInsets.only(left: 20, top: 20),
               child: Text(
                 "Search For Workers Nearby You!",
-                style: TextStyle(color: Colors.white, fontSize: 30),
+                style: GoogleFonts.roboto(color: Colors.white, fontSize: 30),
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(
-                  top: 30, bottom: 20, left: 20, right: 20),
+                  top: 20, bottom: 20, left: 20, right: 20),
               child: TextField(
                 style: const TextStyle(color: Colors.white),
                 decoration: const InputDecoration(
