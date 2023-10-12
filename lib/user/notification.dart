@@ -13,15 +13,17 @@ class _notificationState extends State<notification> {
   Widget build(BuildContext context) {
     return const Scaffold(
       backgroundColor: kbackgroundcolor,
-      body: Column(
-        children: [
-          Center(
-            child: Text(
-              "sent requests",
-              style: TextStyle(color: Colors.white, fontSize: 24),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Center(
+              child: Text(
+                "sent requests",
+                style: TextStyle(color: Colors.white, fontSize: 24),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
