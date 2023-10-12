@@ -68,7 +68,9 @@ class _HomeState extends State<workerprofile> {
                             ),
                             actions: [
                               ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Get.back();
+                                  },
                                   child: const Text("send request")),
                             ]);
                       },

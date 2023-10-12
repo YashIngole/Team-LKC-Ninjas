@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahayak/Themeconst.dart';
@@ -114,7 +113,10 @@ class _HomeState extends State<userprofile> {
                             ),
                             actions: [
                               ElevatedButton(
-                                  onPressed: () {}, child: const Text("send request"))
+                                  onPressed: () {
+                                    Get.back();
+                                  },
+                                  child: const Text("send request"))
                             ]);
                       },
                       style: ElevatedButton.styleFrom(

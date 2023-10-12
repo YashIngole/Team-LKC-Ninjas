@@ -84,13 +84,13 @@ class _workerpageState extends State<workerpage> {
                                   style: const TextStyle(),
                                   decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
-                                        borderSide:
-                                            const BorderSide(color: Colors.black),
+                                        borderSide: const BorderSide(
+                                            color: Colors.black),
                                         borderRadius:
                                             BorderRadius.circular(12)),
                                     focusedBorder: OutlineInputBorder(
-                                        borderSide:
-                                            const BorderSide(color: Colors.black),
+                                        borderSide: const BorderSide(
+                                            color: Colors.black),
                                         borderRadius:
                                             BorderRadius.circular(12)),
                                     errorBorder: OutlineInputBorder(
@@ -162,13 +162,13 @@ class _workerpageState extends State<workerpage> {
                                   maxLength: 500,
                                   decoration: InputDecoration(
                                     enabledBorder: OutlineInputBorder(
-                                        borderSide:
-                                            const BorderSide(color: Colors.black),
+                                        borderSide: const BorderSide(
+                                            color: Colors.black),
                                         borderRadius:
                                             BorderRadius.circular(12)),
                                     focusedBorder: OutlineInputBorder(
-                                        borderSide:
-                                            const BorderSide(color: Colors.black),
+                                        borderSide: const BorderSide(
+                                            color: Colors.black),
                                         borderRadius:
                                             BorderRadius.circular(12)),
                                     errorBorder: OutlineInputBorder(
@@ -188,30 +188,28 @@ class _workerpageState extends State<workerpage> {
                                 ),
                               ),
                               ElevatedButton(
-                                  onPressed: () {
-                                    User? user =
-                                        authService.firebaseAuth.currentUser;
+                                onPressed: () {
+                                  User? user =
+                                      authService.firebaseAuth.currentUser;
 
-                                    _databaseservice.saveworkerlisting(
-                                        userName,
-                                        title,
-                                        user!.uid,
-                                        category,
-                                        Description);
-                                  },
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(Colors
-                                            .black), // Set the background color to black
-                                    shape: MaterialStateProperty.all<
-                                        OutlinedBorder>(
-                                      RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            0.0), // Set the border radius to make it rectangular
-                                      ),
+                                  _databaseservice.saveworkerlisting(userName,
+                                      title, user!.uid, category, Description);
+                                  Get.back();
+                                },
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(Colors
+                                          .black), // Set the background color to black
+                                  shape:
+                                      MaterialStateProperty.all<OutlinedBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          0.0), // Set the border radius to make it rectangular
                                     ),
                                   ),
-                                  child: const Text("Create")),
+                                ),
+                                child: const Text("Create"),
+                              ),
                             ],
                           ),
                         ),
@@ -257,14 +255,16 @@ class _workerpageState extends State<workerpage> {
                                         right: BorderSide(
                                             width: 1.0,
                                             color: Colors.white24))),
-                                child: const Icon(Icons.work, color: Colors.white),
+                                child:
+                                    const Icon(Icons.work, color: Colors.white),
                               ),
                               title: Row(
                                 children: [
                                   Expanded(
                                     child: Text(
                                       data['title'],
-                                      style: const TextStyle(color: Colors.white),
+                                      style:
+                                          const TextStyle(color: Colors.white),
                                     ),
                                   ),
                                 ],
@@ -277,11 +277,12 @@ class _workerpageState extends State<workerpage> {
                                     children: [
                                       Text(
                                         data['category'].toString(),
-                                        style: const TextStyle(color: Colors.white),
+                                        style: const TextStyle(
+                                            color: Colors.white),
                                       ),
                                       Text(data['Description'],
-                                          style:
-                                              const TextStyle(color: Colors.white)),
+                                          style: const TextStyle(
+                                              color: Colors.white)),
                                     ],
                                   ),
                                   const Spacer(),
