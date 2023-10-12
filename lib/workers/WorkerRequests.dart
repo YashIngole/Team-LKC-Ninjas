@@ -1,16 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:sahayak/Loading.dart';
 import 'package:sahayak/Themeconst.dart';
 import 'package:sahayak/auth%20svc/authentication.dart';
 import 'package:sahayak/auth%20svc/databaseService.dart';
 import 'package:sahayak/auth%20svc/helper.dart';
-import 'package:sahayak/user/UserProfile.dart';
 
 class workerrequests extends StatefulWidget {
-  workerrequests({Key? key});
+  const workerrequests({Key? key});
 
   @override
   State<workerrequests> createState() => _workerrequestsState();
@@ -19,12 +17,12 @@ class workerrequests extends StatefulWidget {
 class _workerrequestsState extends State<workerrequests> {
   final TextEditingController availabilityController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
-  String userName = "";
-  String email = "";
+
   List<String> descriptions = [];
 
-  databaseService _databaseservice = databaseService();
-
+  final databaseService _databaseservice = databaseService();
+  String userName = "";
+  String email = "";
   gettingUserData() async {
     await helperFunctions.getUserEmailFromSF().then((value) {
       setState(() {
@@ -125,8 +123,8 @@ class _workerrequestsState extends State<workerrequests> {
                                     }
                                   },
                                   child: data['AcceptStatus'] == 'false'
-                                      ? Text("Accept")
-                                      : Text("Accepted"),
+                                      ? const Text("Accept")
+                                      : const Text("Accepted"),
                                 ),
                               ),
                             ),
@@ -135,7 +133,7 @@ class _workerrequestsState extends State<workerrequests> {
                       ),
                     );
                   }
-                  // Future.delayed(1000.milliseconds);
+
                   return const Center(child: LoadingIndicator());
                 },
               )

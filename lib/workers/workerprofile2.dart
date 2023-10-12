@@ -1,5 +1,5 @@
 import 'dart:typed_data';
-//import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -72,30 +72,30 @@ class _HomeState extends State<workerprofile2> {
           const SizedBox(
             height: 40,
           ),
-          // CachedNetworkImage(
-          //   height: Get.height * 0.3,
-          //   width: Get.width * 0.6,
-          //   imageUrl: ImageUrl,
-          //   imageBuilder: (context, imageProvider) => Stack(
-          //     children: [
-          //       Container(
-          //         decoration: BoxDecoration(
-          //             image: DecorationImage(
-          //               image: imageProvider,
-          //               fit: BoxFit.fill,
-          //             ),
-          //             borderRadius: BorderRadius.circular(10)),
-          //       ),
-          //     ],
-          //   ),
-          //   placeholder: (context, url) => const CircularProgressIndicator(),
-          //   errorWidget: (context, url, error) => Container(
-          //     height: Get.height * 0.3,
-          //     width: Get.width * 0.6,
-          //     decoration: BoxDecoration(
-          //         color: ktilecolor, borderRadius: BorderRadius.circular(10)),
-          //   ),
-          // ),
+          CachedNetworkImage(
+            height: Get.height * 0.3,
+            width: Get.width * 0.6,
+            imageUrl: ImageUrl,
+            imageBuilder: (context, imageProvider) => Stack(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.fill,
+                      ),
+                      borderRadius: BorderRadius.circular(10)),
+                ),
+              ],
+            ),
+            placeholder: (context, url) => const CircularProgressIndicator(),
+            errorWidget: (context, url, error) => Container(
+              height: Get.height * 0.3,
+              width: Get.width * 0.6,
+              decoration: BoxDecoration(
+                  color: ktilecolor, borderRadius: BorderRadius.circular(10)),
+            ),
+          ),
           Spacer(),
           Column(
             children: [

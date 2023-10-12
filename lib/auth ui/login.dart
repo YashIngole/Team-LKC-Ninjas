@@ -126,7 +126,8 @@ class _SigninState extends State<LoginPage> {
                                               hintText: "Email",
                                               hintStyle: TextStyle(
                                                   color: Colors.grey[500])),
-                                          style: const TextStyle(color: Colors.white),
+                                          style: const TextStyle(
+                                              color: Colors.white),
                                           validator: (val) {
                                             return RegExp(
                                                         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
@@ -153,7 +154,8 @@ class _SigninState extends State<LoginPage> {
                                               hintText: "Password",
                                               hintStyle: TextStyle(
                                                   color: Colors.grey[500])),
-                                          style: const TextStyle(color: Colors.white),
+                                          style: const TextStyle(
+                                              color: Colors.white),
                                           //parameter for name input
                                           onChanged: (val) {
                                             setState(() {

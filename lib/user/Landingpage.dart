@@ -90,12 +90,6 @@ class _LandingPageState extends State<LandingPage> {
                             )
                           ],
                         ),
-                        Spacer(),
-                        IconButton(
-                            onPressed: () {
-                              signOut();
-                            },
-                            icon: Icon(Icons.logout_outlined)),
                       ],
                     ),
                   ],
@@ -136,7 +130,7 @@ class _LandingPageState extends State<LandingPage> {
                     const Spacer(),
                     InkWell(
                       onTap: () {
-                        Get.to(SearchWorkers(InitialVal: ""));
+                        Get.to(const SearchWorkers(InitialVal: ""));
                       },
                       child: Text("View all",
                           style: GoogleFonts.andadaPro(
@@ -161,6 +155,6 @@ class _LandingPageState extends State<LandingPage> {
   signOut() async {
     await auth.signOut();
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => WelcomePage()));
+        context, MaterialPageRoute(builder: (context) => const WelcomePage()));
   }
 }

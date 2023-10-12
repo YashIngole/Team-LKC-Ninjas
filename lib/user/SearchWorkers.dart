@@ -1,3 +1,6 @@
+import 'dart:core';
+
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
@@ -6,6 +9,7 @@ import 'package:sahayak/Loading.dart';
 import 'package:sahayak/Themeconst.dart';
 import 'package:sahayak/auth%20svc/helper.dart';
 import 'package:sahayak/workers/workerprofile.dart';
+import 'package:sahayak/workers/workerprofile2.dart';
 
 class SearchWorkers extends StatefulWidget {
   const SearchWorkers({Key? key, required this.InitialVal});
@@ -147,14 +151,15 @@ class _SearchWorkersState extends State<SearchWorkers> {
                       itemBuilder: (_, i) {
                         final data = filteredDocs[i].data();
                         String userId = data['worker id'].toString();
+                        String DiplayName = data['DisplayName'] ?? "";
+
                         return Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 10, vertical: 8),
                           child: InkWell(
                             onTap: () {
-                              Get.to(workerprofile(
-                                workername: userName,
-                                ImageUrl: '',
+                              Get.to(workerprofile2(
+                                DisplayName: DiplayName,
                                 userId: userId,
                               ));
                             },

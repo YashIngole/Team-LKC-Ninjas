@@ -8,6 +8,7 @@ import 'package:sahayak/Themeconst.dart';
 import 'package:sahayak/auth%20svc/authentication.dart';
 import 'package:sahayak/auth%20svc/databaseService.dart';
 import 'package:sahayak/auth%20svc/helper.dart';
+import 'package:sahayak/auth%20ui/welcome_ui.dart';
 
 class workerpage extends StatefulWidget {
   const workerpage({Key? key});
@@ -47,7 +48,7 @@ class _workerpageState extends State<workerpage> {
   String Description = "";
   List<String> categories = [];
   List<DocumentSnapshot<Map<String, dynamic>>> docs = [];
-
+  final FirebaseAuth auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -78,9 +79,18 @@ class _workerpageState extends State<workerpage> {
                           fontSize: 30,
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
+                const Spacer(),
+                IconButton(
+                    onPressed: () {
+                      signOut();
+                    },
+                    icon: const Icon(
+                      Icons.logout_outlined,
+                      color: Colors.white,
+                    )),
               ],
             ),
             Column(
@@ -225,39 +235,33 @@ class _workerpageState extends State<workerpage> {
                                         User? user = authService
                                             .firebaseAuth.currentUser;
 
-                                        _databaseservice.saveworkerlisting(
-                                            userName,
-                                            title,
-                                            user!.uid,
-                                            category,
-                                            Description);
-                                      },
-                                      style: ButtonStyle(
-                                        backgroundColor: MaterialStateProperty
-                                            .all<Color>(Colors
-                                                .black), // Set the background color to black
-                                        shape: MaterialStateProperty.all<
-                                            OutlinedBorder>(
-                                          RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                0.0), // Set the border radius to make it rectangular
-                                          ),
-                                        ),
+                                    _databaseservice.saveworkerlisting(
+                                        userName,
+                                        title,
+                                        user!.uid,
+                                        category,
+                                        Description);
+                                  },
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(Colors
+                                            .black), // Set the background color to black
+                                    shape: MaterialStateProperty.all<
+                                        OutlinedBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            0.0), // Set the border radius to make it rectangular
                                       ),
-                                      child: const Text("Create")),
-                                ],
-                              ),
-                            ),
+                                    ),
+                                  ),
+                                  child: const Text("Create")),
+                            ],
                           ),
-                        );
-                      },
-                      child: Icon(Icons.add)),
-                ),
-                Text(
-                  "Create a Listing",
-                  style: TextStyle(color: Colors.white),
-                )
-              ],
+                        ),
+                      ),
+                    );
+                  },
+                  child: const Text("Create Listing")),
             ),
             const SizedBox(height: 30),
             Expanded(
@@ -358,8 +362,8 @@ class _workerpageState extends State<workerpage> {
             ),
           ],
         ),
-      ),
-    );
+     ] ),
+     ), );
   }
 
   void deleteworklistData(int index) async {
@@ -375,5 +379,11 @@ class _workerpageState extends State<workerpage> {
     } else {
       print('Document not found');
     }
+  }
+
+  signOut() async {
+    await auth.signOut();
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => const WelcomePage()));
   }
 }

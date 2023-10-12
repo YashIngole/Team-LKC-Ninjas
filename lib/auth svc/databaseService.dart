@@ -65,4 +65,11 @@ class databaseService {
 
   //user collection ref
   CollectionReference usersRef = FirebaseFirestore.instance.collection('users');
+
+  //add imageurl field in user
+  Future SavingImageurl(String ImageUrl) async {
+    return await userCollection.doc(uid).set({
+      "ImageUrl": ImageUrl,
+    });
+  }
 }
