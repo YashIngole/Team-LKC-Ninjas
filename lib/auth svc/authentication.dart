@@ -24,7 +24,7 @@ class AuthService {
 
   //register
   Future registerUserWithEmailAndPassword(
-      String fullName, String email, String password, userType) async {
+      String fullName, String email, String password, userType, String Phone) async {
     try {
       User user = (await firebaseAuth.createUserWithEmailAndPassword(
               email: email, password: password))
@@ -32,7 +32,7 @@ class AuthService {
 
       if (user != null) {
         //call database to update the user data
-        await databaseService(uid: user.uid).savingUserData(fullName, email,);
+        await databaseService(uid: user.uid).savingUserData(fullName, email, Phone);
 
         return true;
       } else {}
@@ -43,7 +43,7 @@ class AuthService {
 
   //register worker
   Future registerworkerWithEmailAndPassword(
-      String fullName, String email, String password, userType) async {
+      String fullName, String email, String password, userType, String Phone) async {
     try {
       User user = (await firebaseAuth.createUserWithEmailAndPassword(
               email: email, password: password))
@@ -51,7 +51,7 @@ class AuthService {
 
       if (user != null) {
         //call database to update the user data
-        await databaseService(uid: user.uid).savingworkerData(fullName, email);
+        await databaseService(uid: user.uid).savingworkerData(fullName, email, Phone);
 
         return true;
       } else {}

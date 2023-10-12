@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahayak/auth%20svc/helper.dart';
+import 'package:sahayak/auth%20ui/register_ui.dart';
 import 'package:sahayak/auth%20ui/welcome_ui.dart';
 import 'package:sahayak/constants.dart';
 import 'package:sahayak/firebase_options.dart';
@@ -66,8 +67,6 @@ class _MyAppState extends State<MyApp> {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: //Home()
-            // WelcomePage()
-            WorkerHome());
+        home: WelcomePage());
   }
 }

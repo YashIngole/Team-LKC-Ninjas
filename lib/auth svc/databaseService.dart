@@ -9,19 +9,25 @@ class databaseService {
 
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection("users");
-  Future savingUserData(String fullName, String email) async {
-    return await userCollection.doc(uid).set(
-        {"fullName": fullName, "email": email, "uid": uid, "userType": "user"});
-  }
-
-  final CollectionReference workerCollection =
-      FirebaseFirestore.instance.collection("workers");
-  Future savingworkerData(String fullName, String email) async {
+  Future savingUserData(String fullName, String email, String Phone) async {
     return await userCollection.doc(uid).set({
       "fullName": fullName,
       "email": email,
       "uid": uid,
-      "userType": "worker"
+      "userType": "user",
+      "Phone": Phone
+    });
+  }
+
+  final CollectionReference workerCollection =
+      FirebaseFirestore.instance.collection("workers");
+  Future savingworkerData(String fullName, String email, String Phone) async {
+    return await userCollection.doc(uid).set({
+      "fullName": fullName,
+      "email": email,
+      "uid": uid,
+      "userType": "worker",
+      "Phone": Phone,
     });
   }
 
@@ -48,7 +54,6 @@ class databaseService {
   // function to save the listing data to Firestore
   Future<void> saveworkerlisting(String? DisplayName, String title,
       String workerid, String? category, String Description) async {
-    // new document with a unique ID in the 'drivers' collection
     DocumentReference newworkersRef = workersRef.doc();
 
     await newworkersRef.set({
