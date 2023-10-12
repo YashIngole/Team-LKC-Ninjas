@@ -62,17 +62,6 @@ class _LandingPageState extends State<LandingPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        // Padding(
-                        //   padding: const EdgeInsets.symmetric(
-                        //       horizontal: 10, vertical: 10),
-                        //   child: Container(
-                        //     height: 50,
-                        //     width: 50,
-                        //     decoration: BoxDecoration(
-                        //         borderRadius: BorderRadius.circular(1000),
-                        //         color: Colors.green),
-                        //   ),
-                        // ),
                         Column(
                           children: [
                             Padding(
