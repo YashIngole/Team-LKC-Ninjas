@@ -102,7 +102,7 @@ class _workerpageState extends State<workerpage> {
                       Get.defaultDialog(
                         contentPadding: EdgeInsets.zero,
                         barrierDismissible: false,
-                        title: "Create a listing",
+                        title: "Create a Work",
                         content: SingleChildScrollView(
                           child: SizedBox(
                             width: Get.width * 0.5,
