@@ -24,6 +24,7 @@ User? currentUser = FirebaseAuth.instance.currentUser;
 String userId = currentUser!.uid;
 String issue = "";
 String ImageUrl = "";
+String Phone = "";
 
 class _HomeState extends State<userprofile> {
   String userName = "";
@@ -33,6 +34,7 @@ class _HomeState extends State<userprofile> {
     email = await helperFunctions.getUserEmailFromSF() ?? '';
     userName = await helperFunctions.getUserNameFromSF() ?? '';
     final imageUrl = await getImageUrl(userId);
+
     setState(() {
       ImageUrl = imageUrl ?? "";
     });
@@ -41,6 +43,7 @@ class _HomeState extends State<userprofile> {
   AuthService authService = AuthService();
   final databaseService _databaseservice = databaseService();
   final FirebaseAuth auth = FirebaseAuth.instance;
+  TextEditingController phoneController = TextEditingController();
   @override
   void initState() {
     getUserData();
@@ -197,32 +200,60 @@ class _HomeState extends State<userprofile> {
           Column(
             children: [
               Center(
-                child: Container(
-                  padding: EdgeInsets.all(20),
-                  color: ktilecolor,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Name : $userName",
-                        style:
-                            GoogleFonts.acme(color: Colors.white, fontSize: 20),
-                      ),
-                      Text("Email : $email",
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(20)),
+                    padding: EdgeInsets.all(20),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Name : $userName",
                           style: GoogleFonts.acme(
-                              color: Colors.white, fontSize: 20)),
-                      Row(
-                        children: [
-                          Text(
-                            "Phone : ${user!.displayName}",
+                              color: Colors.white, fontSize: 20),
+                        ),
+                        Text("Email : $email",
                             style: GoogleFonts.acme(
-                                color: Colors.white, fontSize: 20),
-                          ),
-                          IconButton(onPressed: () {}, icon: Icon(Icons.edit))
-                        ],
-                      ),
-                    ],
+                                color: Colors.white, fontSize: 20)),
+                        Row(
+                          children: [
+                            Expanded(
+                                child: Text(
+                              "Phone: $Phone",
+                              style: GoogleFonts.acme(
+                                  color: Colors.white, fontSize: 20),
+                            )),
+                            IconButton(
+                              onPressed: () {
+                                Get.defaultDialog(
+                                    content: TextFormField(
+                                      onChanged: (value) {
+                                        setState(() {
+                                          Phone = value;
+                                        });
+                                      },
+                                      controller: phoneController,
+                                      decoration: InputDecoration(
+                                          labelText: "Update Phone Number"),
+                                    ),
+                                    actions: [
+                                      IconButton(
+                                          onPressed: () {
+                                            AddPhoneNumber();
+                                          },
+                                          icon: Icon(Icons.save))
+                                    ]);
+                              },
+                              icon: Icon(Icons.edit),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -267,6 +298,20 @@ class _HomeState extends State<userprofile> {
       collection
           .doc(documentSnapshot.id)
           .update({'ImageUrl': ImageUrl})
+          .then((_) => print('Success'))
+          .catchError((error) => print('Failed: $error'));
+    }
+  }
+
+  void AddPhoneNumber() async {
+    var collection = FirebaseFirestore.instance.collection('users');
+
+    var querySnapshot = await collection.where('uid', isEqualTo: userId).get();
+    if (querySnapshot.docs.isNotEmpty) {
+      var documentSnapshot = querySnapshot.docs.first;
+      collection
+          .doc(documentSnapshot.id)
+          .update({'Phone': Phone})
           .then((_) => print('Success'))
           .catchError((error) => print('Failed: $error'));
     }
