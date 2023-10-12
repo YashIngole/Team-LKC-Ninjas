@@ -14,9 +14,10 @@ import 'package:sahayak/auth%20svc/helper.dart';
 
 //import 'package:image_picker/image_picker.dart';
 class workerprofile2 extends StatefulWidget {
-  const workerprofile2({super.key, required this.DisplayName, required this.userId});
+  const workerprofile2(
+      {super.key, required this.DisplayName, required this.userId});
   final String DisplayName;
-   final String userId;
+  final String userId;
   @override
   State<workerprofile2> createState() => _HomeState();
 }
@@ -120,47 +121,47 @@ class _HomeState extends State<workerprofile2> {
                   ),
                 ),
               ),
-             ElevatedButton(
-                      onPressed: () {
-                        Get.defaultDialog(
-                            title: "Send work request",
-                            content: Column(
-                              children: [
-                                TextFormField(
-                                  onChanged: (val) {
-                                    setState(() {
-                                      issue = val;
-                                    });
-                                  },
-                                  minLines: 5,
-                                  maxLines: null,
-                                  maxLength: 500,
-                                  decoration: const InputDecoration(
-                                      border: OutlineInputBorder(),
-                                      labelText: "Describe your issue"),
-                                ),
-                              ],
+              ElevatedButton(
+                  onPressed: () {
+                    Get.defaultDialog(
+                        title: "Send work request",
+                        content: Column(
+                          children: [
+                            TextFormField(
+                              onChanged: (val) {
+                                setState(() {
+                                  issue = val;
+                                });
+                              },
+                              minLines: 5,
+                              maxLines: null,
+                              maxLength: 500,
+                              decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: "Describe your issue"),
                             ),
-                            actions: [
-                              ElevatedButton(
-                                  onPressed: () {
-                                    _databaseservice.createServiceRequest(
-                                        issue, widget.userId, false);
-                                    Get.back();
-                                  },
-                                  child: const Text("send request"))
-                            ]);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(0), // <-- Radius
+                          ],
                         ),
-                      ),
-                      child: const Text(
-                        "Send requests",
-                        style: TextStyle(fontSize: 20),
-                      )),
+                        actions: [
+                          ElevatedButton(
+                              onPressed: () {
+                                _databaseservice.createServiceRequest(
+                                    issue, widget.userId, false);
+                                Get.back();
+                              },
+                              child: const Text("send request"))
+                        ]);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(0), // <-- Radius
+                    ),
+                  ),
+                  child: const Text(
+                    "Send Work request",
+                    style: TextStyle(fontSize: 20),
+                  )),
             ],
           ),
           const Spacer()
