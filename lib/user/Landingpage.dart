@@ -90,14 +90,12 @@ class _LandingPageState extends State<LandingPage> {
                             )
                           ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 240),
-                          child: IconButton(
-                              onPressed: () {
-                                signOut();
-                              },
-                              icon: Icon(Icons.logout_outlined)),
-                        ),
+                        Spacer(),
+                        IconButton(
+                            onPressed: () {
+                              signOut();
+                            },
+                            icon: Icon(Icons.logout_outlined)),
                       ],
                     ),
                   ],
