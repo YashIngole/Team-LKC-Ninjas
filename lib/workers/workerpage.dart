@@ -87,7 +87,10 @@ class _workerpageState extends State<workerpage> {
                     onPressed: () {
                       signOut();
                     },
-                    icon: const Icon(Icons.logout_outlined)),
+                    icon: const Icon(
+                      Icons.logout_outlined,
+                      color: Colors.white,
+                    )),
               ],
             ),
             Column(
