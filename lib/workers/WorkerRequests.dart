@@ -1,21 +1,53 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sahayak/Loading.dart';
 import 'package:sahayak/Themeconst.dart';
+import 'package:sahayak/auth%20svc/authentication.dart';
+import 'package:sahayak/auth%20svc/helper.dart';
 
-class workerrequests extends StatelessWidget {
-  final TextEditingController availabilityController = TextEditingController();
-  final TextEditingController priceController = TextEditingController();
-
+class workerrequests extends StatefulWidget {
   workerrequests({super.key});
+
+  @override
+  State<workerrequests> createState() => _workerrequestsState();
+}
+
+class _workerrequestsState extends State<workerrequests> {
+  final TextEditingController availabilityController = TextEditingController();
+
+  final TextEditingController priceController = TextEditingController();
+  String userName = "";
+  String email = "";
+  gettingUserData() async {
+    await helperFunctions.getUserEmailFromSF().then((value) {
+      setState(() {
+        email = value!;
+      });
+    });
+    await helperFunctions.getUserNameFromSF().then((val) {
+      setState(() {
+        userName = val!;
+      });
+    });
+  }
+
+  AuthService authService = AuthService();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    gettingUserData();
+  }
 
   @override
   Widget build(BuildContext context) {
     // Assuming you have a worker ID obtained after authentication.
-    const workerId = 'kKRjGRysGdPmP01bCD78UdC7NTy1';
 
+    User? user = authService.firebaseAuth.currentUser;
+    String workerId = user!.uid;
     // Assuming you have received a request ID as a parameter.
-    const requestId = 'request789';
+    const requestId = 'request789'; 
 
     return SafeArea(
       child: Scaffold(
@@ -76,12 +108,14 @@ class workerrequests extends StatelessWidget {
                                   children: [
                                     Text(
                                       data['createdAt'].toString(),
-                                      style: const TextStyle(color: Colors.white),
+                                      style:
+                                          const TextStyle(color: Colors.white),
                                     ),
                                   ],
                                 ),
                                 trailing: ElevatedButton(
-                                    onPressed: () {}, child: const Text("Accept")),
+                                    onPressed: () {},
+                                    child: const Text("Accept")),
                               ),
                             ),
                           );

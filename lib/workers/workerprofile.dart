@@ -1,21 +1,24 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahayak/Themeconst.dart';
 import 'package:sahayak/auth%20svc/databaseService.dart';
+import 'package:sahayak/user/UserProfile.dart';
 
 //import 'package:image_picker/image_picker.dart';
 class workerprofile extends StatefulWidget {
   const workerprofile(
-      {super.key, required this.workername, required this.ImageUrl});
+      {super.key,
+      required this.workername,
+      required this.ImageUrl,
+      required this.userId});
   final String workername;
   final String ImageUrl;
+  final String userId;
   @override
   State<workerprofile> createState() => _HomeState();
 }
 
 String issue = "";
-String userId = "kKRjGRysGdPmP01bCD78UdC7NTy1";
 
 class _HomeState extends State<workerprofile> {
   final databaseService _databaseservice = databaseService();
@@ -119,7 +122,7 @@ class _HomeState extends State<workerprofile> {
                               ElevatedButton(
                                   onPressed: () {
                                     _databaseservice.createServiceRequest(
-                                        issue, userId);
+                                        issue, widget.userId);
                                   },
                                   child: const Text("send request"))
                             ]);
