@@ -269,55 +269,52 @@ class _SigninState extends State<LoginPage> {
         _isLoading = true;
       });
 
-      await authService
-          .loginWithEmailAndPassword(email, password)
-          .then((value) async {
-        if (value == true) {
-          QuerySnapshot snapshot =
-              await databaseService(uid: FirebaseAuth.instance.currentUser!.uid)
-                  .gettingUserData(email);
+      try {
+        await authService.loginWithEmailAndPassword(email, password);
+        QuerySnapshot snapshot =
+            await databaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+                .gettingUserData(email);
 
-          // Saving the values to shared preferences
-          await helperFunctions.saveUserLoggedInStatus(true);
-          await helperFunctions.saveUserEmailSF(email);
-          await helperFunctions.saveUsernameSF(snapshot.docs[0]['fullName']);
+        // Saving the values to shared preferences
+        await helperFunctions.saveUserLoggedInStatus(true);
+        await helperFunctions.saveUserEmailSF(email);
+        await helperFunctions.saveUsernameSF(snapshot.docs[0]['fullName']);
 
-          // Check if the user is logged in
-          bool? isLoggedIn = await helperFunctions.getUserLoggedInStatus();
+        // Check if the user is logged in
+        bool? isLoggedIn = await helperFunctions.getUserLoggedInStatus();
 
-          // Now, let's check the user's type and navigate accordingly
-          String? useremail = authService.firebaseAuth.currentUser!.email;
+        // Now, let's check the user's type and navigate accordingly
+        String? useremail = authService.firebaseAuth.currentUser!.email;
 
-          void checkUserType() async {
-            var collection = FirebaseFirestore.instance.collection('users');
+        void checkUserType() async {
+          var collection = FirebaseFirestore.instance.collection('users');
 
-            var querySnapshot =
-                await collection.where('email', isEqualTo: useremail).get();
+          var querySnapshot =
+              await collection.where('email', isEqualTo: useremail).get();
 
-            if (querySnapshot.docs.isNotEmpty) {
-              var documentSnapshot = querySnapshot.docs.first;
-              var data = documentSnapshot.data();
+          if (querySnapshot.docs.isNotEmpty) {
+            var documentSnapshot = querySnapshot.docs.first;
+            var data = documentSnapshot.data();
 
-              if (data["userType"] == "user") {
-                // Navigate to the user home screen
-                Get.off(const Home());
-              } else {
-                // Navigate to the worker home screen
-                Get.off(const WorkerHome());
-              }
+            if (data["userType"] == "user") {
+              // Navigate to the user home screen
+              Get.off(const Home());
+            } else {
+              // Navigate to the worker home screen
+              Get.off(const WorkerHome());
             }
           }
-
-          // Call the function to check user type
-          checkUserType();
-
-          setState(() {
-            _isLoading = false;
-          });
-        } else {
-          //return Navigator.pop(context);
         }
-      });
+
+        // Call the function to check user type
+        checkUserType();
+      } catch (error) {
+        // Handle the error, for example, by showing an error message and stopping loading
+        print("Error during login: $error");
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
   }
 }
