@@ -142,7 +142,7 @@ class _LandingPageState extends State<LandingPage> {
                       },
                       child: Text("View all",
                           style: GoogleFonts.andadaPro(
-                              color: Colors.grey, fontSize: 12)),
+                              color: Colors.grey, fontSize: 15)),
                     )
                   ],
                 ),

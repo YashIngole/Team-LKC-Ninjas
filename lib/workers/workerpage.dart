@@ -98,170 +98,180 @@ class _workerpageState extends State<workerpage> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: ElevatedButton(
-                      onPressed: () {
-                        Get.defaultDialog(
-                          contentPadding: EdgeInsets.zero,
-                          barrierDismissible: false,
-                          title: "Create a listing",
-                          content: SingleChildScrollView(
-                            child: SizedBox(
-                              width: Get.width * 0.5,
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10),
-                                    child: TextFormField(
-                                      onChanged: (val) {
-                                        setState(() {
-                                          title = val;
-                                        });
-                                      },
-                                      style: const TextStyle(),
-                                      decoration: InputDecoration(
-                                        enabledBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
-                                                color: Colors.black),
-                                            borderRadius:
-                                                BorderRadius.circular(12)),
-                                        focusedBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
-                                                color: Colors.black),
-                                            borderRadius:
-                                                BorderRadius.circular(12)),
-                                        errorBorder: OutlineInputBorder(
+                    onPressed: () {
+                      Get.defaultDialog(
+                        contentPadding: EdgeInsets.zero,
+                        barrierDismissible: false,
+                        title: "Create a Work",
+                        content: SingleChildScrollView(
+                          child: SizedBox(
+                            width: Get.width * 0.5,
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: TextFormField(
+                                    onChanged: (val) {
+                                      setState(() {
+                                        title = val;
+                                      });
+                                    },
+                                    style: const TextStyle(),
+                                    decoration: InputDecoration(
+                                      enabledBorder: OutlineInputBorder(
                                           borderSide: const BorderSide(
-                                            color: Color.fromARGB(
-                                                255, 243, 65, 65),
-                                          ),
+                                              color: Colors.black),
                                           borderRadius:
-                                              BorderRadius.circular(12),
-                                        ),
-                                        focusedErrorBorder: OutlineInputBorder(
+                                              BorderRadius.circular(12)),
+                                      focusedBorder: OutlineInputBorder(
                                           borderSide: const BorderSide(
-                                            color: Color.fromARGB(255, 0, 0, 5),
-                                          ),
+                                              color: Colors.black),
                                           borderRadius:
-                                              BorderRadius.circular(12),
+                                              BorderRadius.circular(12)),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color:
+                                              Color.fromARGB(255, 243, 65, 65),
                                         ),
-                                        labelText: 'Title',
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return 'Please Enter title';
-                                        }
-                                        return null;
-                                      },
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color.fromARGB(255, 0, 0, 5),
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      labelText: 'Name',
+                                    ),
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return 'Please Enter Name';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                                const Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 10),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: DropdownButtonFormField(
+                                    isExpanded: true,
+
+                                    icon: const Icon(Icons.keyboard_arrow_down),
+
+                                    // Array list of items
+                                    items: items.map((String items) {
+                                      return DropdownMenuItem(
+                                        value: items,
+                                        child: Text(items),
+                                      );
+                                    }).toList(),
+                                    // After selecting the desired option,it will
+                                    // change button value to selected value
+                                    onChanged: (String? newValue) {
+                                      // print('Selected category: $newValue');
+                                      setState(() {
+                                        category = newValue;
+                                      });
+                                    },
+                                  ),
+                                ),
+                                // Padding(
+                                //   padding: const EdgeInsets.symmetric(
+                                //       horizontal: 20, vertical: 10),
+                                // ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, right: 10, top: 30),
+                                  child: TextFormField(
+                                    onChanged: (val) {
+                                      setState(() {
+                                        Description = val;
+                                      });
+                                    },
+                                    minLines: 2,
+                                    maxLines: null,
+                                    maxLength: 500,
+                                    decoration: InputDecoration(
+                                      enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: Colors.black),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: Colors.black),
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color:
+                                              Color.fromARGB(255, 243, 65, 65),
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color.fromARGB(255, 0, 0, 5),
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      labelText: 'Description',
                                     ),
                                   ),
-                                  const Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 10),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10),
-                                    child: DropdownButtonFormField(
-                                      isExpanded: true,
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    User? user =
+                                        authService.firebaseAuth.currentUser;
 
-                                      icon:
-                                          const Icon(Icons.keyboard_arrow_down),
+                                    _databaseservice.saveworkerlisting(
+                                        userName,
+                                        title,
+                                        user!.uid,
+                                        category,
+                                        Description);
 
-                                      // Array list of items
-                                      items: items.map((String items) {
-                                        return DropdownMenuItem(
-                                          value: items,
-                                          child: Text(items),
+                                    Get.back(); // Close the dialog
+                                    // Show a Snackbar
+                                    Get.snackbar(
+                                        "Success", // Title of the Snackbar
+                                        "Listing created successfully", // Message of the Snackbar
+                                        snackPosition: SnackPosition.BOTTOM,
+                                        backgroundColor: Color(
+                                            0xff293241), // Background color (black)
+                                        colorText: Colors.white,
+                                        duration: Duration(
+                                            seconds: 1) // Text color (white)
                                         );
-                                      }).toList(),
-                                      // After selecting the desired option,it will
-                                      // change button value to selected value
-                                      onChanged: (String? newValue) {
-                                        // print('Selected category: $newValue');
-                                        setState(() {
-                                          category = newValue;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                  // Padding(
-                                  //   padding: const EdgeInsets.symmetric(
-                                  //       horizontal: 20, vertical: 10),
-                                  // ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 10, right: 10, top: 30),
-                                    child: TextFormField(
-                                      onChanged: (val) {
-                                        setState(() {
-                                          Description = val;
-                                        });
-                                      },
-                                      minLines: 2,
-                                      maxLines: null,
-                                      maxLength: 500,
-                                      decoration: InputDecoration(
-                                        enabledBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
-                                                color: Colors.black),
-                                            borderRadius:
-                                                BorderRadius.circular(12)),
-                                        focusedBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
-                                                color: Colors.black),
-                                            borderRadius:
-                                                BorderRadius.circular(12)),
-                                        errorBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: Color.fromARGB(
-                                                255, 243, 65, 65),
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                        ),
-                                        focusedErrorBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: Color.fromARGB(255, 0, 0, 5),
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                        ),
-                                        labelText: 'Description',
+                                  },
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(Colors
+                                            .black), // Set the background color to black
+                                    shape: MaterialStateProperty.all<
+                                        OutlinedBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            0.0), // Set the border radius to make it rectangular
                                       ),
                                     ),
                                   ),
-                                  ElevatedButton(
-                                      onPressed: () {
-                                        User? user = authService
-                                            .firebaseAuth.currentUser;
-
-                                        _databaseservice.saveworkerlisting(
-                                            userName,
-                                            title,
-                                            user!.uid,
-                                            category,
-                                            Description);
-                                      },
-                                      style: ButtonStyle(
-                                        backgroundColor: MaterialStateProperty
-                                            .all<Color>(Colors
-                                                .black), // Set the background color to black
-                                        shape: MaterialStateProperty.all<
-                                            OutlinedBorder>(
-                                          RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                0.0), // Set the border radius to make it rectangular
-                                          ),
-                                        ),
-                                      ),
-                                      child: const Text("Create")),
-                                ],
-                              ),
+                                  child: const Text("Create"),
+                                ),
+                              ],
                             ),
                           ),
-                        );
-                      },
-                      child: const Icon(Icons.add)),
+                        ),
+                      );
+                    },
+                    child: const Icon(Icons.add),
+                  ),
                 ),
                 const Text(
                   "Create a Listing",
@@ -353,6 +363,14 @@ class _workerpageState extends State<workerpage> {
                                     color: Colors.white, size: 30.0),
                                 onPressed: () {
                                   deleteworklistData(i);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('Worker deleted'),
+                                      duration: Duration(seconds: 1),
+                                      backgroundColor: Colors
+                                          .black, // Adjust the duration as needed
+                                    ),
+                                  );
                                 },
                               ),
                             ),
