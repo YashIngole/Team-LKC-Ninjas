@@ -5,6 +5,7 @@ import 'package:sahayak/Themeconst.dart';
 import 'package:sahayak/auth%20svc/databaseService.dart';
 import 'package:sahayak/auth%20ui/welcome_ui.dart';
 import 'package:sahayak/user/Landingpage.dart';
+import 'package:sahayak/user/notification.dart';
 
 //import 'package:image_picker/image_picker.dart';
 class userprofile extends StatefulWidget {
@@ -29,7 +30,27 @@ class _HomeState extends State<userprofile> {
       backgroundColor: kbackgroundcolor,
       body: Column(
         children: [
-          const Spacer(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const notification()),
+                    );
+                  },
+                  icon: Icon(
+                    Icons.send_outlined,
+                    size: 50,
+                  )),
+            ],
+          ),
+          // const Spacer(),
+          const SizedBox(
+            height: 100,
+          ),
           const Text(
             "User Card",
             style: TextStyle(fontSize: 28, color: Colors.white),
