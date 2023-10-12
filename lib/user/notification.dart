@@ -1,7 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sahayak/Themeconst.dart';
+import 'package:sahayak/auth%20svc/authentication.dart';
+import 'package:sahayak/user/UserProfile.dart';
 
 class notification extends StatefulWidget {
   const notification({super.key});
@@ -14,6 +18,8 @@ class _notificationState extends State<notification> {
   @override
   Widget build(BuildContext context) {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    User? user = AuthService().firebaseAuth.currentUser;
+    String uid = user!.uid.toString();
     return Scaffold(
       backgroundColor: kbackgroundcolor,
       appBar: AppBar(
@@ -30,8 +36,11 @@ class _notificationState extends State<notification> {
         ),
       ),
       body: Center(
-        child: FutureBuilder<QuerySnapshot>(
-          future: firestore.collection('service_requests').get(),
+        child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+          stream: FirebaseFirestore.instance
+              .collection('service_requests')
+              .where("userId", isEqualTo: uid)
+              .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return CircularProgressIndicator();
