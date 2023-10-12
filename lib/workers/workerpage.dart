@@ -10,7 +10,7 @@ import 'package:sahayak/auth%20svc/databaseService.dart';
 import 'package:sahayak/auth%20svc/helper.dart';
 
 class workerpage extends StatefulWidget {
-  const workerpage({Key? key});
+  const workerpage({ Key? key});
 
   @override
   State<workerpage> createState() => _workerpageState();
@@ -251,9 +251,9 @@ class _workerpageState extends State<workerpage> {
                           ),
                         );
                       },
-                      child: Icon(Icons.add)),
+                      child: const Icon(Icons.add)),
                 ),
-                Text(
+                const Text(
                   "Create a Listing",
                   style: TextStyle(color: Colors.white),
                 )

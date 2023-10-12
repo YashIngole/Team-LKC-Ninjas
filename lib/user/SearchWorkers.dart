@@ -8,7 +8,7 @@ import 'package:sahayak/auth%20svc/helper.dart';
 import 'package:sahayak/workers/workerprofile.dart';
 
 class SearchWorkers extends StatefulWidget {
-  const SearchWorkers({Key? key, required this.InitialVal});
+  const SearchWorkers({ Key? key, required this.InitialVal});
   final String InitialVal;
   @override
   State<SearchWorkers> createState() => _SearchWorkersState();

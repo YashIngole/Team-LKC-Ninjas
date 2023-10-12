@@ -19,8 +19,8 @@ class _WorkerHomeState extends State<WorkerHome> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
   final List<Widget> _widgetOptions = <Widget>[
     const workerpage(),
-    workerrequests(),
-     workerprofile(
+    const workerrequests(),
+     const workerprofile(
       workername: "",
       ImageUrl: '', userId: '',
     )

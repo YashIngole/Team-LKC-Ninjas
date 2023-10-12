@@ -6,7 +6,6 @@ import 'package:sahayak/auth%20svc/helper.dart';
 import 'package:sahayak/auth%20ui/welcome_ui.dart';
 import 'package:sahayak/constants.dart';
 import 'package:sahayak/firebase_options.dart';
-import 'package:sahayak/user/UserProfile.dart';
 import 'package:sahayak/user/home.dart';
 
 //import 'package:sahayak/user/SearchWorkers.dart';
@@ -66,6 +65,6 @@ class _MyAppState extends State<MyApp> {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: _isSignedIn ? WelcomePage() : Home());
+        home: _isSignedIn ? const WelcomePage() : const Home());
   }
 }

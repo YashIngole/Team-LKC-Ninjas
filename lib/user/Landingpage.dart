@@ -9,7 +9,6 @@ import 'package:sahayak/auth%20svc/databaseService.dart';
 import 'package:sahayak/auth%20svc/helper.dart';
 import 'package:sahayak/auth%20ui/welcome_ui.dart';
 import 'package:sahayak/user/SearchWorkers.dart';
-import 'package:sahayak/user/UserProfile.dart';
 import 'package:sahayak/user/customslider.dart';
 
 class LandingPage extends StatefulWidget {
@@ -90,12 +89,12 @@ class _LandingPageState extends State<LandingPage> {
                             )
                           ],
                         ),
-                        Spacer(),
+                        const Spacer(),
                         IconButton(
                             onPressed: () {
                               signOut();
                             },
-                            icon: Icon(Icons.logout_outlined)),
+                            icon: const Icon(Icons.logout_outlined)),
                       ],
                     ),
                   ],
@@ -136,7 +135,7 @@ class _LandingPageState extends State<LandingPage> {
                     const Spacer(),
                     InkWell(
                       onTap: () {
-                        Get.to(SearchWorkers(InitialVal: ""));
+                        Get.to(const SearchWorkers(InitialVal: ""));
                       },
                       child: Text("View all",
                           style: GoogleFonts.andadaPro(
@@ -161,6 +160,6 @@ class _LandingPageState extends State<LandingPage> {
   signOut() async {
     await auth.signOut();
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => WelcomePage()));
+        context, MaterialPageRoute(builder: (context) => const WelcomePage()));
   }
 }
