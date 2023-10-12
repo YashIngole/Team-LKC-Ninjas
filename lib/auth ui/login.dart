@@ -39,6 +39,7 @@ class _SigninState extends State<LoginPage> {
   String password = "";
   bool _isLoading = false;
   AuthService authService = AuthService();
+  bool _passwordObscured = true;
 
   @override
   Widget build(BuildContext context) {
@@ -101,13 +102,17 @@ class _SigninState extends State<LoginPage> {
                                         const SizedBox(
                                           height: 40,
                                         ),
-                                        const Text(
-                                            "Welcome back! Sign in to your account to access all the great features and services",
-                                            // ignore: prefer_const_constructors
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 20),
-                                            textAlign: TextAlign.start),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 7),
+                                          child: Text(
+                                              "Welcome back! Sign in to your account to access all the great features and services",
+                                              // ignore: prefer_const_constructors
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 20),
+                                              textAlign: TextAlign.start),
+                                        ),
                                         // ignore: prefer_const_constructors
                                         SizedBox(height: 20),
 
@@ -149,6 +154,23 @@ class _SigninState extends State<LoginPage> {
                                                   const OutlineInputBorder(),
                                               focusedBorder:
                                                   const OutlineInputBorder(),
+                                              suffixIcon: IconButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    _passwordObscured =
+                                                        !_passwordObscured;
+                                                  });
+                                                },
+                                                icon: Icon(
+                                                  _passwordObscured
+                                                      ? Icons
+                                                          .visibility_off_outlined
+                                                      : Icons
+                                                          .visibility_outlined,
+                                                  size: 30,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
                                               fillColor: kfieldcolor,
                                               filled: true,
                                               hintText: "Password",
@@ -163,12 +185,15 @@ class _SigninState extends State<LoginPage> {
                                               print(password);
                                             });
                                           },
-                                          validator: (val) {
-                                            if (val!.isNotEmpty) {
-                                              return null;
-                                            } else {
-                                              return "Name cannot be empty";
+                                          obscureText: _passwordObscured,
+                                          validator: (value) {
+                                            if (value == null ||
+                                                value.isEmpty) {
+                                              return 'Password is required';
+                                            } else if (value.length < 6) {
+                                              return 'Password must be at least 6 characters long';
                                             }
+                                            return null;
                                           },
                                         ),
                                         const SizedBox(height: 20),
@@ -203,16 +228,19 @@ class _SigninState extends State<LoginPage> {
                                                 ),
                                               ),
                                             ),
-                                            const SizedBox(height: 5),
-                                            const Center(
-                                              child: Text(
-                                                  "Don't have an Account?",
-                                                  style: TextStyle(
-                                                      color: Colors.white)),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 35),
+                                              child: const Center(
+                                                child: Text(
+                                                    "Don't have an Account?",
+                                                    style: TextStyle(
+                                                        color: Colors.white)),
+                                              ),
                                             ),
                                             TextButton(
                                               onPressed: () {
-                                                Get.to(const Registerpagee(
+                                                Get.off(const Registerpagee(
                                                   userType: '',
                                                 ));
                                               },
@@ -248,71 +276,55 @@ class _SigninState extends State<LoginPage> {
         _isLoading = true;
       });
 
-      await authService
-          .loginWithEmailAndPassword(email, password)
-          .then((value) async {
-        if (value == true) {
-          QuerySnapshot snapshot =
-              await databaseService(uid: FirebaseAuth.instance.currentUser!.uid)
-                  .gettingUserData(email);
+      try {
+        await authService.loginWithEmailAndPassword(email, password);
+        QuerySnapshot snapshot =
+            await databaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+                .gettingUserData(email);
 
-          // Saving the values to shared preferences
-          await helperFunctions.saveUserLoggedInStatus(true);
-          await helperFunctions.saveUserEmailSF(email);
-          await helperFunctions.saveUsernameSF(snapshot.docs[0]['fullName']);
+        // Saving the values to shared preferences
+        await helperFunctions.saveUserLoggedInStatus(true);
+        await helperFunctions.saveUserEmailSF(email);
+        await helperFunctions.saveUsernameSF(snapshot.docs[0]['fullName']);
 
-          // Check if the user is logged in
-          bool? isLoggedIn = await helperFunctions.getUserLoggedInStatus();
+        // Check if the user is logged in
+        bool? isLoggedIn = await helperFunctions.getUserLoggedInStatus();
 
-          // Now, let's check the user's type and navigate accordingly
-          String? useremail = authService.firebaseAuth.currentUser!.email;
+        // Now, let's check the user's type and navigate accordingly
+        String? useremail = authService.firebaseAuth.currentUser!.email;
 
-          void checkUserType() async {
-            var collection = FirebaseFirestore.instance.collection('users');
+        void checkUserType() async {
+          var collection = FirebaseFirestore.instance.collection('users');
 
-            var querySnapshot =
-                await collection.where('email', isEqualTo: useremail).get();
+          var querySnapshot =
+              await collection.where('email', isEqualTo: useremail).get();
 
-            if (querySnapshot.docs.isNotEmpty) {
-              var documentSnapshot = querySnapshot.docs.first;
-              var data = documentSnapshot.data();
+          if (querySnapshot.docs.isNotEmpty) {
+            var documentSnapshot = querySnapshot.docs.first;
+            var data = documentSnapshot.data();
 
-              if (data["userType"] == "user") {
-                // Navigate to the user home screen
-                Get.off(const Home());
-              } else {
-                // Navigate to the worker home screen
-                Get.off(const WorkerHome());
-              }
+            if (data["userType"] == "user") {
+              // Navigate to the user home screen
+              Get.off(const Home());
+            } else {
+              // Navigate to the worker home screen
+              Get.off(const WorkerHome());
             }
           }
-
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Welcome, ${snapshot.docs[0]['fullName']}!'),
-              duration: Duration(seconds: 3),
-            ),
-          );
-          // Get.snackbar(
-          //   'Welcome',
-          //   '${snapshot.docs[0]['fullName']}!', // Message of the Snackbar
-          //   snackPosition: SnackPosition.BOTTOM,
-          //   backgroundColor: Colors.black, // Background color (black)
-          //   colorText: Colors.white, // Text color (white)
-          //   duration: Duration(seconds: 3), // Custom duration (3 seconds)
-          // );
-
-          // Call the function to check user type
-          checkUserType();
-
-          setState(() {
-            _isLoading = false;
-          });
-        } else {
-          // Handle login failure here
-          // Show an error message to the user
         }
-      });
+
+        // Call the function to check user type
+        checkUserType();
+      } catch (error) {
+        Get.snackbar("Login Credentials mismatched.", "Please try again",
+            duration: const Duration(seconds: 3),
+            backgroundColor: Colors.black,
+            snackPosition: SnackPosition.BOTTOM,
+            colorText: Colors.white);
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
   }
 }

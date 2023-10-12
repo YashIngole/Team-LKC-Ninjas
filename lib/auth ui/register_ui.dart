@@ -30,6 +30,7 @@ class _LoginPageState extends State<Registerpagee> {
   String fullname = "";
   bool _isLoading = false;
   AuthService authService = AuthService();
+  bool _passwordObscured = true;
 
   @override
   Widget build(BuildContext context) {
@@ -126,8 +127,8 @@ class _LoginPageState extends State<Registerpagee> {
                                                 hintText: "Fullname",
                                                 hintStyle: TextStyle(
                                                     color: Colors.grey[500])),
-                                            style:
-                                                const TextStyle(color: Colors.white),
+                                            style: const TextStyle(
+                                                color: Colors.white),
                                             //parameter for name input
                                             onChanged: (val) {
                                               setState(() {
@@ -166,8 +167,8 @@ class _LoginPageState extends State<Registerpagee> {
                                                 hintText: "Email",
                                                 hintStyle: TextStyle(
                                                     color: Colors.grey[500])),
-                                            style:
-                                                const TextStyle(color: Colors.white),
+                                            style: const TextStyle(
+                                                color: Colors.white),
                                             validator: (val) {
                                               if (val == null || val.isEmpty) {
                                                 return 'Please enter an email address';
@@ -199,13 +200,30 @@ class _LoginPageState extends State<Registerpagee> {
                                                         //     color:
                                                         //         Colors.grey.shade400),
                                                         ),
+                                                suffixIcon: IconButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      _passwordObscured =
+                                                          !_passwordObscured;
+                                                    });
+                                                  },
+                                                  icon: Icon(
+                                                    _passwordObscured
+                                                        ? Icons
+                                                            .visibility_off_outlined
+                                                        : Icons
+                                                            .visibility_outlined,
+                                                    size: 30,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
                                                 fillColor: kfieldcolor,
                                                 filled: true,
                                                 hintText: "Password",
                                                 hintStyle: TextStyle(
                                                     color: Colors.grey[500])),
-                                            style:
-                                                const TextStyle(color: Colors.white),
+                                            style: const TextStyle(
+                                                color: Colors.white),
                                             //parameter for name input
                                             onChanged: (val) {
                                               setState(() {
@@ -213,25 +231,24 @@ class _LoginPageState extends State<Registerpagee> {
                                                 print(password);
                                               });
                                             },
-                                            validator: (val) {
-                                              if (val!.isNotEmpty) {
-                                                return null;
-                                              } else {
-                                                return "Name cannot be empty";
+                                            obscureText: _passwordObscured,
+                                            validator: (value) {
+                                              if (value == null ||
+                                                  value.isEmpty) {
+                                                return 'Password is required';
+                                              } else if (value.length < 6) {
+                                                return 'Password must be at least 6 characters long';
                                               }
+                                              return null;
                                             },
                                           ),
                                           const SizedBox(height: 30),
                                           Column(
-                                            
-                                          crossAxisAlignment:
+                                            crossAxisAlignment:
                                                 CrossAxisAlignment.center,
                                             children: [
-                                             
-
                                               ElevatedButton(
                                                 onPressed: () {
-                                                
                                                   widget.userType == "Worker"
                                                       ? registerworker()
                                                       : registeruser();
@@ -241,7 +258,8 @@ class _LoginPageState extends State<Registerpagee> {
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               0.0)),
-                                                  fixedSize: const Size(350, 50),
+                                                  fixedSize:
+                                                      const Size(350, 50),
                                                   backgroundColor: ktilecolor,
                                                   shadowColor:
                                                       Colors.transparent,
@@ -256,25 +274,21 @@ class _LoginPageState extends State<Registerpagee> {
                                                 ),
                                               ),
                                               const SizedBox(height: 20),
-
-                                              const Text('Already have an Account?',
+                                              const Text(
+                                                  'Already have an Account?',
                                                   style: TextStyle(
                                                       color: Colors.white)),
                                               TextButton(
                                                 onPressed: () {
-                                                  Get.to(LoginPage(
+                                                  Get.off(LoginPage(
                                                     userType: widget.userType,
                                                   ));
                                                 },
                                                 child: const Text(
                                                   ' Sign In.',
                                                   style: TextStyle(
-                                                      color:
-                                                          Color.fromARGB(
-                                                              255,
-                                                              59,
-                                                              179,
-                                                              235)),
+                                                      color: Color.fromARGB(
+                                                          255, 59, 179, 235)),
                                                 ),
                                               ),
                                             ],

@@ -220,6 +220,7 @@ class _SearchWorkersState extends State<SearchWorkers> {
                       },
                     );
                   }
+                  
 
                   return const Center(child: LoadingIndicator());
                 },
