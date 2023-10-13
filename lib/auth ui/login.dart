@@ -303,15 +303,30 @@ class _SigninState extends State<LoginPage> {
             var documentSnapshot = querySnapshot.docs.first;
             var data = documentSnapshot.data();
 
-            if (data["userType"] == "user") {
-              // Navigate to the user home screen
-              Get.off(const Home());
-            } else {
-              // Navigate to the worker home screen
-              Get.off(const WorkerHome());
+              if (data["userType"] == "user") {
+                // Navigate to the user home screen
+                Get.off(const Home());
+              } else {
+                // Navigate to the worker home screen
+                Get.off(const WorkerHome());
+              }
             }
           }
-        }
+
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   SnackBar(
+          //     content: Text('Welcome, ${snapshot.docs[0]['fullName']}!'),
+          //     duration: Duration(seconds: 3),
+          //   ),
+          // );
+          Get.snackbar(
+            'Welcome',
+            '${snapshot.docs[0]['fullName']}!', // Message of the Snackbar
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.black, // Background color (black)
+            colorText: Colors.white, // Text color (white)
+            duration: Duration(seconds: 2), // Custom duration (3 seconds)
+          );
 
         // Call the function to check user type
         checkUserType();

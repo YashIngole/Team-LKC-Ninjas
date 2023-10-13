@@ -62,91 +62,96 @@ class _HomeState extends State<workerprofile> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: kbackgroundcolor,
-        body: Column(children: [
-          const Spacer(),
-          Text(
-            "Sahayak Card",
-            style: GoogleFonts.roboto(
+        body: SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
+          child: SizedBox(
+            height: Get.height,
+            child: Column(mainAxisSize: MainAxisSize.min, children: [
+              const Spacer(),
+              Text(
+                "Sahayak Card",
+                style: GoogleFonts.roboto(
               fontSize: 35,
               color: const Color.fromARGB(255, 200, 201, 202),
               fontWeight: FontWeight.w900,
             ),
-          ),
-          const SizedBox(
-            height: 40,
-          ),
-          ImageUrl.isEmpty
-              ? Container(
-                  height: Get.height * 0.3,
-                  width: Get.width * 0.6,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.grey[800]),
-                  child: IconButton(
-                      onPressed: () async {
-                        ImagePicker imagePicker = ImagePicker();
-                        XFile? file = await imagePicker.pickImage(
-                          source: ImageSource.gallery,
-                        );
-                        if (file == null) {
-                          return;
-                        }
-                        //convert file to data
-                        final Uint8List fileBytes = await file.readAsBytes();
+              ),
+              const SizedBox(
+                height: 40,
+              ),
+              ImageUrl.isEmpty
+                  ? Container(
+                      height: Get.height * 0.3,
+                      width: Get.width * 0.6,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.grey[800]),
+                      child: IconButton(
+                          onPressed: () async {
+                            ImagePicker imagePicker = ImagePicker();
+                            XFile? file = await imagePicker.pickImage(
+                              source: ImageSource.gallery,
+                            );
+                            if (file == null) {
+                              return;
+                            }
+                            //convert file to data
+                            final Uint8List fileBytes =
+                                await file.readAsBytes();
 
-                        // Reference to storage root of Firebase Storage
-                        Reference referenceRoot =
-                            FirebaseStorage.instance.ref();
-                        Reference referenceDirImages =
-                            referenceRoot.child('images');
+                            // Reference to storage root of Firebase Storage
+                            Reference referenceRoot =
+                                FirebaseStorage.instance.ref();
+                            Reference referenceDirImages =
+                                referenceRoot.child('images');
 
-                        // Reference for the image to be stored
-                        String uniqueFileName =
-                            '${DateTime.now().millisecondsSinceEpoch}.jpg';
-                        Reference referenceImageToUpload =
-                            referenceDirImages.child(uniqueFileName);
-                        try {
-                          // Store the file
-                          await referenceImageToUpload.putData(fileBytes,
-                              SettableMetadata(contentType: 'image/jpeg'));
-                          ImageUrl =
-                              await referenceImageToUpload.getDownloadURL();
-                          print(ImageUrl);
-                          setState(
-                            () {
-                              ImageUrl;
-                            },
-                          );
-                        } catch (e) {
-                          print('Error uploading image: $e');
-                        }
+                            // Reference for the image to be stored
+                            String uniqueFileName =
+                                '${DateTime.now().millisecondsSinceEpoch}.jpg';
+                            Reference referenceImageToUpload =
+                                referenceDirImages.child(uniqueFileName);
+                            try {
+                              // Store the file
+                              await referenceImageToUpload.putData(fileBytes,
+                                  SettableMetadata(contentType: 'image/jpeg'));
+                              ImageUrl =
+                                  await referenceImageToUpload.getDownloadURL();
+                              print(ImageUrl);
+                              setState(
+                                () {
+                                  ImageUrl;
+                                },
+                              );
+                            } catch (e) {
+                              print('Error uploading image: $e');
+                            }
 
-                        AddImageUrl();
-                      },
-                      icon: Icon(
-                        Icons.add_a_photo,
-                        color: Colors.white,
-                        size: Get.height * 0.12,
-                      )),
-                )
-              : CachedNetworkImage(
-                  height: Get.height * 0.3,
-                  width: Get.width * 0.6,
-                  imageUrl: ImageUrl,
-                  imageBuilder: (context, imageProvider) => Stack(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: imageProvider,
-                              fit: BoxFit.fill,
-                            ),
-                            borderRadius: BorderRadius.circular(20)),
-                      ),
-                      Positioned(
-                          right: 0,
-                          bottom: 0,
-                          child: ElevatedButton.icon(
+                            AddImageUrl();
+                          },
+                          icon: Icon(
+                            Icons.add_a_photo,
+                            color: Colors.white,
+                            size: Get.height * 0.12,
+                          )),
+                    )
+                  : CachedNetworkImage(
+                      height: Get.height * 0.3,
+                      width: Get.width * 0.6,
+                      imageUrl: ImageUrl,
+                      imageBuilder: (context, imageProvider) => Stack(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: imageProvider,
+                                  fit: BoxFit.fill,
+                                ),
+                                borderRadius: BorderRadius.circular(10)),
+                          ),
+                          Positioned(
+                            right: 0,
+                            bottom: 0,
+                            child: IconButton(
                               onPressed: () async {
                                 ImagePicker imagePicker = ImagePicker();
                                 XFile? file = await imagePicker.pickImage(
@@ -190,89 +195,137 @@ class _HomeState extends State<workerprofile> {
 
                                 AddImageUrl();
                               },
-                              icon: Icon(Icons.edit),
-                              label: Text("Change")))
-                    ],
-                  ),
-                  placeholder: (context, url) =>
-                      const CircularProgressIndicator(),
-                  errorWidget: (context, url, error) => Container(
-                    height: Get.height * 0.3,
-                    width: Get.width * 0.6,
-                    decoration: BoxDecoration(
-                        color: ktilecolor,
-                        borderRadius: BorderRadius.circular(10)),
-                  ),
-                ),
-          Spacer(),
-          Column(
-            children: [
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.circular(20)),
-                    padding: EdgeInsets.all(20),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Name : $userName",
-                          style: GoogleFonts.acme(
-                              color: Colors.white, fontSize: 20),
-                        ),
-                        Text("Email : $email",
-                            style: GoogleFonts.acme(
-                                color: Colors.white, fontSize: 20)),
-                        Row(
+                              icon: Icon(
+                                Icons.add_a_photo,
+                                color: Color(0xFFFFFFFF),
+                                size: Get.height * 0.05,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      placeholder: (context, url) =>
+                          const CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => Container(
+                        height: Get.height * 0.3,
+                        width: Get.width * 0.6,
+                        decoration: BoxDecoration(
+                            color: ktilecolor,
+                            borderRadius: BorderRadius.circular(10)),
+                      ),
+                    ),
+              Spacer(),
+              Column(
+                children: [
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.grey,
+                            borderRadius: BorderRadius.circular(20)),
+                        padding: EdgeInsets.all(20),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Expanded(
-                                child: Text(
-                              "Phone: $Phone",
+                            Text(
+                              "Name : $userName",
                               style: GoogleFonts.acme(
                                   color: Colors.white, fontSize: 20),
-                            )),
-                            IconButton(
-                              onPressed: () {
-                                Get.defaultDialog(
-                                    content: TextFormField(
-                                      onChanged: (value) {
-                                        setState(() {
-                                          Phone = value;
-                                        });
-                                      },
-                                      controller: phoneController,
-                                      decoration: InputDecoration(
-                                          labelText: "Update Phone Number"),
-                                    ),
-                                    actions: [
-                                      IconButton(
+                            ),
+                            Text("Email : $email",
+                                style: GoogleFonts.acme(
+                                    color: Colors.white, fontSize: 20)),
+                            Row(
+                              children: [
+                                Expanded(
+                                    child: Text(
+                                  "Phone: $Phone",
+                                  style: GoogleFonts.acme(
+                                      color: Colors.white, fontSize: 20),
+                                )),
+                                IconButton(
+                                  onPressed: () {
+                                    Get.defaultDialog(
+                                      barrierDismissible:
+                                          false, // Prevent dismissal by tapping outside
+                                      title: "Update Phone Number",
+                                      titleStyle:
+                                          TextStyle(color: Colors.white),
+                                      content: Column(
+                                        children: [
+                                          TextFormField(
+                                            onChanged: (value) {
+                                              setState(() {
+                                                Phone = value;
+                                              });
+                                            },
+                                            controller: phoneController,
+                                            decoration: InputDecoration(
+                                              labelText: "Phone Number",
+                                              labelStyle: TextStyle(
+                                                  color: Colors.white),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.white),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.white),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      actions: [
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            Get.back();
+                                          },
+                                          child: Text("Cancel"),
+                                        ),
+                                        SizedBox(
+                                          height: 30,
+                                        ),
+                                        ElevatedButton(
                                           onPressed: () {
                                             AddPhoneNumber();
                                             Get.back();
+                                            Get.snackbar(
+                                              "Phone Number",
+                                              "Successfully updated",
+                                              snackPosition:
+                                                  SnackPosition.BOTTOM,
+                                              backgroundColor: Colors.black,
+                                              colorText: Colors.white,
+                                              duration: Duration(seconds: 3),
+                                            );
                                           },
-                                          icon: Icon(Icons.save))
-                                    ]);
-                              },
-                              icon: Icon(Icons.edit),
+                                          child: Text("Save"),
+                                        ),
+                                      ],
+                                      backgroundColor: ktilecolor,
+                                    );
+                                  },
+                                  icon: Icon(Icons.edit),
+                                )
+                              ],
                             ),
                           ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
+                  // SizedBox(
+                  //   height: 10,
+                  // ),
+                ],
               ),
-              // SizedBox(
-              //   height: 10,
-              // ),
-            ],
+              const Spacer()
+            ]),
           ),
-          const Spacer()
-        ]),
+        ),
       ),
     );
   }

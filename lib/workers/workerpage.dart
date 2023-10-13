@@ -404,6 +404,14 @@ class _workerpageState extends State<workerpage> {
 
   signOut() async {
     await auth.signOut();
+    Get.snackbar(
+      "Sign Out",
+      "You have been signed out.",
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.black,
+      colorText: Colors.white,
+      duration: Duration(seconds: 3),
+    );
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => const WelcomePage()));
   }

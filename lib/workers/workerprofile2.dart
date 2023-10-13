@@ -65,6 +65,18 @@ class _HomeState extends State<workerprofile2> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: kbackgroundcolor,
+        appBar: AppBar(
+          backgroundColor: kbackgroundcolor,
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ), // Replace "your_custom_icon" with the icon you want to use
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ),
         body: Column(children: [
           const Spacer(),
           Text(
@@ -128,46 +140,55 @@ class _HomeState extends State<workerprofile2> {
                 ),
               ),
               ElevatedButton(
-                  onPressed: () {
-                    Get.defaultDialog(
-                        title: "Send work request",
-                        content: Column(
-                          children: [
-                            TextFormField(
-                              onChanged: (val) {
-                                setState(() {
-                                  issue = val;
-                                });
-                              },
-                              minLines: 5,
-                              maxLines: null,
-                              maxLength: 500,
-                              decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  labelText: "Describe your issue"),
-                            ),
-                          ],
-                        ),
-                        actions: [
-                          ElevatedButton(
-                              onPressed: () {
-                                _databaseservice.createServiceRequest(
-                                    issue, widget.userId, false, currentuid);
-                                Get.back();
-                              },
-                              child: const Text("send request"))
-                        ]);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.transparent,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0), // <-- Radius
-                    ),
+                onPressed: () {
+                  Get.defaultDialog(
+                      title: "Send work request",
+                      content: Column(
+                        children: [
+                          TextFormField(
+                            onChanged: (val) {
+                              setState(() {
+                                issue = val;
+                              });
+                            },
+                            minLines: 5,
+                            maxLines: null,
+                            maxLength: 500,
+                            decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: "Describe your issue"),
+                          ),
+                        ],
+                      ),
+                      actions: [
+                        ElevatedButton(
+                            onPressed: () {
+                              _databaseservice.createServiceRequest(
+                                  issue, widget.userId, false, currentuid);
+                              Get.back();
+                              Get.snackbar("Request Sent",
+                                  "Your work request has been sent.",
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  backgroundColor:
+                                      Colors.black, // Background color
+                                  colorText: Colors.white,
+                                  duration: Duration(seconds: 1) // Text color
+                                  );
+                            },
+                            child: const Text("send request"))
+                      ]);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(0), // <-- Radius
                   ),
-                  child: const Text(
-                    "Send Work request",
-                    style: TextStyle(fontSize: 20),
-                  )),
+                ),
+                child: const Text(
+                  "Send Work request",
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
             ],
           ),
           const Spacer()
