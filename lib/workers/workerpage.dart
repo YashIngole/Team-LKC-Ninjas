@@ -11,7 +11,7 @@ import 'package:sahayak/auth%20svc/helper.dart';
 import 'package:sahayak/auth%20ui/welcome_ui.dart';
 
 class workerpage extends StatefulWidget {
-  const workerpage({Key? key});
+  const workerpage({ Key? key});
 
   @override
   State<workerpage> createState() => _workerpageState();
@@ -119,7 +119,7 @@ class _workerpageState extends State<workerpage> {
                               style: TextStyle(color: Colors.white),
                             ),
                             isExpanded: true,
-                            dropdownColor: Color(0xff212121),
+                            dropdownColor: const Color(0xff212121),
 
                             icon: const Icon(Icons.keyboard_arrow_down),
 
@@ -129,7 +129,7 @@ class _workerpageState extends State<workerpage> {
                                 value: items,
                                 child: Text(
                                   items,
-                                  style: TextStyle(color: Colors.white70),
+                                  style: const TextStyle(color: Colors.white70),
                                 ),
                               );
                             }).toList(),
@@ -200,11 +200,11 @@ class _workerpageState extends State<workerpage> {
                                 "Success", // Title of the Snackbar
                                 "Listing created successfully", // Message of the Snackbar
                                 snackPosition: SnackPosition.BOTTOM,
-                                backgroundColor: Color(
+                                backgroundColor: const Color(
                                     0xff293241), // Background color (black)
                                 colorText: Colors.white,
                                 duration:
-                                    Duration(seconds: 1) // Text color (white)
+                                    const Duration(seconds: 1) // Text color (white)
                                 );
                           },
                           style: ButtonStyle(
@@ -227,7 +227,7 @@ class _workerpageState extends State<workerpage> {
               ),
             );
           },
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
         ),
         resizeToAvoidBottomInset: true,
         backgroundColor: kbackgroundcolor,
@@ -236,8 +236,8 @@ class _workerpageState extends State<workerpage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Spacer(),
-                Padding(padding: EdgeInsets.symmetric(horizontal: 20)),
+                const Spacer(),
+                const Padding(padding: EdgeInsets.symmetric(horizontal: 20)),
                 Column(
                   children: [
                     Padding(
@@ -272,8 +272,8 @@ class _workerpageState extends State<workerpage> {
                     )),
               ],
             ),
-            SizedBox(height: 10),
-            Text(
+            const SizedBox(height: 10),
+            const Text(
               "Create a Work Listing here: ",
               style: TextStyle(color: Colors.grey),
             ),
@@ -361,7 +361,7 @@ class _workerpageState extends State<workerpage> {
                                 onPressed: () {
                                   deleteworklistData(i);
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
+                                    const SnackBar(
                                       content: Text('Worker deleted'),
                                       duration: Duration(seconds: 1),
                                       backgroundColor: Colors
@@ -410,7 +410,7 @@ class _workerpageState extends State<workerpage> {
       snackPosition: SnackPosition.BOTTOM,
       backgroundColor: Colors.black,
       colorText: Colors.white,
-      duration: Duration(seconds: 3),
+      duration: const Duration(seconds: 3),
     );
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => const WelcomePage()));

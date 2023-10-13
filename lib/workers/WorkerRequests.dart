@@ -65,11 +65,11 @@ class _workerrequestsState extends State<workerrequests> {
                   fontWeight: FontWeight.w900,
                 ),
               ),
-              Text(
+              const Text(
                 "Check The work Requests sent by the users here!",
                 style: TextStyle(color: Colors.grey),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Expanded(

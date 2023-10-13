@@ -2,18 +2,19 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:location/location.dart' as loc; // Use 'loc' as the prefix
 import 'package:sahayak/Themeconst.dart';
 import 'package:sahayak/auth%20svc/databaseService.dart';
 import 'package:sahayak/auth%20svc/helper.dart';
 import 'package:sahayak/auth%20ui/welcome_ui.dart';
 import 'package:sahayak/user/SearchWorkers.dart';
 import 'package:sahayak/user/customslider.dart';
-import 'package:sahayak/Location_svc/GetLocation.dart';
 
 class LandingPage extends StatefulWidget {
-  LandingPage({super.key});
+  LandingPage({Key? key}) : super(key: key);
   final controller = CarouselController();
 
   @override
@@ -24,6 +25,42 @@ var selectedPage;
 late PageController _myPage;
 
 class _LandingPageState extends State<LandingPage> {
+  late bool _serviceEnabled;
+  late loc.PermissionStatus _permissionGranted;
+  String locality = '';
+  String country = '';
+
+  // Use the prefix here
+
+  loc.LocationData? _userLocation; // Use the prefix here
+
+  Future<void> _getUserLocation() async {
+    loc.Location location = loc.Location(); // Use the prefix here
+
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == loc.PermissionStatus.denied) {
+      // Use the prefix here
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != loc.PermissionStatus.granted) {
+        // Use the prefix here
+        return;
+      }
+    }
+
+    final locationData = await location.getLocation();
+    setState(() {
+      _userLocation = locationData;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -31,10 +68,13 @@ class _LandingPageState extends State<LandingPage> {
     _myPage = PageController(initialPage: 0);
     selectedPage = 0;
     gettingUserData();
+    _getUserLocation();
+    getUserLocation();
   }
 
   String userName = "";
   String email = "";
+
   gettingUserData() async {
     await helperFunctions.getUserEmailFromSF().then((value) {
       setState(() {
@@ -50,6 +90,7 @@ class _LandingPageState extends State<LandingPage> {
 
   final databaseService _databaseservice = databaseService();
   final FirebaseAuth auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,11 +110,14 @@ class _LandingPageState extends State<LandingPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.location_on),
+                          onPressed: () {
+                            _getUserLocation();
+                            getUserLocation(); // Call the function here
+                          },
+                          icon: const Icon(Icons.location_on),
                           color: Colors.white,
                         ),
-                        Spacer(),
+                        const Spacer(),
                         Column(
                           children: [
                             Padding(
@@ -170,6 +214,31 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
+  // Function to get user location details
+  getUserLocation() async {
+    if (_userLocation != null) {
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+          _userLocation!.latitude!, _userLocation!.longitude!);
+      Placemark place = placemarks[0];
+
+      setState(() {
+        locality = place.locality ?? 'Unknown';
+        country = place.country ?? 'Unknown';
+      });
+
+      // Displaying the location details in a SnackBar
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Locality: $locality, Country: $country'),
+          duration: const Duration(seconds: 3),
+        ),
+      );
+
+      print(place);
+    }
+  }
+
+  // Function to sign out
   signOut() async {
     await auth.signOut();
     // Show a Snackbar message
@@ -179,7 +248,7 @@ class _LandingPageState extends State<LandingPage> {
       snackPosition: SnackPosition.BOTTOM,
       backgroundColor: Colors.black,
       colorText: Colors.white,
-      duration: Duration(seconds: 3),
+      duration: const Duration(seconds: 3),
     );
     Navigator.pushReplacement(
       context,

@@ -1,12 +1,9 @@
-import 'dart:typed_data';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:sahayak/Themeconst.dart';
 import 'package:sahayak/auth%20svc/authentication.dart';
 import 'package:sahayak/auth%20svc/databaseService.dart';
@@ -68,7 +65,7 @@ class _HomeState extends State<workerprofile2> {
         appBar: AppBar(
           backgroundColor: kbackgroundcolor,
           leading: IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back,
               color: Colors.white,
             ), // Replace "your_custom_icon" with the icon you want to use
@@ -114,7 +111,7 @@ class _HomeState extends State<workerprofile2> {
                   color: ktilecolor, borderRadius: BorderRadius.circular(10)),
             ),
           ),
-          Spacer(),
+          const Spacer(),
           Column(
             children: [
               Center(
@@ -124,13 +121,13 @@ class _HomeState extends State<workerprofile2> {
                     decoration: BoxDecoration(
                         color: Colors.grey,
                         borderRadius: BorderRadius.circular(20)),
-                    padding: EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(20),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Name : " + widget.DisplayName,
+                          "Name : ${widget.DisplayName}",
                           style: GoogleFonts.acme(
                               color: Colors.white, fontSize: 20),
                         ),
@@ -172,7 +169,7 @@ class _HomeState extends State<workerprofile2> {
                                   backgroundColor:
                                       Colors.black, // Background color
                                   colorText: Colors.white,
-                                  duration: Duration(seconds: 1) // Text color
+                                  duration: const Duration(seconds: 1) // Text color
                                   );
                             },
                             child: const Text("send request"))

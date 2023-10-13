@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -67,12 +66,12 @@ class _HomeState extends State<userprofile> {
         body: Column(children: [
           Row(
             children: [
-              Spacer(),
+              const Spacer(),
               IconButton(
                   onPressed: () {
-                    Get.to(notification());
+                    Get.to(const notification());
                   },
-                  icon: Icon(Icons.send))
+                  icon: const Icon(Icons.send))
             ],
           ),
           const Spacer(),
@@ -136,7 +135,7 @@ class _HomeState extends State<userprofile> {
                     },
                     icon: Icon(
                       Icons.add_a_photo,
-                      color: Color(0xFFFFFFFF),
+                      color: const Color(0xFFFFFFFF),
                       size: Get.height * 0.05,
                     ),
                   ),
@@ -202,8 +201,8 @@ class _HomeState extends State<userprofile> {
 
                                 AddImageUrl();
                               },
-                              icon: Icon(Icons.edit),
-                              label: Text("edit")))
+                              icon: const Icon(Icons.edit),
+                              label: const Text("edit")))
                     ],
                   ),
                   placeholder: (context, url) =>
@@ -216,7 +215,7 @@ class _HomeState extends State<userprofile> {
                         borderRadius: BorderRadius.circular(10)),
                   ),
                 ),
-          Spacer(),
+          const Spacer(),
           Column(
             children: [
               Center(
@@ -226,7 +225,7 @@ class _HomeState extends State<userprofile> {
                     decoration: BoxDecoration(
                         color: Colors.grey,
                         borderRadius: BorderRadius.circular(20)),
-                    padding: EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(20),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -253,7 +252,7 @@ class _HomeState extends State<userprofile> {
                                   barrierDismissible:
                                       false, // Prevent dismissal by tapping outside
                                   title: "Update Phone Number",
-                                  titleStyle: TextStyle(color: Colors.white),
+                                  titleStyle: const TextStyle(color: Colors.white),
                                   content: Column(
                                     children: [
                                       TextFormField(
@@ -263,7 +262,7 @@ class _HomeState extends State<userprofile> {
                                           });
                                         },
                                         controller: phoneController,
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                           labelText: "Phone Number",
                                           labelStyle:
                                               TextStyle(color: Colors.white),
@@ -284,9 +283,9 @@ class _HomeState extends State<userprofile> {
                                       onPressed: () {
                                         Get.back();
                                       },
-                                      child: Text("Cancel"),
+                                      child: const Text("Cancel"),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 30,
                                     ),
                                     ElevatedButton(
@@ -299,16 +298,16 @@ class _HomeState extends State<userprofile> {
                                           snackPosition: SnackPosition.BOTTOM,
                                           backgroundColor: Colors.black,
                                           colorText: Colors.white,
-                                          duration: Duration(seconds: 3),
+                                          duration: const Duration(seconds: 3),
                                         );
                                       },
-                                      child: Text("Save"),
+                                      child: const Text("Save"),
                                     ),
                                   ],
                                   backgroundColor: ktilecolor,
                                 );
                               },
-                              icon: Icon(Icons.edit),
+                              icon: const Icon(Icons.edit),
                             )
                           ],
                         ),

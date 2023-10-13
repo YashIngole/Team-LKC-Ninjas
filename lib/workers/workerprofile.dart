@@ -63,7 +63,7 @@ class _HomeState extends State<workerprofile> {
       child: Scaffold(
         backgroundColor: kbackgroundcolor,
         body: SingleChildScrollView(
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           child: SizedBox(
             height: Get.height,
             child: Column(mainAxisSize: MainAxisSize.min, children: [
@@ -197,7 +197,7 @@ class _HomeState extends State<workerprofile> {
                               },
                               icon: Icon(
                                 Icons.add_a_photo,
-                                color: Color(0xFFFFFFFF),
+                                color: const Color(0xFFFFFFFF),
                                 size: Get.height * 0.05,
                               ),
                             ),
@@ -214,7 +214,7 @@ class _HomeState extends State<workerprofile> {
                             borderRadius: BorderRadius.circular(10)),
                       ),
                     ),
-              Spacer(),
+              const Spacer(),
               Column(
                 children: [
                   Center(
@@ -224,7 +224,7 @@ class _HomeState extends State<workerprofile> {
                         decoration: BoxDecoration(
                             color: Colors.grey,
                             borderRadius: BorderRadius.circular(20)),
-                        padding: EdgeInsets.all(20),
+                        padding: const EdgeInsets.all(20),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -252,7 +252,7 @@ class _HomeState extends State<workerprofile> {
                                           false, // Prevent dismissal by tapping outside
                                       title: "Update Phone Number",
                                       titleStyle:
-                                          TextStyle(color: Colors.white),
+                                          const TextStyle(color: Colors.white),
                                       content: Column(
                                         children: [
                                           TextFormField(
@@ -262,7 +262,7 @@ class _HomeState extends State<workerprofile> {
                                               });
                                             },
                                             controller: phoneController,
-                                            decoration: InputDecoration(
+                                            decoration: const InputDecoration(
                                               labelText: "Phone Number",
                                               labelStyle: TextStyle(
                                                   color: Colors.white),
@@ -283,9 +283,9 @@ class _HomeState extends State<workerprofile> {
                                           onPressed: () {
                                             Get.back();
                                           },
-                                          child: Text("Cancel"),
+                                          child: const Text("Cancel"),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 30,
                                         ),
                                         ElevatedButton(
@@ -299,16 +299,16 @@ class _HomeState extends State<workerprofile> {
                                                   SnackPosition.BOTTOM,
                                               backgroundColor: Colors.black,
                                               colorText: Colors.white,
-                                              duration: Duration(seconds: 3),
+                                              duration: const Duration(seconds: 3),
                                             );
                                           },
-                                          child: Text("Save"),
+                                          child: const Text("Save"),
                                         ),
                                       ],
                                       backgroundColor: ktilecolor,
                                     );
                                   },
-                                  icon: Icon(Icons.edit),
+                                  icon: const Icon(Icons.edit),
                                 )
                               ],
                             ),
@@ -403,6 +403,6 @@ class _HomeState extends State<workerprofile> {
   signOut() async {
     await auth.signOut();
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => WelcomePage()));
+        context, MaterialPageRoute(builder: (context) => const WelcomePage()));
   }
 }

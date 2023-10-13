@@ -19,7 +19,7 @@ class _WorkerHomeState extends State<WorkerHome> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
   final List<Widget> _widgetOptions = <Widget>[
     const workerpage(),
-     workerrequests(),
+     const workerrequests(),
     const workerprofile()
   ];
   @override

@@ -1,12 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:sahayak/Loading.dart';
 import 'package:sahayak/Themeconst.dart';
-import 'package:sahayak/auth%20svc/authentication.dart';
-import 'package:sahayak/user/UserProfile.dart';
 
 class notification extends StatefulWidget {
   const notification({super.key});
@@ -29,9 +25,9 @@ class _notificationState extends State<notification> {
       backgroundColor: kbackgroundcolor,
       appBar: AppBar(
         backgroundColor: kbackgroundcolor,
-        title: Text("Sent Requests", style: TextStyle(color: Colors.white)),
+        title: const Text("Sent Requests", style: TextStyle(color: Colors.white)),
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.white,
           ), // Replace "your_custom_icon" with the icon you want to use
@@ -95,8 +91,8 @@ class _notificationState extends State<notification> {
                           ],
                         ),
                         trailing: AcceptedStatus
-                            ? Text("Status : Accepted")
-                            : Text("Status : Rejected")),
+                            ? const Text("Status : Accepted")
+                            : const Text("Status : Rejected")),
                   ),
                 );
               },

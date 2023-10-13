@@ -102,9 +102,9 @@ class _SigninState extends State<LoginPage> {
                                         const SizedBox(
                                           height: 40,
                                         ),
-                                        Padding(
+                                        const Padding(
                                           padding:
-                                              const EdgeInsets.only(left: 7),
+                                              EdgeInsets.only(left: 7),
                                           child: Text(
                                               "Welcome back! Sign in to your account to access all the great features and services",
                                               // ignore: prefer_const_constructors
@@ -228,10 +228,10 @@ class _SigninState extends State<LoginPage> {
                                                 ),
                                               ),
                                             ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
+                                            const Padding(
+                                              padding: EdgeInsets.only(
                                                   top: 35),
-                                              child: const Center(
+                                              child: Center(
                                                 child: Text(
                                                     "Don't have an Account?",
                                                     style: TextStyle(
