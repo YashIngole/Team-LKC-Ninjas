@@ -10,6 +10,7 @@ import 'package:sahayak/auth%20svc/helper.dart';
 import 'package:sahayak/auth%20ui/welcome_ui.dart';
 import 'package:sahayak/user/SearchWorkers.dart';
 import 'package:sahayak/user/customslider.dart';
+import 'package:sahayak/Location_svc/GetLocation.dart';
 
 class LandingPage extends StatefulWidget {
   LandingPage({super.key});
@@ -67,8 +68,12 @@ class _LandingPageState extends State<LandingPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.location_on),
+                          color: Colors.white,
+                        ),
                         Spacer(),
-                        Padding(padding: EdgeInsets.symmetric(horizontal: 20)),
                         Column(
                           children: [
                             Padding(
