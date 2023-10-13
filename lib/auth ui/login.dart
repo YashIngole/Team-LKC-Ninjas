@@ -299,7 +299,7 @@ class _SigninState extends State<LoginPage> {
             snackPosition: SnackPosition.BOTTOM,
             backgroundColor: Colors.black, // Background color (black)
             colorText: Colors.white, // Text color (white)
-            duration: Duration(seconds: 1), // Custom duration (3 seconds)
+            duration: Duration(seconds: 2), // Custom duration (3 seconds)
           );
 
           // Call the function to check user type

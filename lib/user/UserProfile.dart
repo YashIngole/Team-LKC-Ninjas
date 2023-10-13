@@ -98,51 +98,51 @@ class _HomeState extends State<userprofile> {
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.grey[800]),
                   child: IconButton(
-                      onPressed: () async {
-                        ImagePicker imagePicker = ImagePicker();
-                        XFile? file = await imagePicker.pickImage(
-                          source: ImageSource.gallery,
+                    onPressed: () async {
+                      ImagePicker imagePicker = ImagePicker();
+                      XFile? file = await imagePicker.pickImage(
+                        source: ImageSource.gallery,
+                      );
+                      if (file == null) {
+                        return;
+                      }
+                      //convert file to data
+                      final Uint8List fileBytes = await file.readAsBytes();
+
+                      // Reference to storage root of Firebase Storage
+                      Reference referenceRoot = FirebaseStorage.instance.ref();
+                      Reference referenceDirImages =
+                          referenceRoot.child('images');
+
+                      // Reference for the image to be stored
+                      String uniqueFileName =
+                          '${DateTime.now().millisecondsSinceEpoch}.jpg';
+                      Reference referenceImageToUpload =
+                          referenceDirImages.child(uniqueFileName);
+                      try {
+                        // Store the file
+                        await referenceImageToUpload.putData(fileBytes,
+                            SettableMetadata(contentType: 'image/jpeg'));
+                        ImageUrl =
+                            await referenceImageToUpload.getDownloadURL();
+                        print(ImageUrl);
+                        setState(
+                          () {
+                            ImageUrl;
+                          },
                         );
-                        if (file == null) {
-                          return;
-                        }
-                        //convert file to data
-                        final Uint8List fileBytes = await file.readAsBytes();
+                      } catch (e) {
+                        print('Error uploading image: $e');
+                      }
 
-                        // Reference to storage root of Firebase Storage
-                        Reference referenceRoot =
-                            FirebaseStorage.instance.ref();
-                        Reference referenceDirImages =
-                            referenceRoot.child('images');
-
-                        // Reference for the image to be stored
-                        String uniqueFileName =
-                            '${DateTime.now().millisecondsSinceEpoch}.jpg';
-                        Reference referenceImageToUpload =
-                            referenceDirImages.child(uniqueFileName);
-                        try {
-                          // Store the file
-                          await referenceImageToUpload.putData(fileBytes,
-                              SettableMetadata(contentType: 'image/jpeg'));
-                          ImageUrl =
-                              await referenceImageToUpload.getDownloadURL();
-                          print(ImageUrl);
-                          setState(
-                            () {
-                              ImageUrl;
-                            },
-                          );
-                        } catch (e) {
-                          print('Error uploading image: $e');
-                        }
-
-                        AddImageUrl();
-                      },
-                      icon: Icon(
-                        Icons.add_a_photo,
-                        color: Colors.white,
-                        size: Get.height * 0.12,
-                      )),
+                      AddImageUrl();
+                    },
+                    icon: Icon(
+                      Icons.add_a_photo,
+                      color: Color(0xFFFFFFFF),
+                      size: Get.height * 0.05,
+                    ),
+                  ),
                 )
               : CachedNetworkImage(
                   height: Get.height * 0.3,

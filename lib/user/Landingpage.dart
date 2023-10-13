@@ -91,13 +91,14 @@ class _LandingPageState extends State<LandingPage> {
                         ),
                         const Spacer(),
                         IconButton(
-                            onPressed: () {
-                              signOut();
-                            },
-                            icon: const Icon(
-                              Icons.logout_outlined,
-                              color: Colors.white,
-                            )),
+                          onPressed: () {
+                            signOut();
+                          },
+                          icon: const Icon(
+                            Icons.logout_outlined,
+                            color: Colors.white,
+                          ),
+                        ),
                       ],
                     ),
                   ],
@@ -162,7 +163,18 @@ class _LandingPageState extends State<LandingPage> {
 
   signOut() async {
     await auth.signOut();
+    // Show a Snackbar message
+    Get.snackbar(
+      "Sign Out",
+      "You have been signed out.",
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.black,
+      colorText: Colors.white,
+      duration: Duration(seconds: 3),
+    );
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const WelcomePage()));
+      context,
+      MaterialPageRoute(builder: (context) => const WelcomePage()),
+    );
   }
 }
