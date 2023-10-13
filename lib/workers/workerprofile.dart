@@ -244,9 +244,11 @@ class _HomeState extends State<workerprofile> {
                                 IconButton(
                                   onPressed: () {
                                     Get.defaultDialog(
-                                      // barrierDismissible:
-                                      //     false, // Prevent dismissal by tapping outside
+                                      barrierDismissible:
+                                          false, // Prevent dismissal by tapping outside
                                       title: "Update Phone Number",
+                                      titleStyle:
+                                          TextStyle(color: Colors.white),
                                       content: Column(
                                         children: [
                                           TextFormField(
@@ -257,16 +259,31 @@ class _HomeState extends State<workerprofile> {
                                             },
                                             controller: phoneController,
                                             decoration: InputDecoration(
-                                                labelText: "Phone Number",
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                            color:
-                                                                Colors.black))),
+                                              labelText: "Phone Number",
+                                              labelStyle: TextStyle(
+                                                  color: Colors.white),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.white),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.white),
+                                              ),
+                                            ),
                                           ),
                                         ],
                                       ),
                                       actions: [
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            Get.back();
+                                          },
+                                          child: Text("Cancel"),
+                                        ),
+                                        SizedBox(
+                                          height: 30,
+                                        ),
                                         ElevatedButton(
                                           onPressed: () {
                                             AddPhoneNumber();
@@ -284,7 +301,7 @@ class _HomeState extends State<workerprofile> {
                                           child: Text("Save"),
                                         ),
                                       ],
-                                      backgroundColor: Colors.grey,
+                                      backgroundColor: ktilecolor,
                                     );
                                   },
                                   icon: Icon(Icons.edit),
