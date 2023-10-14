@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:get/get.dart';
 import 'package:sahayak/Loading.dart';
 import 'package:sahayak/Themeconst.dart';
 import 'package:sahayak/auth%20svc/authentication.dart';
@@ -103,8 +102,7 @@ class _SigninState extends State<LoginPage> {
                                           height: 40,
                                         ),
                                         const Padding(
-                                          padding:
-                                              EdgeInsets.only(left: 7),
+                                          padding: EdgeInsets.only(left: 7),
                                           child: Text(
                                               "Welcome back! Sign in to your account to access all the great features and services",
                                               // ignore: prefer_const_constructors
@@ -229,8 +227,7 @@ class _SigninState extends State<LoginPage> {
                                               ),
                                             ),
                                             const Padding(
-                                              padding: EdgeInsets.only(
-                                                  top: 35),
+                                              padding: EdgeInsets.only(top: 35),
                                               child: Center(
                                                 child: Text(
                                                     "Don't have an Account?",
@@ -240,9 +237,8 @@ class _SigninState extends State<LoginPage> {
                                             ),
                                             TextButton(
                                               onPressed: () {
-                                                Get.off(const Registerpagee(
-                                                  userType: '',
-                                                ));
+                                                //to register screen
+                                                Navigator.pop(context);
                                               },
                                               child: const Text(
                                                 " Create One",
@@ -305,10 +301,16 @@ class _SigninState extends State<LoginPage> {
 
             if (data["userType"] == "user") {
               // Navigate to the user home screen
-              Get.off(const Home());
+              Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => const Home()),
+  );
             } else {
               // Navigate to the worker home screen
-              Get.off(const WorkerHome());
+              Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => const WorkerHome()),
+  );
             }
           }
         }
@@ -316,11 +318,11 @@ class _SigninState extends State<LoginPage> {
         // Call the function to check user type
         checkUserType();
       } catch (error) {
-        Get.snackbar("Login Credentials mismatched.", "Please try again",
-            duration: const Duration(seconds: 3),
-            backgroundColor: Colors.black,
-            snackPosition: SnackPosition.BOTTOM,
-            colorText: Colors.white);
+        final snackBar = SnackBar(
+        content: Text("Login Credentials mismatched. \nPlease try again"),
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
         setState(() {
           _isLoading = false;
         });

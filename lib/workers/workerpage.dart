@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import 'package:sahayak/Loading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sahayak/Themeconst.dart';
@@ -11,7 +11,7 @@ import 'package:sahayak/auth%20svc/helper.dart';
 import 'package:sahayak/auth%20ui/welcome_ui.dart';
 
 class workerpage extends StatefulWidget {
-  const workerpage({ Key? key});
+  const workerpage({Key? key});
 
   @override
   State<workerpage> createState() => _workerpageState();
@@ -55,27 +55,26 @@ class _workerpageState extends State<workerpage> {
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Get.defaultDialog(
-              backgroundColor: ktilecolor,
-              contentPadding: EdgeInsets.zero,
-              title: "Create a Work",
-              titleStyle: const TextStyle(color: Colors.white70),
-              content: SingleChildScrollView(
-                child: SizedBox(
-                  width: Get.width * 0.6,
-                  child: Container(
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 1),
-                          child: TextFormField(
-                            onChanged: (val) {
-                              setState(() {
-                                title = val;
-                              });
-                            },
-                            style: const TextStyle(color: Colors.white70),
-                            decoration: InputDecoration(
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Dialog(
+                  backgroundColor: ktilecolor,
+                  child: SingleChildScrollView(
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.6,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 1),
+                            child: TextFormField(
+                              onChanged: (val) {
+                                setState(() {
+                                  title = val;
+                                });
+                              },
+                              style: const TextStyle(color: Colors.white70),
+                              decoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
                                     borderSide:
                                         const BorderSide(color: Colors.white),
@@ -98,133 +97,120 @@ class _workerpageState extends State<workerpage> {
                                 ),
                                 labelText: 'Name',
                                 labelStyle:
-                                    const TextStyle(color: Colors.white70)),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please Enter Name';
-                              }
-                              return null;
-                            },
-                          ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: DropdownButtonFormField(
-                            hint: const Text(
-                              'Profession',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            isExpanded: true,
-                            dropdownColor: const Color(0xff212121),
-
-                            icon: const Icon(Icons.keyboard_arrow_down),
-
-                            // Array list of items
-                            items: items.map((String items) {
-                              return DropdownMenuItem(
-                                value: items,
-                                child: Text(
-                                  items,
-                                  style: const TextStyle(color: Colors.white70),
-                                ),
-                              );
-                            }).toList(),
-                            // After selecting the desired option,it will
-                            // change button value to selected value
-                            onChanged: (String? newValue) {
-                              // print('Selected category: $newValue');
-                              setState(() {
-                                category = newValue;
-                              });
-                            },
-                          ),
-                        ),
-                        // Padding(
-                        //   padding: const EdgeInsets.symmetric(
-                        //       horizontal: 20, vertical: 10),
-                        // ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(left: 1, right: 1, top: 30),
-                          child: TextFormField(
-                            style: const TextStyle(color: Colors.white70),
-                            onChanged: (val) {
-                              setState(() {
-                                Description = val;
-                              });
-                            },
-                            minLines: 2,
-                            maxLines: null,
-                            maxLength: 500,
-                            decoration: InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide:
-                                      const BorderSide(color: Colors.white),
-                                  borderRadius: BorderRadius.circular(12)),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide:
-                                      const BorderSide(color: Colors.white),
-                                  borderRadius: BorderRadius.circular(12)),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color.fromARGB(255, 243, 65, 65),
-                                ),
-                                borderRadius: BorderRadius.circular(12),
+                                    const TextStyle(color: Colors.white70),
                               ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color.fromARGB(255, 0, 0, 5),
-                                ),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              labelText: 'Description',
-                              labelStyle:
-                                  const TextStyle(color: Colors.white70),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please Enter Name';
+                                }
+                                return null;
+                              },
                             ),
                           ),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            User? user = authService.firebaseAuth.currentUser;
-
-                            _databaseservice.saveworkerlisting(userName, title,
-                                user!.uid, category, Description);
-
-                            Get.back(); // Close the dialog
-                            // Show a Snackbar
-                            Get.snackbar(
-                                "Success", // Title of the Snackbar
-                                "Listing created successfully", // Message of the Snackbar
-                                snackPosition: SnackPosition.BOTTOM,
-                                backgroundColor: const Color(
-                                    0xff293241), // Background color (black)
-                                colorText: Colors.white,
-                                duration:
-                                    const Duration(seconds: 1) // Text color (white)
+                          const Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: DropdownButtonFormField(
+                              hint: const Text(
+                                'Profession',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              isExpanded: true,
+                              dropdownColor: const Color(0xff212121),
+                              icon: const Icon(Icons.keyboard_arrow_down),
+                              items: items.map((String item) {
+                                return DropdownMenuItem(
+                                  value: item,
+                                  child: Text(
+                                    item,
+                                    style:
+                                        const TextStyle(color: Colors.white70),
+                                  ),
                                 );
-                          },
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                                Colors
-                                    .white), // Set the background color to black
-                            shape: MaterialStateProperty.all<OutlinedBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    20), // Set the border radius to make it rectangular
+                              }).toList(),
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  category = newValue;
+                                });
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 1, right: 1, top: 30),
+                            child: TextFormField(
+                              style: const TextStyle(color: Colors.white70),
+                              onChanged: (val) {
+                                setState(() {
+                                  Description = val;
+                                });
+                              },
+                              minLines: 2,
+                              maxLines: null,
+                              maxLength: 500,
+                              decoration: InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide:
+                                        const BorderSide(color: Colors.white),
+                                    borderRadius: BorderRadius.circular(12)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide:
+                                        const BorderSide(color: Colors.white),
+                                    borderRadius: BorderRadius.circular(12)),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Color.fromARGB(255, 243, 65, 65),
+                                  ),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Color.fromARGB(255, 0, 0, 5),
+                                  ),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                labelText: 'Description',
+                                labelStyle:
+                                    const TextStyle(color: Colors.white70),
                               ),
                             ),
                           ),
-                          child: const Text("Create"),
-                        ),
-                      ],
+                          ElevatedButton(
+                            onPressed: () {
+                              User? user = authService.firebaseAuth.currentUser;
+
+                              _databaseservice.saveworkerlisting(userName,
+                                  title, user!.uid, category, Description);
+
+                              Navigator.pop(context); // Close the dialog
+                              const snackBar = SnackBar(
+                                content: Text(
+                                    "Success\nListing created successfully"),
+                              );
+
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            },
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.white),
+                              shape: MaterialStateProperty.all<OutlinedBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                              ),
+                            ),
+                            child: const Text("Create"),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ),
+                );
+              },
             );
           },
           child: const Icon(Icons.add),
@@ -404,14 +390,11 @@ class _workerpageState extends State<workerpage> {
 
   signOut() async {
     await auth.signOut();
-    Get.snackbar(
-      "Sign Out",
-      "You have been signed out.",
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: Colors.black,
-      colorText: Colors.white,
-      duration: const Duration(seconds: 3),
+    const snackBar = SnackBar(
+      content: Text("Sign Out \nYou have been signed out."),
     );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => const WelcomePage()));
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:sahayak/Themeconst.dart';
@@ -49,7 +49,12 @@ class DevopsTools extends StatelessWidget {
             children: [
               InkWell(
                 onTap: () {
-                  Get.to(SearchWorkers(InitialVal: InitialVal));
+                  Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => SearchWorkers(InitialVal: InitialVal),
+      ),
+    );
+                 // Get.to(SearchWorkers(InitialVal: InitialVal));
                 },
                 child: Container(
                   height: 250.sp,

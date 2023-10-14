@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sahayak/Themeconst.dart';
 import 'package:sahayak/auth%20svc/authentication.dart';
@@ -88,8 +88,8 @@ class _HomeState extends State<workerprofile2> {
             height: 40,
           ),
           CachedNetworkImage(
-            height: Get.height * 0.3,
-            width: Get.width * 0.6,
+            height: MediaQuery.of(context).size.height * 0.3,
+            width: MediaQuery.of(context).size.width * 0.6,
             imageUrl: ImageUrl,
             imageBuilder: (context, imageProvider) => Stack(
               children: [
@@ -105,8 +105,8 @@ class _HomeState extends State<workerprofile2> {
             ),
             placeholder: (context, url) => const CircularProgressIndicator(),
             errorWidget: (context, url, error) => Container(
-              height: Get.height * 0.3,
-              width: Get.width * 0.6,
+              height: MediaQuery.of(context).size.height * 0.3,
+              width: MediaQuery.of(context).size.width * 0.6,
               decoration: BoxDecoration(
                   color: ktilecolor, borderRadius: BorderRadius.circular(10)),
             ),
@@ -138,42 +138,49 @@ class _HomeState extends State<workerprofile2> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Get.defaultDialog(
-                      title: "Send work request",
-                      content: Column(
-                        children: [
-                          TextFormField(
-                            onChanged: (val) {
-                              setState(() {
-                                issue = val;
-                              });
-                            },
-                            minLines: 5,
-                            maxLines: null,
-                            maxLength: 500,
-                            decoration: const InputDecoration(
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text("Send work request"),
+                        content: Column(
+                          children: [
+                            TextFormField(
+                              onChanged: (val) {
+                                setState(() {
+                                  issue = val;
+                                });
+                              },
+                              minLines: 5,
+                              maxLines: null,
+                              maxLength: 500,
+                              decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
-                                labelText: "Describe your issue"),
-                          ),
-                        ],
-                      ),
-                      actions: [
-                        ElevatedButton(
+                                labelText: "Describe your issue",
+                              ),
+                            ),
+                          ],
+                        ),
+                        actions: [
+                          ElevatedButton(
                             onPressed: () {
                               _databaseservice.createServiceRequest(
                                   issue, widget.userId, false, currentuid);
-                              Get.back();
-                              Get.snackbar("Request Sent",
-                                  "Your work request has been sent.",
-                                  snackPosition: SnackPosition.BOTTOM,
-                                  backgroundColor:
-                                      Colors.black, // Background color
-                                  colorText: Colors.white,
-                                  duration: const Duration(seconds: 1) // Text color
-                                  );
+                              Navigator.pop(context);
+                              const snackBar = SnackBar(
+                                content: Text(
+                                    "Request Sent\nYour work request has been sent."),
+                              );
+
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
                             },
-                            child: const Text("send request"))
-                      ]);
+                            child: Text("send request"),
+                          ),
+                        ],
+                      );
+                    },
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.transparent,

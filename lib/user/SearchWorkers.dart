@@ -2,7 +2,7 @@ import 'dart:core';
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get/get.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sahayak/Loading.dart';
 import 'package:sahayak/Themeconst.dart';
@@ -10,7 +10,7 @@ import 'package:sahayak/auth%20svc/helper.dart';
 import 'package:sahayak/workers/workerprofile2.dart';
 
 class SearchWorkers extends StatefulWidget {
-  const SearchWorkers({ Key? key, required this.InitialVal});
+  const SearchWorkers({Key? key, required this.InitialVal});
   final String InitialVal;
   @override
   State<SearchWorkers> createState() => _SearchWorkersState();
@@ -163,10 +163,14 @@ class _SearchWorkersState extends State<SearchWorkers> {
                               horizontal: 10, vertical: 8),
                           child: InkWell(
                             onTap: () {
-                              Get.to(workerprofile2(
-                                DisplayName: DiplayName,
-                                userId: userId,
-                              ));
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => workerprofile2(
+                                    DisplayName: DiplayName,
+                                    userId: userId,
+                                  ),
+                                ),
+                              );
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -219,7 +223,6 @@ class _SearchWorkersState extends State<SearchWorkers> {
                       },
                     );
                   }
-                  
 
                   return const Center(child: LoadingIndicator());
                 },

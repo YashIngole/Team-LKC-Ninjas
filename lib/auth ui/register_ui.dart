@@ -3,7 +3,7 @@ import 'package:sahayak/Loading.dart';
 import 'package:sahayak/Themeconst.dart';
 import 'package:sahayak/auth ui/login.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import 'package:sahayak/auth svc/authentication.dart';
 import 'package:sahayak/auth svc/helper.dart';
 
@@ -280,9 +280,14 @@ class _LoginPageState extends State<Registerpagee> {
                                                       color: Colors.white)),
                                               TextButton(
                                                 onPressed: () {
-                                                  Get.off(LoginPage(
-                                                    userType: widget.userType,
-                                                  ));
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            LoginPage(
+                                                                userType: widget
+                                                                    .userType)),
+                                                  );
                                                 },
                                                 child: const Text(
                                                   ' Sign In.',
@@ -326,9 +331,11 @@ class _LoginPageState extends State<Registerpagee> {
           await helperFunctions.saveUserEmailSF(email);
           await helperFunctions.saveUsernameSF(fullname);
 
-          Get.off(LoginPage(
-            userType: widget.userType,
-          ));
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => LoginPage(userType: widget.userType)),
+          );
         } else {
           setState(() {
             _isLoading = false;
@@ -353,9 +360,11 @@ class _LoginPageState extends State<Registerpagee> {
           await helperFunctions.saveUserEmailSF(email);
           await helperFunctions.saveUsernameSF(fullname);
 
-          Get.off(LoginPage(
-            userType: widget.userType,
-          ));
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => LoginPage(userType: widget.userType)),
+          );
         } else {
           setState(() {
             _isLoading = false;

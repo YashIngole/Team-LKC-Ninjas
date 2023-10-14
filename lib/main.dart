@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import 'package:sahayak/auth%20svc/helper.dart';
 import 'package:sahayak/auth%20ui/welcome_ui.dart';
 import 'package:sahayak/constants.dart';
@@ -58,7 +58,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    return MaterialApp(
         title: 'Sahayak',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

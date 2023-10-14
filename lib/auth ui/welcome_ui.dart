@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sahayak/Themeconst.dart';
 
@@ -48,9 +48,12 @@ class WelcomePage extends StatelessWidget {
                       child: ElevatedButton(
                     onPressed: () {
                       // Navigator.of(context).push(_createRoute());
-                      Get.to(Registerpagee(
-                        userType: 'User',
-                      ));
+                      Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            Registerpagee(userType: 'User')),
+                                                  );
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
@@ -83,9 +86,12 @@ class WelcomePage extends StatelessWidget {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        Get.to(Registerpagee(
-                          userType: 'Worker',
-                        ));
+                        Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            Registerpagee(userType: 'Worker')),
+                                                  );
                       },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(

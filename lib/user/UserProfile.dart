@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sahayak/Themeconst.dart';
@@ -69,7 +69,11 @@ class _HomeState extends State<userprofile> {
               const Spacer(),
               IconButton(
                   onPressed: () {
-                    Get.to(const notification());
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const notification(),
+                      ),
+                    );
                   },
                   icon: const Icon(Icons.send))
             ],
@@ -88,8 +92,8 @@ class _HomeState extends State<userprofile> {
           ),
           ImageUrl.isEmpty
               ? Container(
-                  height: Get.height * 0.3,
-                  width: Get.width * 0.6,
+                  height: MediaQuery.of(context).size.height * 0.3,
+                  width: MediaQuery.of(context).size.width * 0.6,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.grey[800]),
@@ -136,13 +140,13 @@ class _HomeState extends State<userprofile> {
                     icon: Icon(
                       Icons.add_a_photo,
                       color: const Color(0xFFFFFFFF),
-                      size: Get.height * 0.05,
+                      size: MediaQuery.of(context).size.height * 0.05,
                     ),
                   ),
                 )
               : CachedNetworkImage(
-                  height: Get.height * 0.3,
-                  width: Get.width * 0.6,
+                  height: MediaQuery.of(context).size.height * 0.3,
+                  width: MediaQuery.of(context).size.height * 0.6,
                   imageUrl: ImageUrl,
                   imageBuilder: (context, imageProvider) => Stack(
                     children: [
@@ -208,8 +212,8 @@ class _HomeState extends State<userprofile> {
                   placeholder: (context, url) =>
                       const CircularProgressIndicator(),
                   errorWidget: (context, url, error) => Container(
-                    height: Get.height * 0.3,
-                    width: Get.width * 0.6,
+                    height: MediaQuery.of(context).size.height * 0.3,
+                    width: MediaQuery.of(context).size.width * 0.6,
                     decoration: BoxDecoration(
                         color: ktilecolor,
                         borderRadius: BorderRadius.circular(10)),
@@ -248,63 +252,62 @@ class _HomeState extends State<userprofile> {
                             )),
                             IconButton(
                               onPressed: () {
-                                Get.defaultDialog(
+                                showDialog(
+                                  context: context,
                                   barrierDismissible:
                                       false, // Prevent dismissal by tapping outside
-                                  title: "Update Phone Number",
-                                  titleStyle: const TextStyle(color: Colors.white),
-                                  content: Column(
-                                    children: [
-                                      TextFormField(
-                                        onChanged: (value) {
-                                          setState(() {
-                                            Phone = value;
-                                          });
-                                        },
-                                        controller: phoneController,
-                                        decoration: const InputDecoration(
-                                          labelText: "Phone Number",
-                                          labelStyle:
-                                              TextStyle(color: Colors.white),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.white),
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text("Update Phone Number"),
+                                      content: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          TextFormField(
+                                            onChanged: (value) {
+                                              setState(() {
+                                                Phone = value;
+                                              });
+                                            },
+                                            controller: phoneController,
+                                            decoration: const InputDecoration(
+                                              labelText: "Phone Number",
+                                              enabledBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.black),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.black),
+                                              ),
+                                            ),
                                           ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.white),
-                                          ),
-                                        ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                  actions: [
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        Get.back();
-                                      },
-                                      child: const Text("Cancel"),
-                                    ),
-                                    const SizedBox(
-                                      height: 30,
-                                    ),
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        AddPhoneNumber();
-                                        Get.back();
-                                        Get.snackbar(
-                                          "Phone Number",
-                                          "Successfully updated",
-                                          snackPosition: SnackPosition.BOTTOM,
-                                          backgroundColor: Colors.black,
-                                          colorText: Colors.white,
-                                          duration: const Duration(seconds: 3),
-                                        );
-                                      },
-                                      child: const Text("Save"),
-                                    ),
-                                  ],
-                                  backgroundColor: ktilecolor,
+                                      actions: [
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text("Cancel"),
+                                        ),
+                                        const SizedBox(height: 30),
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            AddPhoneNumber();
+                                            Navigator.pop(context);
+                                            const snackBar = SnackBar(
+                                              content: Text(
+                                                  "Phone number\nSuccessfully Updated"),
+                                            );
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(snackBar);
+                                          },
+                                          child: const Text("Save"),
+                                        ),
+                                      ],
+                                      backgroundColor: ktilecolor,
+                                    );
+                                  },
                                 );
                               },
                               icon: const Icon(Icons.edit),

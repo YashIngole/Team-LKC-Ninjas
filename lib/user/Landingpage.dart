@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:get/get.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:location/location.dart' as loc; // Use 'loc' as the prefix
 import 'package:sahayak/Themeconst.dart';
@@ -192,7 +192,11 @@ class _LandingPageState extends State<LandingPage> {
                     const Spacer(),
                     InkWell(
                       onTap: () {
-                        Get.to(const SearchWorkers(InitialVal: ""));
+                       Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const SearchWorkers(InitialVal: ""),
+      ),
+    );
                       },
                       child: Text("View all",
                           style: GoogleFonts.andadaPro(
@@ -242,14 +246,11 @@ class _LandingPageState extends State<LandingPage> {
   signOut() async {
     await auth.signOut();
     // Show a Snackbar message
-    Get.snackbar(
-      "Sign Out",
-      "You have been signed out.",
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: Colors.black,
-      colorText: Colors.white,
-      duration: const Duration(seconds: 3),
-    );
+   const snackBar = SnackBar(
+        content: Text("Sign Out. \nYou have been signed out.",),
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => const WelcomePage()),
