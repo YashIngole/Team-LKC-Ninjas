@@ -11,7 +11,7 @@ import 'package:sahayak/auth%20svc/helper.dart';
 import 'package:sahayak/auth%20ui/welcome_ui.dart';
 
 class workerpage extends StatefulWidget {
-  const workerpage({ Key? key});
+  const workerpage({Key? key});
 
   @override
   State<workerpage> createState() => _workerpageState();
@@ -203,8 +203,8 @@ class _workerpageState extends State<workerpage> {
                                 backgroundColor: const Color(
                                     0xff293241), // Background color (black)
                                 colorText: Colors.white,
-                                duration:
-                                    const Duration(seconds: 1) // Text color (white)
+                                duration: const Duration(
+                                    seconds: 1) // Text color (white)
                                 );
                           },
                           style: ButtonStyle(
@@ -264,7 +264,13 @@ class _workerpageState extends State<workerpage> {
                 const Spacer(),
                 IconButton(
                     onPressed: () {
-                      signOut();
+                      authService.signOut();
+                      Get.snackbar("Sign Out", "You have been signed out.",
+                          snackPosition: SnackPosition.BOTTOM,
+                          backgroundColor: Colors.black,
+                          colorText: Colors.white,
+                          duration: const Duration(seconds: 3));
+                      Get.off(WelcomePage());
                     },
                     icon: const Icon(
                       Icons.logout_outlined,

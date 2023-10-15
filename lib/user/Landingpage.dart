@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:location/location.dart' as loc; // Use 'loc' as the prefix
 import 'package:sahayak/Themeconst.dart';
+import 'package:sahayak/auth%20svc/authentication.dart';
 import 'package:sahayak/auth%20svc/databaseService.dart';
 import 'package:sahayak/auth%20svc/helper.dart';
 import 'package:sahayak/auth%20ui/welcome_ui.dart';
@@ -31,7 +32,7 @@ class _LandingPageState extends State<LandingPage> {
   String country = '';
 
   // Use the prefix here
-
+  AuthService authService = AuthService();
   loc.LocationData? _userLocation; // Use the prefix here
 
   Future<void> _getUserLocation() async {
@@ -145,7 +146,16 @@ class _LandingPageState extends State<LandingPage> {
                         const Spacer(),
                         IconButton(
                           onPressed: () {
-                            signOut();
+                            authService.signOut();
+                            Get.snackbar(
+                              "Sign Out",
+                              "You have been signed out.",
+                              snackPosition: SnackPosition.BOTTOM,
+                              backgroundColor: Colors.black,
+                              colorText: Colors.white,
+                              duration: const Duration(seconds: 3),
+                            );
+                            Get.off(WelcomePage());
                           },
                           icon: const Icon(
                             Icons.logout_outlined,
@@ -239,20 +249,4 @@ class _LandingPageState extends State<LandingPage> {
   }
 
   // Function to sign out
-  signOut() async {
-    await auth.signOut();
-    // Show a Snackbar message
-    Get.snackbar(
-      "Sign Out",
-      "You have been signed out.",
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: Colors.black,
-      colorText: Colors.white,
-      duration: const Duration(seconds: 3),
-    );
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const WelcomePage()),
-    );
-  }
 }

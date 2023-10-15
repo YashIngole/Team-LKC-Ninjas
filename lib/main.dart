@@ -65,6 +65,6 @@ class _MyAppState extends State<MyApp> {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: _isSignedIn ? const WelcomePage() : const Home());
+        home: _isSignedIn ? Home() : const WelcomePage());
   }
 }
