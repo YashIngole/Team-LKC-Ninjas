@@ -30,6 +30,7 @@ class _LandingPageState extends State<LandingPage> {
   late loc.PermissionStatus _permissionGranted;
   String locality = '';
   String country = '';
+  String sublocality = '';
 
   // Use the prefix here
   AuthService authService = AuthService();
@@ -69,8 +70,9 @@ class _LandingPageState extends State<LandingPage> {
     _myPage = PageController(initialPage: 0);
     selectedPage = 0;
     gettingUserData();
-    _getUserLocation();
-    getUserLocation();
+    _getUserLocation().then((_) {
+      getUserLocation();
+    });
   }
 
   String userName = "";
@@ -110,13 +112,21 @@ class _LandingPageState extends State<LandingPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        IconButton(
-                          onPressed: () {
-                            _getUserLocation();
-                            getUserLocation(); // Call the function here
-                          },
-                          icon: const Icon(Icons.location_on),
-                          color: Colors.white,
+                        Row(
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                // _getUserLocation();
+                                // getUserLocation();
+                              },
+                              icon: const Icon(Icons.location_on),
+                              color: Colors.white,
+                            ),
+                            Text(
+                              ' $sublocality, $locality',
+                              style: TextStyle(color: Colors.white),
+                            )
+                          ],
                         ),
                         const Spacer(),
                         Column(
@@ -234,16 +244,20 @@ class _LandingPageState extends State<LandingPage> {
       setState(() {
         locality = place.locality ?? 'Unknown';
         country = place.country ?? 'Unknown';
+        sublocality = place.subLocality ?? 'Unknown';
       });
 
       // Displaying the location details in a SnackBar
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Locality: $locality, Country: $country'),
+          content: Text(
+            'Locality: $locality, Country: $country , Sublocality: $sublocality',
+          ),
           duration: const Duration(seconds: 3),
         ),
       );
-
+      print(
+          'Coordinates: ${_userLocation!.latitude}, ${_userLocation!.longitude}');
       print(place);
     }
   }
