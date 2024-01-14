@@ -16,10 +16,10 @@ void main() async {
   if (kIsWeb) {
     await Firebase.initializeApp(
       options: FirebaseOptions(
-        apiKey: constansts.apiKey,
-        appId: constansts.appId,
-        messagingSenderId: constansts.messagingSenderId,
-        projectId: constansts.projectId,
+        apiKey: constants.apiKey,
+        appId: constants.appId,
+        messagingSenderId: constants.messagingSenderId,
+        projectId: constants.projectId,
         storageBucket: "saahayak-77fed.appspot.com",
       ),
     );
@@ -29,7 +29,7 @@ void main() async {
     );
   }
 
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -44,53 +44,45 @@ class _MyAppState extends State<MyApp> {
   String userName = "";
   String email = "";
   String userType = "";
+
   @override
   void initState() {
     super.initState();
+    _initializeApp();
+  }
+
+  Future<void> _initializeApp() async {
     getUserLoggedInStatus();
-    gettingUserData();
-    checkUserType(); // Move this here to check user type on app start
+    await gettingUserData();
+    await checkUserType();
+    setState(() {}); // Rebuild the widget after initialization
   }
 
   gettingUserData() async {
-    await helperFunctions.getUserEmailFromSF().then((value) {
-      setState(() {
-        email = value!;
-      });
-    });
-    await helperFunctions.getUserNameFromSF().then((val) {
-      setState(() {
-        userName = val!;
-      });
-    });
+    email = await helperFunctions.getUserEmailFromSF() ?? "";
+    userName = await helperFunctions.getUserNameFromSF() ?? "";
   }
 
   void getUserLoggedInStatus() async {
-    await helperFunctions.getUserLoggedInStatus().then((value) {
-      if (value != null) {
-        setState(() {
-          _isSignedIn = value;
-        });
-      }
-    });
+    final value = await helperFunctions.getUserLoggedInStatus();
+    if (value != null) {
+      setState(() {
+        _isSignedIn = value;
+      });
+    }
   }
 
-  void checkUserType() async {
+  Future<void> checkUserType() async {
     if (_isSignedIn) {
       var collection = FirebaseFirestore.instance.collection('users');
-
       var querySnapshot =
           await collection.where('email', isEqualTo: email).get();
 
       if (querySnapshot.docs.isNotEmpty) {
         var documentSnapshot = querySnapshot.docs.first;
         var data = documentSnapshot.data();
-
-        // Example: printing userType
-        userType = data["userType"];
+        userType = data?["userType"] ?? "";
         print('User Type: $userType');
-
-        // Use the data retrieved for further processing or navigation
       }
     }
   }
@@ -106,9 +98,9 @@ class _MyAppState extends State<MyApp> {
       ),
       home: _isSignedIn
           ? userType == "user"
-              ? const Home()
-              : const WorkerHome()
-          : const WelcomePage(),
+              ? Home()
+              : WorkerHome()
+          : WelcomePage(),
     );
   }
 }

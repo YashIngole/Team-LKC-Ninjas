@@ -70,13 +70,45 @@ class _LandingPageState extends State<LandingPage> {
     _myPage = PageController(initialPage: 0);
     selectedPage = 0;
     gettingUserData();
-    _getUserLocation().then((_) {
-      getUserLocation();
-    });
+    gettinglocationData();
   }
 
   String userName = "";
   String email = "";
+  String CurrentCountry = "";
+  String Currentlocality = "";
+  String CurrentSublocality = "";
+  String CurrentLatitude = "";
+  String CurrentLongitude = "";
+
+  gettinglocationData() async {
+    await helperFunctions.getCountry().then((value) {
+      setState(() {
+        CurrentCountry = value!;
+      });
+    });
+    await helperFunctions.getSubLocality().then((value) {
+      setState(() {
+        CurrentSublocality = value!;
+      });
+    });
+    await helperFunctions.getLocality().then((value) {
+      setState(() {
+        Currentlocality = value!;
+      });
+    });
+    await helperFunctions.getLatitude().then((value) {
+      setState(() {
+        CurrentLatitude = value!.toString();
+      });
+    });
+
+    await helperFunctions.getLongitude().then((value) {
+      setState(() {
+        CurrentLongitude = value!.toString();
+      });
+    });
+  }
 
   gettingUserData() async {
     await helperFunctions.getUserEmailFromSF().then((value) {
@@ -116,14 +148,15 @@ class _LandingPageState extends State<LandingPage> {
                           children: [
                             IconButton(
                               onPressed: () {
-                                // _getUserLocation();
-                                // getUserLocation();
+                                _getUserLocation().then((_) {
+                                  getUserLocation();
+                                });
                               },
                               icon: const Icon(Icons.location_on),
                               color: Colors.white,
                             ),
                             Text(
-                              ' $sublocality, $locality',
+                              ' $CurrentSublocality, $Currentlocality',
                               style: TextStyle(color: Colors.white),
                             )
                           ],
@@ -259,6 +292,11 @@ class _LandingPageState extends State<LandingPage> {
       print(
           'Coordinates: ${_userLocation!.latitude}, ${_userLocation!.longitude}');
       print(place);
+      await helperFunctions.saveCountry(country);
+      await helperFunctions.saveLocality(locality);
+      await helperFunctions.saveSubLocality(sublocality);
+      await helperFunctions.saveLatitude(_userLocation!.latitude!.toDouble());
+      await helperFunctions.saveLongitude(_userLocation!.longitude!.toDouble());
     }
   }
 

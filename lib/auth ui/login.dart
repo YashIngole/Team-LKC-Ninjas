@@ -305,10 +305,10 @@ class _SigninState extends State<LoginPage> {
 
             if (data["userType"] == "user") {
               // Navigate to the user home screen
-              Get.off(const Home());
+              Get.off( Home());
             } else {
               // Navigate to the worker home screen
-              Get.off(const WorkerHome());
+              Get.off( WorkerHome());
             }
           }
         }

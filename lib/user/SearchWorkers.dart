@@ -1,17 +1,16 @@
-import 'dart:core';
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:sahayak/Loading.dart';
 import 'package:sahayak/Themeconst.dart';
 import 'package:sahayak/auth%20svc/helper.dart';
 import 'package:sahayak/workers/workerprofile2.dart';
 
 class SearchWorkers extends StatefulWidget {
-  const SearchWorkers({ Key? key, required this.InitialVal});
+  const SearchWorkers({Key? key, required this.InitialVal});
   final String InitialVal;
+
   @override
   State<SearchWorkers> createState() => _SearchWorkersState();
 }
@@ -19,17 +18,53 @@ class SearchWorkers extends StatefulWidget {
 class _SearchWorkersState extends State<SearchWorkers> {
   TextEditingController controller = TextEditingController();
   String searchQuery = '';
-  String? selectedCategory; // Added variable to store selected category
+  String? selectedCategory;
+  String userName = "";
+  String email = "";
+  String CurrentCountry = "";
+  String Currentlocality = "";
+  String CurrentSublocality = "";
+  double CurrentLatitude = 1;
+  double CurrentLongitude = 1;
+
   @override
   void initState() {
-    // TODO: implement initState
+    super.initState();
     controller.text = widget.InitialVal;
     searchQuery = widget.InitialVal.toLowerCase();
     gettingUserData();
+    gettinglocationData();
   }
 
-  String userName = "";
-  String email = "";
+  gettinglocationData() async {
+    await helperFunctions.getCountry().then((value) {
+      setState(() {
+        CurrentCountry = value!;
+      });
+    });
+    await helperFunctions.getSubLocality().then((value) {
+      setState(() {
+        CurrentSublocality = value!;
+      });
+    });
+    await helperFunctions.getLocality().then((value) {
+      setState(() {
+        Currentlocality = value!;
+      });
+    });
+    await helperFunctions.getLatitude().then((value) {
+      setState(() {
+        CurrentLatitude = value!;
+      });
+    });
+
+    await helperFunctions.getLongitude().then((value) {
+      setState(() {
+        CurrentLongitude = value!;
+      });
+    });
+  }
+
   gettingUserData() async {
     await helperFunctions.getUserEmailFromSF().then((value) {
       setState(() {
@@ -46,9 +81,6 @@ class _SearchWorkersState extends State<SearchWorkers> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Search Workers'),
-      // ),
       backgroundColor: kbackgroundcolor,
       body: SafeArea(
         child: Column(
@@ -57,7 +89,7 @@ class _SearchWorkersState extends State<SearchWorkers> {
               padding: const EdgeInsets.only(left: 20, top: 20),
               child: Text(
                 "Search For Workers Nearby You!",
-                style: GoogleFonts.roboto(color: Colors.white, fontSize: 30),
+                style: TextStyle(color: Colors.white, fontSize: 30),
               ),
             ),
             Padding(
@@ -76,8 +108,6 @@ class _SearchWorkersState extends State<SearchWorkers> {
                       Radius.circular(10.0),
                     ),
                   ),
-
-                  //enabled: false
                 ),
                 onChanged: (value) {
                   setState(() {
@@ -143,7 +173,6 @@ class _SearchWorkersState extends State<SearchWorkers> {
                       final description =
                           data['Description'].toString().toLowerCase();
 
-                      // Apply both search query and category filter
                       return (title.contains(searchQuery) ||
                               category.contains(searchQuery) ||
                               description.contains(searchQuery)) &&
@@ -157,6 +186,25 @@ class _SearchWorkersState extends State<SearchWorkers> {
                         final data = filteredDocs[i].data();
                         String userId = data['worker id'].toString();
                         String DiplayName = data['DisplayName'] ?? "";
+                        final locationArray =
+                            data['location'] as List<dynamic>?;
+
+                        double distanceInKm = 0;
+                        if (locationArray != null &&
+                            locationArray.length >= 2) {
+                          double workerLatitude = locationArray[0];
+                          double workerLongitude = locationArray[1];
+                          distanceInKm = Geolocator.distanceBetween(
+                                CurrentLatitude,
+                                CurrentLongitude,
+                                workerLatitude,
+                                workerLongitude,
+                              ) /
+                              1000;
+                        }
+
+                        String formattedDistance =
+                            'Distance: ${distanceInKm.toStringAsFixed(2)} km';
 
                         return Padding(
                           padding: const EdgeInsets.symmetric(
@@ -170,18 +218,19 @@ class _SearchWorkersState extends State<SearchWorkers> {
                             },
                             child: Container(
                               decoration: BoxDecoration(
-                                  color: ktilecolor,
-                                  borderRadius: BorderRadius.circular(6)),
+                                color: ktilecolor,
+                                borderRadius: BorderRadius.circular(6),
+                              ),
                               child: ListTile(
                                 contentPadding: const EdgeInsets.symmetric(
                                     horizontal: 20.0, vertical: 10.0),
                                 leading: Container(
                                   padding: const EdgeInsets.only(right: 12.0),
                                   decoration: const BoxDecoration(
-                                      border: Border(
-                                          right: BorderSide(
-                                              width: 1.0,
-                                              color: Colors.white24))),
+                                    border: Border(
+                                        right: BorderSide(
+                                            width: 1.0, color: Colors.white24)),
+                                  ),
                                   child: const Icon(Icons.work,
                                       color: Colors.white),
                                 ),
@@ -189,8 +238,7 @@ class _SearchWorkersState extends State<SearchWorkers> {
                                   children: [
                                     Text(
                                       data['DisplayName'] + "-",
-                                      style: GoogleFonts.abhayaLibre(
-                                          color: Colors.white),
+                                      style: TextStyle(color: Colors.white),
                                     ),
                                     Text(
                                       data['title'],
@@ -202,14 +250,23 @@ class _SearchWorkersState extends State<SearchWorkers> {
                                 subtitle: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      data['category'].toString(),
-                                      style:
-                                          const TextStyle(color: Colors.white),
-                                    ),
-                                    Text(data['Description'],
+                                    Text(formattedDistance,
+                                        style: TextStyle(color: Colors.white)),
+                                    Text('Latitude: ${locationArray![0]}',
                                         style: const TextStyle(
-                                            color: Colors.white))
+                                            color: Colors.white)),
+                                    Text('Longitude: ${locationArray[1]}',
+                                        style: const TextStyle(
+                                            color: Colors.white)),
+                                    Text('Locality: ${locationArray[2]}',
+                                        style: const TextStyle(
+                                            color: Colors.white)),
+                                    Text('Sublocality: ${locationArray[3]}',
+                                        style: const TextStyle(
+                                            color: Colors.white)),
+                                    Text('Country: ${locationArray[4]}',
+                                        style: const TextStyle(
+                                            color: Colors.white)),
                                   ],
                                 ),
                               ),
@@ -219,7 +276,6 @@ class _SearchWorkersState extends State<SearchWorkers> {
                       },
                     );
                   }
-                  
 
                   return const Center(child: LoadingIndicator());
                 },

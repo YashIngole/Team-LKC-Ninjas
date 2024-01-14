@@ -16,7 +16,7 @@ class CustomCarouselSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Home home = const Home();
+    Home home = Home();
 
     final List<Widget> planetWidgets = [
       const DevopsTools(

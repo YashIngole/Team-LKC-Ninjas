@@ -9,7 +9,7 @@ import 'package:sahayak/user/SearchWorkers.dart';
 import 'package:sahayak/user/UserProfile.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key});
+  Home({super.key});
 
   @override
   State<Home> createState() => _HomeState();
