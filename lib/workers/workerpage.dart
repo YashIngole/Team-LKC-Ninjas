@@ -28,6 +28,33 @@ class _workerpageState extends State<workerpage> {
   String country = '';
   String sublocality = '';
 
+  Future<void> _getUserLocation() async {
+    loc.Location location = loc.Location(); // Use the prefix here
+
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == loc.PermissionStatus.denied) {
+      // Use the prefix here
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != loc.PermissionStatus.granted) {
+        // Use the prefix here
+        return;
+      }
+    }
+
+    final locationData = await location.getLocation();
+    setState(() {
+      _userLocation = locationData;
+    });
+  }
+
   // Use the prefix here
   AuthService authService = AuthService();
   loc.LocationData? _userLocation; // Use the prefix here
@@ -48,8 +75,41 @@ class _workerpageState extends State<workerpage> {
   void initState() {
     super.initState();
     gettingUserData();
-    _getUserLocation().then((_) {
-      getUserLocation();
+    gettinglocationData();
+  }
+
+  String CurrentCountry = "";
+  String Currentlocality = "";
+  String CurrentSublocality = "";
+  String CurrentLatitude = "";
+  String CurrentLongitude = "";
+
+  gettinglocationData() async {
+    await helperFunctions.getCountry().then((value) {
+      setState(() {
+        CurrentCountry = value!;
+      });
+    });
+    await helperFunctions.getSubLocality().then((value) {
+      setState(() {
+        CurrentSublocality = value!;
+      });
+    });
+    await helperFunctions.getLocality().then((value) {
+      setState(() {
+        Currentlocality = value!;
+      });
+    });
+    await helperFunctions.getLatitude().then((value) {
+      setState(() {
+        CurrentLatitude = value!.toString();
+      });
+    });
+
+    await helperFunctions.getLongitude().then((value) {
+      setState(() {
+        CurrentLongitude = value!.toString();
+      });
     });
   }
 
@@ -254,6 +314,23 @@ class _workerpageState extends State<workerpage> {
         body: Column(
           children: [
             Row(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    _getUserLocation().then((_) {
+                      getUserLocation();
+                    });
+                  },
+                  icon: const Icon(Icons.location_on),
+                  color: Colors.white,
+                ),
+                Text(
+                  ' $CurrentSublocality, $Currentlocality',
+                  style: TextStyle(color: Colors.white),
+                )
+              ],
+            ),
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Spacer(),
@@ -442,33 +519,6 @@ class _workerpageState extends State<workerpage> {
         context, MaterialPageRoute(builder: (context) => const WelcomePage()));
   }
 
-  Future<void> _getUserLocation() async {
-    loc.Location location = loc.Location(); // Use the prefix here
-
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
-        return;
-      }
-    }
-
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == loc.PermissionStatus.denied) {
-      // Use the prefix here
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != loc.PermissionStatus.granted) {
-        // Use the prefix here
-        return;
-      }
-    }
-
-    final locationData = await location.getLocation();
-    setState(() {
-      _userLocation = locationData;
-    });
-  }
-
   // Function to get user location details
   getUserLocation() async {
     if (_userLocation != null) {
@@ -494,6 +544,12 @@ class _workerpageState extends State<workerpage> {
       print(
           'Coordinates: ${_userLocation!.latitude}, ${_userLocation!.longitude}');
       print(place);
+
+      await helperFunctions.saveCountry(country);
+      await helperFunctions.saveLocality(locality);
+      await helperFunctions.saveSubLocality(sublocality);
+      await helperFunctions.saveLatitude(_userLocation!.latitude!.toDouble());
+      await helperFunctions.saveLongitude(_userLocation!.longitude!.toDouble());
     }
   }
 }
