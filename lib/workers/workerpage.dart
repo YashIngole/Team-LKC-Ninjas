@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
+import 'package:location/location.dart' as loc; // Use 'loc' as the prefix
 import 'package:sahayak/Loading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sahayak/Themeconst.dart';
@@ -20,6 +22,15 @@ class workerpage extends StatefulWidget {
 class _workerpageState extends State<workerpage> {
   String userName = "";
   String email = "";
+  late bool _serviceEnabled;
+  late loc.PermissionStatus _permissionGranted;
+  String locality = '';
+  String country = '';
+  String sublocality = '';
+
+  // Use the prefix here
+  AuthService authService = AuthService();
+  loc.LocationData? _userLocation; // Use the prefix here
   gettingUserData() async {
     await helperFunctions.getUserEmailFromSF().then((value) {
       setState(() {
@@ -37,10 +48,13 @@ class _workerpageState extends State<workerpage> {
   void initState() {
     super.initState();
     gettingUserData();
+    _getUserLocation().then((_) {
+      getUserLocation();
+    });
   }
 
   final databaseService _databaseservice = databaseService();
-  AuthService authService = AuthService();
+
   String title = "";
   String title1 = "";
   String listId = "";
@@ -420,5 +434,60 @@ class _workerpageState extends State<workerpage> {
     );
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => const WelcomePage()));
+  }
+
+  Future<void> _getUserLocation() async {
+    loc.Location location = loc.Location(); // Use the prefix here
+
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == loc.PermissionStatus.denied) {
+      // Use the prefix here
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != loc.PermissionStatus.granted) {
+        // Use the prefix here
+        return;
+      }
+    }
+
+    final locationData = await location.getLocation();
+    setState(() {
+      _userLocation = locationData;
+    });
+  }
+
+  // Function to get user location details
+  getUserLocation() async {
+    if (_userLocation != null) {
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+          _userLocation!.latitude!, _userLocation!.longitude!);
+      Placemark place = placemarks[0];
+
+      setState(() {
+        locality = place.locality ?? 'Unknown';
+        country = place.country ?? 'Unknown';
+        sublocality = place.subLocality ?? 'Unknown';
+      });
+
+      // Displaying the location details in a SnackBar
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Locality: $locality, Country: $country , Sublocality: $sublocality',
+          ),
+          duration: const Duration(seconds: 3),
+        ),
+      );
+      print(
+          'Coordinates: ${_userLocation!.latitude}, ${_userLocation!.longitude}');
+      print(place);
+    }
   }
 }
