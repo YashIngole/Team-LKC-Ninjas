@@ -206,7 +206,13 @@ class _workerpageState extends State<workerpage> {
                             User? user = authService.firebaseAuth.currentUser;
 
                             _databaseservice.saveworkerlisting(userName, title,
-                                user!.uid, category, Description);
+                                user!.uid, category, Description, [
+                              _userLocation!.latitude,
+                              _userLocation!.longitude,
+                              locality,
+                              sublocality,
+                              country
+                            ]);
 
                             Get.back(); // Close the dialog
                             // Show a Snackbar

@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
@@ -50,8 +49,14 @@ class databaseService {
   CollectionReference workersRef =
       FirebaseFirestore.instance.collection('workerlisting');
   // function to save the listing data to Firestore
-  Future<void> saveworkerlisting(String? DisplayName, String title,
-      String workerid, String? category, String Description) async {
+  Future<void> saveworkerlisting(
+    String? DisplayName,
+    String title,
+    String workerid,
+    String? category,
+    String Description,
+    List<Object?> location,
+  ) async {
     // new document with a unique ID in the 'drivers' collection
     DocumentReference newworkersRef = workersRef.doc();
 
@@ -60,7 +65,8 @@ class databaseService {
       'title': title,
       'worker id': workerid,
       'category': category,
-      'Description': Description
+      'Description': Description,
+      'location': location,
     });
   }
 
